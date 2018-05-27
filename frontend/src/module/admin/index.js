@@ -1,15 +1,20 @@
-import vue from 'vue'
+// import style with less
+import './assets/index.less'
+import "vue-animate";
 
-vue.config.productionTip = false
+import Vue from 'vue'
+
+Vue.config.productionTip = false
 
 
-new vue({
+new Vue({
     el: '#admin',
-    /*router,*/
-    components: {templates},
-    template: '<templates/>',
     data: {
-        name: 'vue',
-        message: 'Vue的生命周期'
+        hideSub: true
+    },
+    methods: {
+        collapseNav: function (e) {
+            this.hideSub = !this.hideSub;
+        }
     }
 })

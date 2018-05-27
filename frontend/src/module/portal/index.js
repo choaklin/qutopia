@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import templates from './App'
 import style from './assets/home.less'
-import router from './router/'
+import router from './router/index'
 
 Vue.config.productionTip = false
 
