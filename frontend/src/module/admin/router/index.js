@@ -1,15 +1,45 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '../components/HelloWorld'
+import VueRouter from 'vue-router'
+import adminHome from '../components/home'
 
-Vue.use(Router)
+import addPost from '../components/post/add'
+import postIndex from '../components/post/index'
+import draftPost from '../components/post/draft'
 
-export default new Router({
+import comment from '../components/comment'
+import about from  '../components/about'
+
+//== 使用模块化机制编程，导入Vue和VueRouter，要调用 Vue.use(VueRouter)
+Vue.use(VueRouter)
+export default new VueRouter({
     routes: [
         {
-            path: '/',
-            name: 'HelloWorld',
-            component: HelloWorld
-        }
+            path: '/home',
+            component: adminHome
+        },
+        
+        //== article center
+        {
+            path: '/article/add',
+            component: addPost
+        },
+        {
+            path: '/article/index',
+            component: postIndex
+        },
+        {
+            path: '/article/draft',
+            component: draftPost
+        },
+    
+        
+        {
+            path: '/comment',
+            component: comment
+        },
+        {
+            path: '/about',
+            component: about
+        },
     ]
 })

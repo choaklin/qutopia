@@ -1,13 +1,3 @@
 <template>
-
+    <div>here is draft list</div>
 </template>
-
-<script>
-	export default {
-		name: "draft"
-	}
-</script>
-
-<style scoped>
-
-</style>

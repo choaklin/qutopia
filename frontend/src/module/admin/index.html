@@ -23,33 +23,33 @@
                 <div id="tabs">
                     <ul>
                         <li>
-                            <div id="tabs_main">
-                                <a href="#main"><span class="fa fa-home"></span> 首页</a>
+                            <div id="tabs_main" class="tab-current">
+                                <a href="#/home"><span class="fa fa-home"></span> 首页</a>
                             </div>
                         </li>
                         <li>
-                            <div id="tabArticleTitle" class="tab-current" v-on:click="collapseNav">
+                            <div id="tabArticleTitle" v-on:click="collapseNav">
                                 <span class="fa fa-th-list"></span> 文章<span class="fa right" v-bind:class="[hideSub ? 'fa-angle-up' : 'fa-angle-down']"></span>
                             </div>
                             <transition name="bounceDown">
                                 <ul id="tabArticleMgt" class="sub-menu" v-show="hideSub">
                                     <li>
                                         <div id="tabs_article">
-                                            <a href="#article/article" onclick="admin.article.prePost()">
+                                            <a href="#/article/add">
                                                 <span class="fa fa-edit"></span> 发布文章
                                             </a>
                                         </div>
                                     </li>
                                     <li>
                                         <div id="tabs_article-list">
-                                            <a href="#article/article-list">
+                                            <a href="#/article/index">
                                                 <span class="fa fa-table"></span> 文章管理
                                             </a>
                                         </div>
                                     </li>
                                     <li>
                                         <div id="tabs_draft-list">
-                                            <a href="#article/draft-list">
+                                            <a href="#/article/draft">
                                                 <span class="fa fa-inbox"></span> 草稿箱</a>
                                         </div>
                                     </li>
@@ -58,17 +58,17 @@
                         </li>
                         <li>
                             <div id="tabs_comment-list">
-                                <a href="#comment-list"><span class="fa fa-comments"></span> 评论管理</a>
+                                <a href="#/comment"><span class="fa fa-comments"></span> 评论管理</a>
                             </div>
                         </li>
                         <li>
                             <div id="friend_link-list">
-                                <a href="#comment-list"><span class="fa fa-link"></span> 友链管理</a>
+                                <a href="#/friend-link"><span class="fa fa-link"></span> 友链管理</a>
                             </div>
                         </li>
                         <li>
                             <div id="tabs_about">
-                                <a href="#about"><span class="fa fa-info-circle"></span> 关于</a>
+                                <a href="#/about"><span class="fa fa-info-circle"></span> 关于</a>
                             </div>
                         </li>
                     </ul>
@@ -76,7 +76,7 @@
                 <div class="tabs__bg" onclick="admin.toggleMenu()"></div>
 
                 <div id="tabsPanel">
-                    <!--<route-view></route-view>-->
+                    <router-view></router-view>
                 </div>
 
                 <div class="clear"></div>
