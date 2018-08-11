@@ -1,5 +1,6 @@
-package com.qutopia.blog.utils.mongo;
+package com.qutopia.blog.utils.data.mongo;
 
+import com.qutopia.blog.utils.data.commons.UUIDGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;

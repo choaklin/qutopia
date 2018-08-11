@@ -1,4 +1,4 @@
-package com.qutopia.blog.utils.mongo;
+package com.qutopia.blog.utils.data.mongo;
 
 import lombok.Data;
 

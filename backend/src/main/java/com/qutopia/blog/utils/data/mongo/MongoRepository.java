@@ -1,5 +1,9 @@
-package com.qutopia.blog.utils.mongo;
+package com.qutopia.blog.utils.data.mongo;
 
+import com.qutopia.blog.utils.data.mongo.mapping.LogicalRemoveField;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
@@ -14,8 +18,8 @@ import java.util.List;
  */
 public interface MongoRepository<T, ID extends Serializable> {
 
-    int available_yes = 1;
-    int available_no = 0;
+    int available_true  = 1;
+    int available_false = 0;
 
     String aggregation_total_count_field = "totalCount";
 
@@ -44,24 +48,24 @@ public interface MongoRepository<T, ID extends Serializable> {
     long deleteByQuery(Query query);
 
     /**
-     * 如果实体有注解{@link LogicalRemoveField}, 内置增加该字段值为{@link #available_yes}的条件
+     * 如果实体有注解{@link LogicalRemoveField}, 内置增加该字段值为{@link #available_true}的条件
      * @param page
      * @param query
      * @return
      */
-    // Page<T> page(Page page, Query query);
+    Page<T> page(Pageable page, Query query);
 
     /**
      * <p>聚合管道的分页查询
-     * <p>未内置为逻辑字段(有注解{@link LogicalRemoveField})增加值为{@link #available_yes}的条件
-     * <p>有排序需求，设置在{@link Page#sortPolicy}
+     * <p>未内置为逻辑字段(有注解{@link LogicalRemoveField})增加值为{@link #available_true}的条件
+     * <p>有排序需求，设置在{@link Pageable#getSort()}
      *
-     * @param page
+     * @param pageable
      * @param aggregationOperations 聚合管道操作
      * @param outputClass
      * @return
      */
-    // <O> Page<O> pageAggregation(Page page, List<AggregationOperation> aggregationOperations, Class<O> outputClass);
+    <O> Page<O> pageAggregation(Pageable pageable, List<AggregationOperation> aggregationOperations, Class<O> outputClass);
 
     List<T> list(Query query);
 

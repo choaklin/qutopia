@@ -1,13 +1,20 @@
-package com.qutopia.blog.utils.mongo;
+package com.qutopia.blog.utils.data.mongo;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.qutopia.blog.utils.data.mongo.mapping.LogicalRemoveField;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +25,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -131,42 +139,25 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         return deleteResult.getDeletedCount();
     }
 
-    /*
     @Override
-    public Page<T> page(Page page, Query query) {
+    public Page<T> page(Pageable pageable, Query query) {
         if (StringUtils.isNotBlank(logicalRemoveFieldName)) {
-            log.debug(">> 启用了注解[LogicalRemoveField], 默认追加注解字段值是{}的条件", available_yes);
-            query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_yes));
+            log.debug(">> 启用了注解[LogicalRemoveField], 默认追加注解字段值是{}的条件", available_true);
+            query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_true));
         }
 
         long totalCount = mongoOperations.count(query, entityClass, collectionName);
-        int pageNo = page.getPageNo(), pageSize = page.getPageSize();
         if (totalCount < 1) {
-            return new Page(pageNo, pageSize, totalCount, Collections.EMPTY_LIST);
+            return new PageImpl<T>(Collections.EMPTY_LIST, pageable, totalCount);
         }
 
-        int startIndex = Page.getStartOfPage(pageNo, pageSize);
-        //== 创建排序条件
-        SortPolicy sortPolicy = page.getSortPolicy();
-        if (page.getSortPolicy() != null) {
-            Iterator<SortPolicy.Order> orderIterator = sortPolicy.iterator();
-            List<Sort.Order> orders = new ArrayList<>(sortPolicy.getOrders().size());
-            if (orderIterator.hasNext()) {
-                SortPolicy.Order order = orderIterator.next();
-                orders.add(
-                        new Sort.Order(Sort.Direction.valueOf(order.getDirection().name()), order.getSortKey())
-                );
-            }
-            if (orders.size() > 0) {
-                query.with(new Sort(orders));
-            }
-        }
-        List<T> result = mongoOperations.find(query.skip(startIndex).limit(pageSize), entityClass, collectionName);
-        return new Page(pageNo, pageSize, totalCount, result);
+        query.with(pageable);
+        List<T> result = mongoOperations.find(query, entityClass, collectionName);
+        return new PageImpl<>(result, pageable, totalCount);
     }
 
     @Override
-    public <O> Page<O> pageAggregation(Page page, List<AggregationOperation> aggregationOperations, Class<O> outputClass) {
+    public <O> Page<O> pageAggregation(Pageable page, List<AggregationOperation> aggregationOperations, Class<O> outputClass) {
         Assert.notEmpty(aggregationOperations, "聚合管道操作序列不能为空");
 
         //== 增加count aggregation
@@ -174,41 +165,25 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         AggregationResults<AggregationCountResult> countResults = mongoOperations.aggregate(Aggregation.newAggregation(aggregationOperations), collectionName, AggregationCountResult.class);
 
         AggregationCountResult countResult = countResults.getUniqueMappedResult();
-        int pageNo = page.getPageNo(), pageSize = page.getPageSize();
         if (countResult == null) {
-            return new Page(pageNo, pageSize, 0L, Collections.EMPTY_LIST);
+            return new PageImpl<>(Collections.EMPTY_LIST, page, 0L);
         }
         long totalCount = countResult.getTotalCount();
         if (totalCount < 1) {
-            return new Page(pageNo, pageSize, totalCount, Collections.EMPTY_LIST);
+            return new PageImpl(Collections.EMPTY_LIST, page, 0L);
         }
 
         //== 移除追加的count查询(最后一个)
         aggregationOperations.remove(aggregationOperations.size() - 1);
 
         //== 添加排序、skip、limit，执行分页查询
-        SortPolicy sortPolicy = page.getSortPolicy();
-        if (sortPolicy != null) {
-            Iterator<SortPolicy.Order> orderIterator = sortPolicy.iterator();
-            if (orderIterator.hasNext()) {
-                SortPolicy.Order order = orderIterator.next();
-                aggregationOperations.add(
-                        Aggregation.sort(
-                                Sort.Direction.fromString(order.getDirection().name()),
-                                order.getSortKey()
-                        )
-                );
-            }
-        }
-
-        long startIndex = Page.getStartOfPage(pageNo, pageSize);
-        aggregationOperations.add(Aggregation.skip(startIndex));
-        aggregationOperations.add(Aggregation.limit(pageSize));
+        aggregationOperations.add(Aggregation.sort(page.getSort()));
+        aggregationOperations.add(Aggregation.skip(page.getOffset()));
+        aggregationOperations.add(Aggregation.limit(page.getPageSize()));
 
         AggregationResults<O> outputResults = mongoOperations.aggregate(Aggregation.newAggregation(aggregationOperations), collectionName, outputClass);
-        return new Page<>(pageNo, pageSize, totalCount, outputResults.getMappedResults());
+        return new PageImpl<>(outputResults.getMappedResults(), page, totalCount);
     }
-    */
 
     @Override
     public List<T> list(Query query) {
@@ -236,7 +211,7 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         checkExistLogicalRemoveField();
         Assert.notNull(id, "未指定要删除对象的ID");
 
-        UpdateResult result = mongoOperations.updateFirst(Query.query(Criteria.where("_id").is(id)), Update.update(logicalRemoveFieldName, available_no), collectionName);
+        UpdateResult result = mongoOperations.updateFirst(Query.query(Criteria.where("_id").is(id)), Update.update(logicalRemoveFieldName, available_false), collectionName);
         if (result.getMatchedCount() != 1) {
             throw new IllegalArgumentException("不存在指定逻辑删除的记录");
         }
@@ -263,7 +238,7 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         checkExistLogicalRemoveField();
         Assert.notNull(id, "未指定要查询对象的ID");
 
-        T t =  mongoOperations.findOne(Query.query(Criteria.where(logicalRemoveFieldName).is(available_yes).and("_id").is(id)), entityClass, collectionName);
+        T t =  mongoOperations.findOne(Query.query(Criteria.where(logicalRemoveFieldName).is(available_true).and("_id").is(id)), entityClass, collectionName);
         if (StringUtils.isNotBlank(np_message)) {
             Assert.notNull(t, np_message);
         }
@@ -275,7 +250,7 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         checkExistLogicalRemoveField();
         Assert.notNull(query, "Query对象不能为NULL");
 
-        query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_yes));
+        query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_true));
         return mongoOperations.findOne(query, entityClass, collectionName);
     }
 
@@ -294,7 +269,7 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
         checkExistLogicalRemoveField();
         Assert.notNull(query, "Query对象不能为NULL");
 
-        query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_yes));
+        query.addCriteria(Criteria.where(logicalRemoveFieldName).is(available_true));
         return mongoOperations.count(query, entityClass, collectionName);
     }
 
