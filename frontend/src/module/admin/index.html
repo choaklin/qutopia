@@ -5,85 +5,14 @@
 		<title>后台管理页</title>
 	</head>
 	<body>
-        <div id="admin">
-            <div class="tip"><span id="loadMsg">加载中</span></div>
-            <div class="tip tip-msg"><span id="tipMsg"></span></div>
-            <div id="allPanel">
-                <div id="top">
-                    <a href="http://www.qutopia.cn" target="_blank" class="hover">浮闲阁</a>
-                    <span class="top__menu" onclick="admin.toggleMenu()"></span>
-                    <span class="right">
-                        <a href="#" title='首页'>
-                            <div class="avatar"></div> 浮闲阁
-                        </a>
-                        <a href='javascript:admin.logout();' title='登出'>登出</a>
-                    </span>
-                </div>
-
-                <div id="tabs">
-                    <ul>
-                        <li>
-                            <div id="tabs_main" class="tab-current">
-                                <a href="#/home"><span class="fa fa-home"></span> 首页</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="tabArticleTitle" v-on:click="collapseNav">
-                                <span class="fa fa-th-list"></span> 文章<span class="fa right" v-bind:class="[hideSub ? 'fa-angle-up' : 'fa-angle-down']"></span>
-                            </div>
-                            <transition name="bounceDown">
-                                <ul id="tabArticleMgt" class="sub-menu" v-show="hideSub">
-                                    <li>
-                                        <div id="tabs_article">
-                                            <a href="#/article/add">
-                                                <span class="fa fa-edit"></span> 发布文章
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div id="tabs_article-list">
-                                            <a href="#/article/index">
-                                                <span class="fa fa-table"></span> 文章管理
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div id="tabs_draft-list">
-                                            <a href="#/article/draft">
-                                                <span class="fa fa-inbox"></span> 草稿箱</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </transition>
-                        </li>
-                        <li>
-                            <div id="tabs_comment-list">
-                                <a href="#/comment"><span class="fa fa-comments"></span> 评论管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="friend_link-list">
-                                <a href="#/friend-link"><span class="fa fa-link"></span> 友链管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="tabs_about">
-                                <a href="#/about"><span class="fa fa-info-circle"></span> 关于</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tabs__bg" onclick="admin.toggleMenu()"></div>
-
-                <div id="tabsPanel">
-                    <router-view></router-view>
-                </div>
-
-                <div class="clear"></div>
-                <div class="footer">
-                    Powered by <a href="https://www.qutopia.cn" target="_blank">浮闲阁</a>
-                </div>
-            </div>
-        </div>
+        <div id="admin_root"></div>
 	</body>
+
+    <style>
+        #admin_root {
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+        }
+    </style>
 </html>

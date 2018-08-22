@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+input, textarea {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+input:focus, textarea:focus, select:focus {
+    outline-offset: -2px;
+}
+
+.half-range {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+
+.edit-select {
+    margin: 10px 0 20px;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+.edit-select .edit-panel {
+    padding: 10px 20px;
+    background: #fff;
+    border: 1px solid #eee;
+}
+.edit-select .edit-panel > ul{
+    padding: 0;
+    margin: 0;
+}
+.edit-select .edit-panel .row-left {
+    display: inline-block;
+    float: left;
+    max-width: 60px;
+    vertical-align: middle;
+    line-height: 25px;
+}
+.edit-select .edit-panel .row-right {
+    margin-left: 60px;
+}
+.edit-select .edit-tags .tags {
+    display: inline-block;
+    margin-bottom: -10px;
+}
+.edit-select .edit-tags .tags-item {
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 8px;
+    border: 1px solid #3aab4e;
+    margin-right: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.edit-select .edit-tags .tags-item:last-child {
+    margin-right: 10px;
+}
+.edit-select .edit-tags .tags-item:hover {
+    background: #3aab4e;
+    color: #fff;
+    cursor: pointer;
+}
+.edit-select .edit-tags .tags-item .close {
+    font-size: 18px;
+    color: #aaa;
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.edit-select .edit-tags .add-tags-box {
+    display: inline-block;
+    position: relative;
+}
+.edit-select .edit-tags .input-tags {
+    width: 255px;
+    border: none;
+    height: 25px;
+}
+
+.edit-sys-sort {
+    padding: 0;
+}
+.edit-select .edit-list .edit-row {
+    height: 35px;
+    line-height: 35px;
+}
+.edit-select .edit-list .row-left {
+    position: relative;
+    min-width: 130px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.edit-select .edit-list .edit-row {
+    height: 35px;
+    line-height: 35px;
+}
+
+.edit-select .is-original input[type=radio] {
+    display: none;
+}
+.edit-select .radio-label {
+    display: inline-block;
+    margin-right: 15px;
+}
+.edit-select .radio-label .radio {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.edit-select .radio-label .radio:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    top: 5px;
+    left: 5px;
+    border-radius: 50%;
+}
+
+.edit-select .is-original input[type=radio]:checked+.radio-label .radio {
+    border: none;
+    background-color: #3aab4e;
+}

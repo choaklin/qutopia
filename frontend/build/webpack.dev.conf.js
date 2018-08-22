@@ -22,7 +22,7 @@ let htmlPluginConf = []
 for(let x in deviceList){
     // 设置 入口
     entry[deviceList[x]] = extraPolyfill.concat(
-        './src/module/' + deviceList[x] + '/index.js'
+        './src/module/' + deviceList[x] + '/main.js'
     )
     let _htmlPlugin = new HtmlWebpackPlugin({
         filename: deviceList[x]+'/index.html',
