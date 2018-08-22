@@ -97,6 +97,10 @@
         opacity: 0;
     }
 
+    .sidebar-container {
+        height: 100%;
+        background: #00142a;
+    }
     .el-menu {
         border-right:none!important
     }
