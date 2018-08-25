@@ -1,0 +1,80 @@
+.theme-star {
+    .qutopia-container {
+        background-image: url("../../image/star-squashed.jpeg");
+        background-size: 100% 100%;
+
+
+        .sidebar-container, .logo, .el-menu-item, .el-submenu__title, .el-menu {
+            background-color: transparent !important;
+        }
+
+        .logo {
+            border-bottom: 1px solid rgb(40, 46, 111);
+
+            .logo-title {
+                color: #fff !important;
+                i {
+                    color: #fff;
+                }
+            }
+        }
+
+        .el-header {
+            .item {
+                i {
+                    color: #fff;
+                }
+            }
+        }
+
+        .el-main {
+            background-color: rgba(255,255,255,.6);
+        }
+    }
+
+    .el-dropdown {
+        color: #fff;
+        i {
+            color: #fff;
+        }
+    }
+
+    .el-menu--horizontal>.el-menu-item.is-active {
+        border-bottom: none;
+    }
+
+    .nest-menu .el-submenu>.el-submenu__title:hover,
+    .el-submenu .el-menu-item:hover {
+        background-color: rgba(0, 0, 0, .4) !important;
+    }
+    .el-menu--vertical {
+        background-color: rgba(0, 0, 0, .8)
+    }
+    .el-menu-item {
+        &.is-active,
+        &.siderbar-active {
+            background-color: rgba(0, 0, 0, .4) !important;
+            span {
+                color: #fff !important;
+            }
+        }
+        color: #fff !important;
+        i {
+            color: #fff !important;
+        }
+    }
+    .el-submenu__title {
+        color: #fff !important;
+        i {
+            color: #fff !important;
+        }
+    }
+
+    // 滚动条背景色透明
+    ::-webkit-scrollbar, ::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar, ::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+    }
+}

@@ -1,5 +1,5 @@
 <template>
-	<el-container>
+	<el-container class="qutopia-container">
         <the-sidebar />
 
         <el-container class="is-vertical">
@@ -21,29 +21,6 @@
     }
 </script>
 
-<style scoped>
-    .el-container{
-        height: 100%;
-    }
+<style lang="less" scoped>
 
-    .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
-        line-height: 200px;
-        height: 100%;
-    }
-
-    .el-header{
-        background-color: #B3C0D1;
-        color: #333;
-        text-align: center;
-        line-height: 68px;
-    }
-
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        line-height: 160px;
-    }
 </style>
