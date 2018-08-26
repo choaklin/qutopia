@@ -1,12 +1,17 @@
 <template>
 	<el-container class="qutopia-container">
+        <!-- 侧边 -->
         <the-sidebar />
 
         <el-container class="is-vertical">
-            <the-header></the-header>
+            <!-- 头部 -->
+            <the-header/>
+
+            <!-- 主内容区域 -->
             <el-main>
-                <span>Main</span>
-                <span>此处要开发出嵌套的路由视图</span>
+                <transition name="fade-transverse">
+                    <router-view class="router-view"/>
+                </transition>
             </el-main>
         </el-container>
     </el-container>

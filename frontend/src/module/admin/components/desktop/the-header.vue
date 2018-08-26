@@ -21,7 +21,7 @@
 
             <!-- 用户头像 -->
             <el-tooltip class="item" effect="dark" content="用户头像" placement="bottom">
-                <img class="top-userImg" src="../../assets/logo_25.png">
+                <img class="user-image" src="../../assets/logo_25.png">
             </el-tooltip>
 
             <!-- 设置项下拉菜单 -->
@@ -96,6 +96,10 @@
                 i {
                     font-size: 24px;
                 }
+            }
+
+            .user-image {
+                border-radius: 12px;
             }
 
             .username {

@@ -13,6 +13,8 @@ Vue.use(ElementUI);
 
 // import style with less
 import './assets/index.less';
+import "./assets/style/theme/star.less";
+import "./assets/style/theme/gradual.less";
 
 new Vue({
     el: '#admin_root',

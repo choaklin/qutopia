@@ -28,7 +28,7 @@
 
             <!-- 菜单 -->
             <el-menu background-color="#00142a" text-color="hsla(0,0%,100%,.65)" active-text-color="#409eff">
-                <el-menu-item index="1" @click="open()">
+                <el-menu-item index="1" @click="open({path: '/home'})">
                     <i class="el-icon-qutopia-home"></i>
                     <span slot="title">首页</span>
                 </el-menu-item>
@@ -38,31 +38,31 @@
                         <i class="el-icon-qutopia-edit-square"></i>
                         <span>文章</span>
                     </template>
-                    <el-menu-item index="2-1">
+                    <el-menu-item index="2-1" @click="open({path: '/post/add'})">
                         <i class="el-icon-qutopia-edit"></i>
                         <span slot="title">发布文章</span>
                     </el-menu-item>
-                    <el-menu-item index="2-2">
+                    <el-menu-item index="2-2" @click="open({path: '/post/index'})">
                         <i class="el-icon-menu"></i>
                         <span slot="title">文章管理</span>
                     </el-menu-item>
-                    <el-menu-item index="2-3">
+                    <el-menu-item index="2-3" @click="open({path: '/post/draft'})">
                         <i class="el-icon-qutopia-drafts"></i>
                         <span slot="title">草稿箱</span>
                     </el-menu-item>
                 </el-submenu>
 
-                <el-menu-item index="3" @click="open()">
+                <el-menu-item index="3" @click="open({path: '/comment'})">
                     <i class="el-icon-qutopia-comment"></i>
                     <span slot="title">评论管理</span>
                 </el-menu-item>
 
-                <el-menu-item index="4" @click="open()">
+                <el-menu-item index="4" @click="open({path: '/link'})">
                     <i class="el-icon-qutopia-link"></i>
                     <span slot="title">友链管理</span>
                 </el-menu-item>
 
-                <el-menu-item index="5" @click="open()">
+                <el-menu-item index="5" @click="open({path: '/about'})">
                     <i class="el-icon-qutopia-info-circle"></i>
                     <span slot="title">关于</span>
                 </el-menu-item>
@@ -90,8 +90,10 @@
                 this.isCollapse = !this.isCollapse;
             },
 
-		    open: function () {
-
+		    open: function (item) {
+                this.$router.push({
+                    path: item.path
+                })
             }
         }
 	}
