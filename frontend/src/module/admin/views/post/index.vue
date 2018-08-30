@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :inline="true" :model="formInline">
+        <el-form :inline="true" :model="formInline" size="medium" style="background-color: #f2f2f2; padding-top: 25px">
             <el-form-item label="文章标题">
                 <el-input v-model="formInline.user" placeholder="文章标题"></el-input>
             </el-form-item>
@@ -15,8 +15,8 @@
             </el-form-item>
         </el-form>
 
-        <div style="margin-top: 20px">
-            <el-table :data="tableData" border style="width: 100%">
+        <div style="margin-top: 30px">
+            <el-table :data="tableData" border style="width: 100%" :height="487">
                 <el-table-column prop="date" label="日期" width="150"></el-table-column>
                 <el-table-column prop="name" label="姓名" width="120"></el-table-column>
                 <el-table-column prop="province" label="省份" width="120"></el-table-column>
@@ -31,11 +31,13 @@
                 </el-table-column>
             </el-table>
 
-            <el-pagination
-                :current-page.sync="currentPage1"
-                :page-size="100"
-                layout="total, prev, pager, next"
-                :total="1000">
+        </div>
+        <div style="float: right; margin-top: 15px;">
+            <el-pagination background
+                           :current-page.sync="currentPage"
+                           :page-size="100"
+                           layout="total, sizes, prev, pager, next,jumper"
+                           :total="1000">
             </el-pagination>
         </div>
     </div>
@@ -51,7 +53,7 @@
                     region: ""
                 },
 
-                currentPage1: 5,
+                currentPage: 5,
 
                 tableData: [{
                     date: '2016-05-03',
@@ -109,6 +111,20 @@
                     city: '普陀区',
                     address: '上海市普陀区金沙江路 1518 弄',
                     zip: 200333
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333
                 }]
             }
         },
@@ -120,3 +136,15 @@
         }
     }
 </script>
+
+<style lang="less">
+    .el-form--inline {
+        .el-form-item {
+            padding-left: 20px;
+        }
+    }
+
+    .el-table td, .el-table th {
+        padding: 6px 0;
+    }
+</style>
