@@ -21,19 +21,19 @@ export default new VueRouter({
                     component: () => import ('../views/home')
                 },
                 {
-                    path: 'post/add',
+                    path: 'article/add',
                     name: "添加文章",
-                    component: () => import ('../views/post/add')
+                    component: () => import ('../views/article/add')
                 },
                 {
-                    path: 'post/index',
+                    path: 'article/index',
                     name: "文章管理",
-                    component: () => import ('../views/post/index')
+                    component: () => import ('../views/article/index')
                 },
                 {
-                    path: 'post/draft',
+                    path: 'article/draft',
                     name: "草稿箱",
-                    component: () => import ('../views/post/draft')
+                    component: () => import ('../views/article/draft')
                 },
                 {
                     path: 'comment',

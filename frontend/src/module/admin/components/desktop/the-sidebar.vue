@@ -38,15 +38,15 @@
                         <i class="el-icon-qutopia-edit-square"></i>
                         <span>文章</span>
                     </template>
-                    <el-menu-item index="2-1" @click="open({path: '/post/add'})">
+                    <el-menu-item index="2-1" @click="open({path: '/article/add'})">
                         <i class="el-icon-qutopia-edit"></i>
                         <span slot="title">发布文章</span>
                     </el-menu-item>
-                    <el-menu-item index="2-2" @click="open({path: '/post/index'})">
+                    <el-menu-item index="2-2" @click="open({path: '/article/index'})">
                         <i class="el-icon-menu"></i>
                         <span slot="title">文章管理</span>
                     </el-menu-item>
-                    <el-menu-item index="2-3" @click="open({path: '/post/draft'})">
+                    <el-menu-item index="2-3" @click="open({path: '/article/draft'})">
                         <i class="el-icon-qutopia-drafts"></i>
                         <span slot="title">草稿箱</span>
                     </el-menu-item>

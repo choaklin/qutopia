@@ -12,8 +12,12 @@
     "test": "node build/module-conf.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.4.6",
+    "mavon-editor": "^2.6.17",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.3",
+    "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
     "vue2-animate": "^2.0.0"
   },
