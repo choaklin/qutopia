@@ -5,9 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Hello world!
- *
  */
-@SpringBootApplication
+@SpringBootApplication(
+//        scanBasePackages = {
+////                "com.qutopia.blog.repository",
+////                "com.qutopia.blog.service",
+////                "com.qutopia.blog.utils"
+////        }
+)
 public class BootApplication {
 
     public static void main( String[] args ) {

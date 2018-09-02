@@ -18,4 +18,9 @@ public final class CollectionNames {
      * 评论
      */
     public static final String COMMENT = "comment";
+
+    /**
+     * 标签
+     */
+    public static final String TAG = "tag";
 }

@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Document(collection = CollectionNames.ARTICLE)
@@ -39,7 +40,12 @@ public class ArticleDO {
     /**
      * 标签
      */
-    private String tags;
+    private List<String> tags;
+
+    /**
+     * 永久链接
+     */
+    private String permalink;
 
     /**
      * 是否发布, 未发布则是草稿状态
@@ -52,9 +58,14 @@ public class ArticleDO {
     private boolean commentable;
 
     /**
-     * 永久链接
+     * 浏览数
      */
-    private String permalink;
+    private int viewCount;
+
+    /**
+     * 评论数
+     */
+    private int commentCount;
 
     /**
      * 创建时间

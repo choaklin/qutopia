@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -47,11 +48,16 @@ public class ArticleService {
 
         Page result = articleRepository.page(pageable, new Query());
         if (result.getTotalElements() < 1) {
-            ArticleDO temp = articleRepository.findById("1111");
+            // ArticleDO temp = articleRepository.findById("1111");
 
             ArticleDO article = new ArticleDO();
             article.setId(UUIDGenerator.generate());
-            article.setTitle("世界，你好！");
+            article.setTitle("世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！");
+            article.setTags(Arrays.asList(
+                    "Spring高级特性",
+                    "Spring事务传播机制")
+            );
+            article.setCreateTime(LocalDateTime.now());
 
             result = new PageImpl(Arrays.asList(domainMapper.toArticle(article)), pageable, 1);
         }

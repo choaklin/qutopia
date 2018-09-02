@@ -36,20 +36,22 @@ public class ArticleController {
         return articleService.page(page, pageQuery);
     }
 
-
     @PostMapping
     public void create(@RequestBody ArticleFormAO form) {
 
+        log.info(">> increase new article [{}]", form);
     }
 
     @PutMapping(value = "/{id}")
     public void update(@PathVariable String id, @RequestBody ArticleUpdateAO update) {
 
+        log.info(">> update [{}] with [{}]", update);
     }
 
     @DeleteMapping("/{id}")
     public void destroy(@PathVariable String id) {
 
+        log.info(">> delete [{}] article", id);
     }
 
     @GetMapping("/{id}")
