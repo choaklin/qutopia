@@ -1,7 +1,6 @@
 package com.qutopia.blog.gateway;
 
 import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -14,7 +13,7 @@ import javax.servlet.ServletRegistration;
  * @author choaklin
  * @date 2018.11.11
  */
-@Configuration
+// @Configuration
 public class WebDispatcherServletInitializer implements ServletContextInitializer {
 
     @Override
