@@ -5,6 +5,7 @@ import com.qutopia.blog.repository.ArticleRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
 import com.qutopia.blog.service.domain.article.Article;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
+import com.qutopia.blog.service.domain.article.ArticlePool;
 import com.qutopia.blog.utils.data.commons.UUIDGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,19 @@ public class ArticleService {
         }
         return result;
     }
+
+
+    /**
+     *
+     * @param title
+     * @return
+     */
+    public Page<ArticlePool> page(Pageable pageable, String title) {
+
+        Page result = articleRepository.page(pageable, new Query());
+        return result;
+    }
+
 
     public Article show(String id) {
         Article dest = null;

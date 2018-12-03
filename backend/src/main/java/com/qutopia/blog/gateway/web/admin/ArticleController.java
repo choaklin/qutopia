@@ -30,7 +30,7 @@ public class ArticleController {
 
     @GetMapping
     @ResponseBody
-    public Page<Article> index(@PageableDefault Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
+    public Page<Article> index(@PageableDefault(page = 1) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
 
         log.info(">> 进入index方法");
         return articleService.page(page, pageQuery);

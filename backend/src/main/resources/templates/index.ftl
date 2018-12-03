@@ -1,22 +1,24 @@
+<#--<#assign contextPath = request.contextPath>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>qutopia - choaklin</title>
+    <title>首页 - 浮闲阁</title>
     <link href="/public/style/index.css" rel="stylesheet"/>
     <link href="/public/lib/fullpage/jquery.fullpage.min.css" rel="stylesheet"/>
 </head>
 
 <body>
 <canvas id="welcome"></canvas>
-<div id="home" style="display: block;">
+<div id="home" style="display: none;">
     <div class="person half-range">
         <div class="figure"><img src="/public/images/figure.png"></div>
         <div class="sign">致虚极 . 守静笃</div>
 
         <div class="nav">
-            <div class="menu"><a href="/archive">博客</a></div>
-            <div class="menu"><a href="/archive/index">关于</a></div>
+            <div class="menu"><a href="/article">博客</a></div>
+            <div class="menu"><a href="/about">关于</a></div>
         </div>
 
         <div class="link">
@@ -27,11 +29,19 @@
 
 
     <div id="fullpage" class="tourist half-range">
-        <div class="section" style="background: url(/public/images/tourist/hangzhou.jpg); background-size: cover;"></div>
-        <div class="section" style="background: url(/public/images/tourist/huangshan.jpg); background-size: cover;"></div>
-        <div class="section" style="background: url(/public/images/tourist/yunding.jpg); background-size: cover;"></div>
-        <div class="section" style="background: url(/public/images/tourist/pingtan.jpg); background-size: cover;"></div>
-        <div class="section" style="background: url(/public/images/tourist/chaka.jpg); background-size: cover;"></div>
+        <#if latestTravelThumbnails??>
+            <#list latestTravelThumbnails as thumbnail>
+                <div class="section" style="background: url(${thumbnail}); background-size: cover;"></div>
+            </#list>
+        <#else >
+            <div class="section" style="background: url(/public/images/tourist/hangzhou.jpg); background-size: cover;"></div>
+            <div class="section" style="background: url(/public/images/tourist/huangshan.jpg); background-size: cover;"></div>
+            <div class="section" style="background: url(/public/images/tourist/yunding.jpg); background-size: cover;"></div>
+            <div class="section" style="background: url(/public/images/tourist/pingtan.jpg); background-size: cover;"></div>
+            <div class="section" style="background: url(/public/images/tourist/chaka.jpg); background-size: cover;"></div>
+        </#if>
+
+
     </div>
 </div>
 </body>
@@ -42,6 +52,9 @@
 
 <script type="text/javascript" src="/public/js/index.js"></script>
 <script>
+
+    <#--console.log(${contextPath});-->
+
         $(document).ready(function() {
             init.waite();
             init.hideWelcome();

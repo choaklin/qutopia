@@ -1,22 +1,17 @@
 package com.qutopia.blog.service.domain.article;
 
-import com.qutopia.blog.entity.CollectionNames;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@Document(collection = CollectionNames.ARTICLE)
 public class Article {
 
     /**
      * 文章ID
      */
-    @Id
     private String id;
 
     /**

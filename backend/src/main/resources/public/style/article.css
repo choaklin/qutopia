@@ -1,0 +1,239 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+ol, ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+blockquote {
+    border-left: 4px solid #6db33f;
+    background-color: #EBF1E7;
+    padding: 20px 30px;
+    margin: 10px 0;
+    width: auto;
+    font-size: 14px;
+    font-family: "Varela Round", sans-serif;
+}
+
+.container {
+    padding: 50px 0 50px;
+    background: #e9ebec;
+}
+
+/* 对tocbot默认样式的重写 */
+.toc li {
+    margin: 6px 0;
+}
+.toc-list {
+    padding-left: 20px!important;
+}
+.is-collapsible li {
+
+}
+.is-collapsible li:last-child {
+    margin-bottom: 0px;
+}
+.node-name--H1 {
+    font-size: 14px;
+}
+.node-name--H2 .node-name--H3 {
+    font-size: 12px;
+}
+
+.toc-link {
+    color: #666!important;
+}
+.is-active-link {
+    color: #000!important;
+}
+.toc-link:before {
+    background-color: #d1d5c9!important;
+    width: 3px!important;
+}
+.is-active-link::before {
+    background-color: #54BC4B!important;
+}
+
+.toc {
+    height: 100%;
+    min-width: 280px;
+    position: absolute;
+    top: 320px;
+    padding-top: 20px;
+    left: 50%;
+    margin-left: 520px;
+    font-size: 14px;
+}
+
+.post {
+    width: 900px;
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255);
+
+    display: flex;
+    min-height: 400px;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 2px;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+}
+.post .thumbnail {
+    height: 280px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 25px;
+    background-size: cover;
+    flex-direction: row;
+    align-items: flex-end;
+    background-position: 50% 50%;
+}
+.post .thumbnail .title {
+    font-size: 34px;
+    line-height: 40px;
+    font-weight: 400;
+    margin: 0;
+    text-shadow: 1px 1px 8px #444;
+    color: #fafafa!important;
+}
+
+.post .content {
+    width: 90%;
+    margin: 1pc auto;
+    padding-top: 0;
+    color: #34302d;
+}
+
+
+.post .content p {
+    margin: 15px 0;
+
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.post .content pre {
+    font-size: 14px;
+}
+
+
+
+.post-comment {
+    background-color: #eee;
+    width: 900px;
+    margin: 0 auto;
+    border: 1px solid rebeccapurple;
+}
+
+.post-comment .comment-wrap {
+    margin: 0 35px;
+}
+
+.comment-wrap > header {
+    padding: 12px 0;
+    border-bottom: 2px solid #607d8b;
+}
+.post-comment > header .comment-count {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2a2e2e;
+}
+
+.comment-wrap > section {
+    margin-top: 24px;
+    min-height: 125px;
+}
+
+.comment-list > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.avatar{
+    float: left;
+}
+
+.avatar {
+    margin-right: 12px;
+    width: 40px;
+    height: 40px;
+}
+
+.comment-content {
+    margin-left: 52px;
+}
+
+.comment-content .content-header {
+    line-height: 1;
+}
+.comment-content .byline {
+    line-height: 1;
+    font-size: 12px;
+}
+
+.commenter {
+    font-size: 13px;
+    color: #607D8B;
+    font-weight: 700;
+}
+.publisher {
+    margin-right: 5px;
+}
+
+.respondent {
+    margin-left: 5px;
+}
+
+.comment-content .meta {
+    display: inline-block;
+}
+.comment-content .meta .bullet {
+    color: #c2c6cc;
+    padding: 0px;
+    line-height: 1.4;
+    font-size: 13px;
+    font-family: "Helvetica Neue", arial, sans-serif;
+}
+.comment-content .meta .device {
+    color: #656c7a;
+    line-height: 1;
+    font-size: 13px;
+    padding: 0px;
+    margin: 0px;
+    font-family: "Helvetica Neue", arial, sans-serif;
+}
+
+.content-body {
+    margin: 3px 0;
+    font-size: 13px;
+    line-height: 21px;
+}
+.content-body > p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 21px;
+}
+
+.comment-list.comment-sub {
+    margin-left: 52px;
+    margin-top: 10px;
+}
+
+
+.comment-footer {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 12px;
+    line-height: 1;
+    color: #656c7a;
+    font-family: "Helvetica Neue", arial, sans-serif;
+}
+.comment-footer > a {
+    color: #656c7a;
+}
+.comment-footer .time {
+    float: left;
+}
