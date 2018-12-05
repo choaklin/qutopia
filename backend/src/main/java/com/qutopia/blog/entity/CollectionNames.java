@@ -15,6 +15,11 @@ public final class CollectionNames {
     public static final String ARTICLE = "article";
 
     /**
+     * 分类
+     */
+    public static final String CATEGORY = "category";
+
+    /**
      * 评论
      */
     public static final String COMMENT = "comment";
