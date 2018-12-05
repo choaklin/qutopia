@@ -8,16 +8,14 @@
     </head>
     <body>
         <div class="container">
-            <!--<div class="banner"></div>-->
-
             <div class="main">
                 <div class="articles left">
-                    <article class="card show">
+                    <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
                         <div class="thumbnail">
                             <img class="thumbnail" src="../public/images/article/desert.jpg" alt="JavaScript的执行环境和作用域">
                         </div>
                         <header class="title">
-                            <h2><a rel="bookmark" href="">JavaScript的执行环境和作用域</a></h2>
+                            <h2><a rel="bookmark" href="#">JavaScript的执行环境和作用域</a></h2>
                         </header>
                         <section class="overview">
                             <span>执行环境（execution context）是JavaScript中最为重要的一个概念。</span>
@@ -42,12 +40,68 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card sidebar-item catalog" style="height: 150px;">
+                    <div class="card sidebar-item catalog">
                         <div class="sidebar-header">
                             <span class="sidebar-header-title">分类</span>
                         </div>
                         <div class="sidebar-content">
-
+                            <ul class="root">
+                                <li class="root-parent">
+                                    <a href="#" class="item">
+                                        <span class="title">JavaSE</span>
+                                        <span class="quantity">16</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">泛型</span>
+                                                <span class="quantity">7</span>
+                                            </a>
+                                        </li>
+                                        <li class="sub-parent">
+                                            <a href="#" class="item">
+                                                <span class="title">IO</span>
+                                                <span class="quantity">9</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li>
+                                                    <a href="#" class="item">
+                                                        <span class="title">输入</span>
+                                                        <span class="quantity">6</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="item">
+                                                        <span class="title">输出</span>
+                                                        <span class="quantity">3</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="item">
+                                        <span class="title">JavaEE</span>
+                                        <span class="quantity">16</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">Servlet</span>
+                                                <span class="quantity">6</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">JSP</span>
+                                                <span class="quantity">3</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -71,7 +125,9 @@
 
         <script type="text/javascript" src="../public/lib/jquery/jquery-1.10.2.min.js"></script>
         <script>
-
+            $(document).ready(function () {
+                // $(".card").addClass("boom-animation");
+            })
         </script>
     </body>
 </html>

@@ -87,7 +87,7 @@ a:hover {
 
 .main .articles {
     position: relative;
-    left: 120px;
+    left: 100px;
     width: 640px;
     min-height: 400px;
 }
@@ -98,15 +98,21 @@ a:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,.05), 0 0 1px rgba(0,0,0,.1);
 }
 
+.boom-animation {
+    transition: opacity 2s ease-out 1s, transform 2s ease-out 1s;
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -webkit-transform-origin: center top 0px;
+}
+
 article {
     color: #4a4a4a;
     background: #ffffff;
-    visibility: hidden;
 }
 
 article.show{
-    visibility: visible;
-    animation: bounce .6s;
+/*    visibility: visible;
+    animation: bounce .6s;*/
 }
 
 article .thumbnail {
@@ -188,7 +194,7 @@ article .tags .tag {
 
 
 .main .sidebar {
-    width: 270px;
+    width: 290px;
     min-height: 400px;
 }
 
@@ -227,6 +233,7 @@ article .tags .tag {
 
 .sidebar .sidebar-content {
     padding: 24px 0 0;
+    font-size: 14px;
 }
 
 .sidebar-content input {
@@ -275,3 +282,77 @@ article .tags .tag {
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
+
+
+.sidebar-content .root {
+    line-height: 20px;
+}
+
+.root .sub {
+    margin-left: 10px;
+    border-left: 1px #dbdbdb solid;
+}
+
+.root .sub li {
+    margin-left: -15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.root .sub li:before {
+    content: " ";
+    position: relative;
+    float: left;
+    display: block;
+    width: 15px;
+    height: 1px;
+    top: 15px;
+    margin-right: 2px;
+    border-bottom: 1px #dbdbdb solid;
+}
+li.root-parent, li.sub-parent {
+    position: relative;
+}
+/*
+.root li.root-parent:after {
+    content: "+";
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+.root li.sub-parent:after {
+    content: "+";
+    position: absolute;
+    top: 7px;
+    left: 42px;
+}
+*/
+
+.sub li > ul {
+    margin-left: 25px!important;
+}
+
+.root .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px 5px;
+    color: #4a4a4a;
+}
+.root a:hover {
+    background-color: whitesmoke;
+    color: #363636;
+}
+
+.item .quantity {
+    align-items: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: whitesmoke;
+}
+
+
+
