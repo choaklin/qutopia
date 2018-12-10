@@ -4,6 +4,7 @@ import com.qutopia.blog.entity.ArticleDO;
 import com.qutopia.blog.repository.ArticleRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
 import com.qutopia.blog.service.domain.article.Article;
+import com.qutopia.blog.service.domain.article.ArticleFormAO;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
 import com.qutopia.blog.utils.data.commons.UUIDGenerator;
@@ -36,7 +37,9 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
 
-    public void create() {
+    public void create(ArticleFormAO form) {
+
+
 
     }
 

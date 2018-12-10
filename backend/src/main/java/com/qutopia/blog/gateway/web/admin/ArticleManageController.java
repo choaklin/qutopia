@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("article")
-public class ArticleController {
+@RequestMapping("articleManage")
+public class ArticleManageController {
 
     @Autowired
     private ArticleService articleService;
