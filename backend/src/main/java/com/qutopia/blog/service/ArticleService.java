@@ -1,14 +1,16 @@
 package com.qutopia.blog.service;
 
 import com.qutopia.blog.entity.ArticleDO;
+import com.qutopia.blog.entity.TagDimension;
 import com.qutopia.blog.repository.ArticleRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
 import com.qutopia.blog.service.domain.article.Article;
-import com.qutopia.blog.service.domain.article.ArticleFormAO;
+import com.qutopia.blog.service.domain.article.ArticleCreateAO;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
 import com.qutopia.blog.utils.data.commons.UUIDGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,7 +19,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * 文章的服务
@@ -36,11 +38,38 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private TagService tagService;
 
-    public void create(ArticleFormAO form) {
+    /**
+     * 新增一条文章的记录
+     *
+     * @param create
+     */
+    public void create(ArticleCreateAO create) {
 
+        ArticleDO article = domainMapper.fromCreateAO(create);
+        List<String> tags;
+        HashMap<String, String> tagMap = create.getTagMap();
+        if (tagMap != null) {
+            tags = new ArrayList<>(tagMap.size());
 
+            tagMap.forEach((tagName, tagId) -> {
+                if (StringUtils.isBlank(tagId)) {
+                    tags.add(
+                            tagService.create(TagDimension.TECHNIQUE, tagName)
+                    );
+                } else {
+                    tags.add(tagId);
+                }
+            });
+        } else {
+            tags = Collections.emptyList();
+        }
+        article.setTags(tags);
 
+        article.setCreateTime(LocalDateTime.now());
+        articleRepository.create(article);
     }
 
     public void update() {

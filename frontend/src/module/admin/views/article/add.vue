@@ -98,13 +98,16 @@
 
                 let article = this.article;
                 article.published = published;
+                article.categoryId = '402881ee677f023501677f0235c60000';
+                article.tags = {
+                    'JavaScript回调': '12344',
+                    'Github': ''
+                }
 
-                Vue.axios.get("https://github.com/b3log/solo/blob/b0e1c451d1f1afb2d3444ce4f33b8d4c35fd1f3e/src/main/resources/repository.json")
+                Vue.axios.post('/admin/articleManage', article)
                     .then((response) => {
                         console.log(response)
                     });
-
-                Vue.axios.delete
             }
         }
     }

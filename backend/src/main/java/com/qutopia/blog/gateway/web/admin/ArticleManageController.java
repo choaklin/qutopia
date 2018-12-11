@@ -2,7 +2,7 @@ package com.qutopia.blog.gateway.web.admin;
 
 import com.qutopia.blog.service.ArticleService;
 import com.qutopia.blog.service.domain.article.Article;
-import com.qutopia.blog.service.domain.article.ArticleFormAO;
+import com.qutopia.blog.service.domain.article.ArticleCreateAO;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticleUpdateAO;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 文章的控制器
@@ -37,24 +40,25 @@ public class ArticleManageController {
     }
 
     @PostMapping
-    public void create(@RequestBody ArticleFormAO form) {
+    public void create(@RequestBody @Valid ArticleCreateAO create) {
 
-        log.info(">> increase new article [{}]", form);
+        log.info(">> increase new article [{}]", create);
+        articleService.create(create);
     }
 
-    @PutMapping(value = "/{id}")
-    public void update(@PathVariable String id, @RequestBody ArticleUpdateAO update) {
+    @PutMapping(value = "{id}")
+    public void update(@PathVariable @NotBlank(message = "指定修改的文章ID不能空白") String id, @RequestBody ArticleUpdateAO update) {
 
         log.info(">> update [{}] with [{}]", update);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
 
         log.info(">> delete [{}] article", id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Article show(@PathVariable String id) {
 
         return articleService.show(id);

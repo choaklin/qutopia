@@ -34,6 +34,16 @@ public class TagDO implements Serializable {
     private String name;
 
     /**
+     * 标签的图标地址
+     */
+    private String icon;
+
+    /**
+     * 描述
+     */
+    private String desc;
+
+    /**
      * 关联的文章数
      */
     private int referenceCount;

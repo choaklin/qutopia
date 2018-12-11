@@ -1,6 +1,7 @@
 package com.qutopia.blog.gateway.init;
 
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -13,7 +14,7 @@ import javax.servlet.ServletRegistration;
  * @author choaklin
  * @date 2018.11.11
  */
-// Configuration
+@Configuration
 public class WebAdminDispatcherServlet implements ServletContextInitializer {
 
     @Override
@@ -24,7 +25,7 @@ public class WebAdminDispatcherServlet implements ServletContextInitializer {
         ServletRegistration.Dynamic registration = servletContext.addServlet(
                 "web-admin", new DispatcherServlet(webContext)
         );
-        registration.addMapping("/web/*");
+        registration.addMapping("/web/admin/*");
         registration.setLoadOnStartup(1);
     }
 }
