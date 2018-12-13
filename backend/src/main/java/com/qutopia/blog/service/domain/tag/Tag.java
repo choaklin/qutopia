@@ -1,32 +1,17 @@
-package com.qutopia.blog.entity;
+package com.qutopia.blog.service.domain.tag;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.io.Serializable;
 
 /**
- * 标签的数据对象
- *
- * @author choaklin
- * @version 0.0.1
- * @date 2018/9/1
+ * 标签
  */
 @Data
-@Document(collection = CollectionNames.TAG)
-public class TagDO implements Serializable {
+public class Tag {
 
     /**
      * 标签ID
      */
-    @Id
     private String id;
-
-    /**
-     * 标签的所属维度
-     */
-    private TagDimension dimension;
 
     /**
      * 名字
@@ -58,5 +43,4 @@ public class TagDO implements Serializable {
      * 关联已发布的文章数
      */
     private int publishedCount;
-
 }

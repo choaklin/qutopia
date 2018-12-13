@@ -20,15 +20,29 @@
                         </el-radio-group>
                     </div>
                     <div style="float: left; margin-left: 15px; width: 88%">
-                        <el-input :disabled="article.type==1" placeholder="输入转载的原文链接"></el-input>
+                        <el-input size="small" :disabled="article.type==1" placeholder="输入转载的原文链接"></el-input>
                     </div>
+                </el-form-item>
+
+                <el-form-item required label="分类">
+                    <el-select size="middle">
+
+                    </el-select>
                 </el-form-item>
 
                 <el-form-item label="标签">
                     <el-tag closable :disable-transitions="false" v-for="tag in article.tags" :key="tag" @close="handleClose(tag)">
                         {{tag}}
                     </el-tag>
-                    <el-input v-if="inputVisible" ref="saveTagInput" class="input-new-tag" v-model="inputValue" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm"></el-input>
+                    <el-autocomplete
+                        v-if="inputVisible" ref="saveTagInput" class="input-new-tag"
+                        v-model="inputValue" size="small"
+                        @keyup.enter.native="handleInputConfirm"
+                        :trigger-on-focus="false"
+                        :fetch-suggestions="queryTag"
+                        @blur="handleInputConfirm">
+                    </el-autocomplete>
+
                     <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
                 </el-form-item>
 
@@ -83,6 +97,25 @@
                 this.$nextTick(() => {
                     this.$refs.saveTagInput.focus();
                 });
+            },
+
+            queryTag(name, callback) {
+                Vue.axios.get('/admin/tagManage/list?name=' + name).then((response) => {
+
+                    console.log(response);
+                    if (response.status === 200) {
+
+                        let data = response.data;
+                        if (data.length > 0) {
+
+                            data.forEach(function (p) {
+                                p.value = p.name;
+                            })
+                            console.log(data);
+                            callback(data);
+                        }
+                    }
+                })
             },
 
             handleInputConfirm() {
