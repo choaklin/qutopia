@@ -44,6 +44,7 @@ public class TagService {
 
         Criteria criteria = Criteria.where("internal").is(true);
         if (StringUtils.isNotBlank(name)) {
+            // 以输入开头匹配, 且不在乎大小写
             criteria.and("name").regex("^" + name, "i");
         }
         List<TagDO> sources = tagRepository.list(

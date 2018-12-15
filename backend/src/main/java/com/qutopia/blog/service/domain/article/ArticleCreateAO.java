@@ -1,10 +1,10 @@
 package com.qutopia.blog.service.domain.article;
 
+import com.qutopia.blog.entity.CreateType;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author choaklin
@@ -48,6 +48,16 @@ public class ArticleCreateAO {
      * <p>空字符串的标签要进行新增操作</p>
      */
     private HashMap<String, String> tagMap;
+
+    /**
+     * 创建类型
+     */
+    private CreateType createType;
+
+    /**
+     * 转载的原地址
+     */
+    private String reproduceUrl;
 
     /**
      * 是否允许评论

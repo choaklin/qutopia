@@ -43,6 +43,16 @@ public class ArticleDO {
     private List<String> tags;
 
     /**
+     * 创建类型
+     */
+    private CreateType createType;
+
+    /**
+     * 转载的原地址
+     */
+    private String reproduceUrl;
+
+    /**
      * 永久链接
      */
     private String permalink;
