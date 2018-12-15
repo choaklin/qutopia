@@ -44,7 +44,7 @@ public class TagService {
 
         Criteria criteria = Criteria.where("internal").is(true);
         if (StringUtils.isNotBlank(name)) {
-            criteria.and("name").is(name);
+            criteria.and("name").regex("^" + name, "i");
         }
         List<TagDO> sources = tagRepository.list(
                 Query.query(criteria)
