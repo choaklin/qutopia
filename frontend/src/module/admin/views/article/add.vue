@@ -25,25 +25,30 @@
                 </el-form-item>
 
                 <el-form-item required label="分类">
-                    <el-select size="middle">
-
+                    <el-select size="middle" v-model="article.categoryId">
+                        <el-option v-for="item in categories"
+                                   :key="item.id"
+                                   :label="item.name"
+                                   :value="item.id">
+                        </el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="标签">
-                    <el-tag closable :disable-transitions="false" v-for="tag in article.tags" :key="tag" @close="handleClose(tag)">
-                        {{tag}}
+                    <el-tag closable :disable-transitions="false"
+                            v-for="(value, key) in article.tags" :key="key" @close="removeTag(key)">
+                        {{key}}
                     </el-tag>
                     <el-autocomplete
-                        v-if="inputVisible" ref="saveTagInput" class="input-new-tag"
-                        v-model="inputValue" size="small"
-                        @keyup.enter.native="handleInputConfirm"
+                        v-if="tagInputVisible" ref="tagInput" class="input-new-tag" size="small"
+                        v-model="tagName"
                         :trigger-on-focus="false"
-                        :fetch-suggestions="queryTag"
-                        @blur="handleInputConfirm">
+                        :fetch-suggestions="fetchTags"
+                        @select="confirmTagInput"
+                        @keyup.enter.native="confirmTagInput">
                     </el-autocomplete>
 
-                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                    <el-button v-else class="button-new-tag" @click="showTagQueryInput">+ 新标签</el-button>
                 </el-form-item>
 
                 <el-form-item label="选项">
@@ -70,17 +75,25 @@
         name: "article-increase",
         data: function () {
             return {
-                inputVisible: false,
-                inputValue: '',
+                resource: {
+                    _category_manage: '/admin/categoryManage/',
+                    _tag_manage: '/admin/tagManage/',
+                    _article_manage: '/admin/articleManage/'
+                },
 
-                type: 1,
+                // 分类, 默认是空数组
+                categories: [],
+
+                // 标签
+                tagInputVisible: false,
+                tagName: '',
 
                 article: {
+                    type: 1,    // 技术类
                     title: '',
                     overview: '',
                     content: '',
-                    type: 1,
-                    tags: [],
+                    tags: {},
                     options: [],
                     published: false
                 }
@@ -88,43 +101,53 @@
         },
 
         methods: {
-            handleClose(tag) {
-                this.article.tags.splice(this.article.tags.indexOf(tag), 1);
+            /**
+             * 加载分类的数据
+             */
+            loadCategories: function() {
+                Vue.axios.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
+                    if (response.status === 200) {
+                        this.categories = response.data;
+                    }
+                })
             },
 
-            showInput() {
-                this.inputVisible = true;
+            showTagQueryInput: function() {
+                this.tagInputVisible = true;
                 this.$nextTick(() => {
-                    this.$refs.saveTagInput.focus();
+                    this.$refs.tagInput.focus();
                 });
             },
 
-            queryTag(name, callback) {
-                Vue.axios.get('/admin/tagManage/list?name=' + name).then((response) => {
-
-                    console.log(response);
+            fetchTags: function(name, callback) {
+                Vue.axios.get(this.resource._tag_manage + 'list?name=' + name).then((response) => {
                     if (response.status === 200) {
-
                         let data = response.data;
                         if (data.length > 0) {
-
                             data.forEach(function (p) {
                                 p.value = p.name;
-                            })
-                            console.log(data);
+                            });
                             callback(data);
                         }
                     }
                 })
             },
 
-            handleInputConfirm() {
-                let inputValue = this.inputValue;
-                if (inputValue) {
-                    this.article.tags.push(inputValue);
+            confirmTagInput: function (tag) {
+                if (tag.id) {
+                    this.article.tags[tag.name] = tag.id;
+                } else {
+                    this.article.tags[this.tagName] = '';
                 }
-                this.inputVisible = false;
-                this.inputValue = '';
+                this.tagInputVisible = false;
+                this.tagName = '';
+                console.log(this.article.tags);
+            },
+
+            removeTag(tagName) {
+                if (tagName) {
+                    Vue.delete(this.article.tags, tagName);
+                }
             },
 
             increase: function (published) {
@@ -135,13 +158,19 @@
                 article.tags = {
                     'JavaScript回调': '12344',
                     'Github': ''
-                }
+                };
 
-                Vue.axios.post('/admin/articleManage', article)
+                Vue.axios.post(this.resource._article_manage, article)
                     .then((response) => {
                         console.log(response)
                     });
             }
+        },
+
+        created: function () {
+            console.log(this);
+
+            this.loadCategories();
         }
     }
 </script>
