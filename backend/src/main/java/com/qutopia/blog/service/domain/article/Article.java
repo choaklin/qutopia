@@ -1,5 +1,6 @@
 package com.qutopia.blog.service.domain.article;
 
+import com.qutopia.blog.entity.CreateType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,17 @@ public class Article {
     /**
      * 标签
      */
-    private List<String> tags;
+    private List<ArticleTag> articleTags;
+
+    /**
+     * 创建类型
+     */
+    private CreateType createType;
+
+    /**
+     * 转载的原地址
+     */
+    private String reproduceUrl;
 
     /**
      * 是否发布, 未发布则是草稿状态
@@ -48,11 +59,6 @@ public class Article {
      * 是否允许评论
      */
     private boolean commentable;
-
-    /**
-     * 永久链接
-     */
-    private String permalink;
 
     /**
      * 浏览数
@@ -73,4 +79,5 @@ public class Article {
      * 最后更新时间
      */
     private LocalDateTime lastUpdateTime;
+
 }

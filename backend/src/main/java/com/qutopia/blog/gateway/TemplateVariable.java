@@ -22,4 +22,5 @@ public interface TemplateVariable {
 
     ///////////////////////////////////////// 文章列表页的模板变量 ////////////////////////////////
     String ARTICLES = "articles";
+    String ARTICLE = "article";
 }

@@ -10,22 +10,28 @@
         <div class="container">
             <div class="main">
                 <div class="articles left">
-                    <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
-                        <div class="thumbnail">
-                            <img class="thumbnail" src="../public/images/article/desert.jpg" alt="JavaScript的执行环境和作用域">
-                        </div>
-                        <header class="title">
-                            <h2><a rel="bookmark" href="#">JavaScript的执行环境和作用域</a></h2>
-                        </header>
-                        <section class="overview">
-                            <span>执行环境（execution context）是JavaScript中最为重要的一个概念。</span>
-                        </section>
-                        <footer class="tags">
-                            <a class="tag" href="#">JavaScript的作用域</a>
-                            <a class="tag" href="#">Docker</a>
-                            <a class="tag" href="#">Mac OS X</a>
-                        </footer>
-                    </article>
+                    <#if articles??>
+                        <#list articles as article>
+                            <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
+                                <div class="thumbnail">
+                                    <img class="thumbnail" src="../public/images/article/desert.jpg" alt="${article.title}">
+                                </div>
+                                <header class="title">
+                                    <h2><a rel="bookmark" href="article/${article.id}">${article.title}</a></h2>
+                                </header>
+                                <section class="overview">
+                                    <span>${article.overview!""}</span>
+                                </section>
+                                <footer class="tags">
+                                    <#if article.articleTags??>
+                                        <#list article.articleTags as tag>
+                                            <a class="tag" href="#">${tag.name}</a>
+                                        </#list>
+                                    </#if>
+                                </footer>
+                            </article>
+                        </#list>
+                    </#if>
                 </div>
 
                 <div class="sidebar right">

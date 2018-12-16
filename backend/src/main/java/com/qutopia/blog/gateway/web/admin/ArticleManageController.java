@@ -1,10 +1,7 @@
 package com.qutopia.blog.gateway.web.admin;
 
 import com.qutopia.blog.service.ArticleService;
-import com.qutopia.blog.service.domain.article.Article;
-import com.qutopia.blog.service.domain.article.ArticleCreateAO;
-import com.qutopia.blog.service.domain.article.ArticlePageQuery;
-import com.qutopia.blog.service.domain.article.ArticleUpdateAO;
+import com.qutopia.blog.service.domain.article.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,8 +29,7 @@ public class ArticleManageController {
 
 
     @GetMapping
-    @ResponseBody
-    public Page<Article> index(@PageableDefault(page = 1) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
+    public Page<ArticlePool> index(@PageableDefault(page = 1) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
 
         log.info(">> 进入index方法");
         return articleService.page(page, pageQuery);
@@ -61,7 +57,7 @@ public class ArticleManageController {
     @GetMapping("{id}")
     public Article show(@PathVariable String id) {
 
-        return articleService.show(id);
+        return articleService.get(id);
     }
 
 }

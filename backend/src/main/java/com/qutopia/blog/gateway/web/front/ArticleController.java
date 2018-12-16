@@ -2,6 +2,8 @@ package com.qutopia.blog.gateway.web.front;
 
 import com.qutopia.blog.gateway.TemplateVariable;
 import com.qutopia.blog.service.ArticleService;
+import com.qutopia.blog.service.domain.article.Article;
+import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,9 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 文章相关的处理
@@ -35,26 +34,45 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public String list(@PageableDefault(page = 1, size = 5) Pageable pageable, Model model) {
+    public String list(@PageableDefault(size = 5) Pageable pageable, Model model) {
 
+        Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
 
-        List<ArticlePool> articles = Arrays.asList();
-
-        model.addAttribute(TemplateVariable.ARTICLES, articles);
+        model.addAttribute(TemplateVariable.ARTICLES, articles.getContent());
         model.addAttribute(TemplateVariable.PAGE_NO, pageable.getPageNumber());
         model.addAttribute(TemplateVariable.PAGE_SIZE, pageable.getPageSize());
         return "article-list";
     }
 
+    /**
+     * 下一页
+     *
+     * @param pageable
+     * @param title
+     * @param categoryId
+     * @param tagId
+     * @return
+     */
+    public Page<ArticlePool> next(@PageableDefault Pageable pageable, String title, String categoryId, String tagId) {
 
-    public Page<ArticlePool> next(@PageableDefault Pageable pageable, String title) {
-
-        return articleService.page(pageable, title);
+        return articleService.page(
+                pageable,
+                ArticlePageQuery.builder()
+                        .published(true)
+                        .title(title)
+                        .categoryId(categoryId)
+                        .tagId(tagId)
+                        .build()
+        );
     }
 
 
-    @GetMapping("/{id}")
-    public String detail(@PathVariable String id) {
+    @GetMapping("{id}")
+    public String detail(@PathVariable String id, Model model) {
+
+
+        Article article = articleService.get(id);
+        model.addAttribute(TemplateVariable.ARTICLE, article);
 
         return "article-detail";
     }

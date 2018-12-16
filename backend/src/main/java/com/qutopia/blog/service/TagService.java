@@ -58,4 +58,12 @@ public class TagService {
         }
         return Collections.EMPTY_LIST;
     }
+
+    public Tag get(String id) {
+
+        return domainMapper.toTag(
+                tagRepository.findById(id)
+        );
+    }
+
 }

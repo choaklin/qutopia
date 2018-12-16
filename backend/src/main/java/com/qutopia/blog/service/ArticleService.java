@@ -4,17 +4,15 @@ import com.qutopia.blog.entity.ArticleDO;
 import com.qutopia.blog.entity.TagDimension;
 import com.qutopia.blog.repository.ArticleRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
-import com.qutopia.blog.service.domain.article.Article;
-import com.qutopia.blog.service.domain.article.ArticleCreateAO;
-import com.qutopia.blog.service.domain.article.ArticlePageQuery;
-import com.qutopia.blog.service.domain.article.ArticlePool;
-import com.qutopia.blog.utils.data.commons.UUIDGenerator;
+import com.qutopia.blog.service.domain.article.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -77,40 +75,63 @@ public class ArticleService {
     }
 
 
-    public Page<Article> page(Pageable pageable, ArticlePageQuery pageQuery) {
+    /**
+     * 分页获取文章的“廋”对象
+     *
+     * @param pageable
+     * @param pageQuery
+     * @return
+     */
+    public Page<ArticlePool> page(Pageable pageable, ArticlePageQuery pageQuery) {
 
-        Page result = articleRepository.page(pageable, new Query());
-        if (result.getTotalElements() < 1) {
-            // ArticleDO temp = articleRepository.findById("1111");
+        Page<ArticlePool> resultPage;
 
-            ArticleDO article = new ArticleDO();
-            article.setId(UUIDGenerator.generate());
-            article.setTitle("世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！");
-            article.setTags(Arrays.asList(
-                    "Spring高级特性",
-                    "Spring事务传播机制")
-            );
-            article.setCreateTime(LocalDateTime.now());
+        Criteria criteria = Criteria.where("published").is(pageQuery.isPublished());
+        Page<ArticleDO> sourcePage = articleRepository.page(pageable, Query.query(criteria));
+        if (sourcePage.getNumberOfElements() > 0) {
 
-            result = new PageImpl(Arrays.asList(domainMapper.toArticle(article)), pageable, 1);
+            List<ArticleDO> sources = sourcePage.getContent();
+            List<String> tagIds;
+            Map<String, ArticleTag> tagCache = new HashMap<>();
+
+            List<ArticlePool> dests = new ArrayList<>(sources.size());
+            for (ArticleDO source : sources) {
+
+                ArticlePool dest = domainMapper.toPoolArticle(source);
+                tagIds = source.getTags();
+                if (CollectionUtils.isNotEmpty(tagIds)) {
+                    List<ArticleTag> tags = new ArrayList<>(tagIds.size());
+
+                    for (String tagId: tagIds) {
+                        ArticleTag tag = tagCache.get(tagId);
+                        if (tag == null) {
+
+                            tag = ArticleTag.buildFriendly(
+                                    tagService.get(tagId)
+                            );
+                            tagCache.put(tagId, tag);
+                        }
+                        tags.add(tag);
+                    }
+                    dest.setArticleTags(tags);
+                }
+                dests.add(dest);
+            }
+            resultPage = new PageImpl(dests, pageable, sourcePage.getTotalElements());
+        } else {
+            resultPage = new PageImpl<>(Collections.EMPTY_LIST, pageable, 0);
         }
-        return result;
+        return resultPage;
     }
 
 
     /**
+     * 获取文章的详情
      *
-     * @param title
+     * @param id
      * @return
      */
-    public Page<ArticlePool> page(Pageable pageable, String title) {
-
-        Page result = articleRepository.page(pageable, new Query());
-        return result;
-    }
-
-
-    public Article show(String id) {
+    public Article get(String id) {
         Article dest = null;
 
         ArticleDO source = articleRepository.findById(id);

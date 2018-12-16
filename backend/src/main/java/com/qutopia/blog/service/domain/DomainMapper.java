@@ -5,6 +5,7 @@ import com.qutopia.blog.entity.CategoryDO;
 import com.qutopia.blog.entity.TagDO;
 import com.qutopia.blog.service.domain.article.Article;
 import com.qutopia.blog.service.domain.article.ArticleCreateAO;
+import com.qutopia.blog.service.domain.article.ArticlePool;
 import com.qutopia.blog.service.domain.article.ArticleUpdateAO;
 import com.qutopia.blog.service.domain.category.Category;
 import com.qutopia.blog.service.domain.tag.Tag;
@@ -28,6 +29,8 @@ public interface DomainMapper {
     ArticleDO fromCreateAO(ArticleCreateAO create);
 
     ArticleDO fromUpdateAO(ArticleUpdateAO update);
+
+    ArticlePool toPoolArticle(ArticleDO source);
 
     Article toArticle(ArticleDO source);
 
