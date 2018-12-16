@@ -14,13 +14,13 @@
 
                 <el-form-item required label="类型">
                     <div style="float: left;">
-                        <el-radio-group v-model="article.type">
-                            <el-radio :label="1">原创</el-radio>
-                            <el-radio :label="2">转载</el-radio>
+                        <el-radio-group v-model="article.createType" @change="handleCreateTypeChange">
+                            <el-radio :label="'original'">原创</el-radio>
+                            <el-radio :label="'reproduce'">转载</el-radio>
                         </el-radio-group>
                     </div>
                     <div style="float: left; margin-left: 15px; width: 88%">
-                        <el-input size="small" :disabled="article.type==1" placeholder="输入转载的原文链接"></el-input>
+                        <el-input size="small" v-model="article.reproduceUrl" :disabled="article.createType==='original'" placeholder="输入转载的原文链接"></el-input>
                     </div>
                 </el-form-item>
 
@@ -36,7 +36,7 @@
 
                 <el-form-item label="标签">
                     <el-tag closable :disable-transitions="false"
-                            v-for="(value, key) in article.tags" :key="key" @close="removeTag(key)">
+                            v-for="(value, key) in article.tagMap" :key="key" @close="removeTag(key)">
                         {{key}}
                     </el-tag>
                     <el-autocomplete
@@ -51,16 +51,16 @@
                     <el-button v-else class="button-new-tag" @click="showTagQueryInput">+ 新标签</el-button>
                 </el-form-item>
 
-                <el-form-item label="选项">
-                    <el-checkbox-group v-model="article.options">
-                        <el-checkbox label="置顶" name="putPop"></el-checkbox>
-                        <el-checkbox label="禁止评论" name="commentable"></el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
+                <!--<el-form-item label="选项">-->
+                    <!--<el-checkbox-group v-model="article.options">-->
+                        <!--<el-checkbox label="置顶" name="putPop">置顶</el-checkbox>-->
+                        <!--<el-checkbox v-model="article.commentable" label="true" name="commentable">禁止评论</el-checkbox>-->
+                    <!--</el-checkbox-group>-->
+                <!--</el-form-item>-->
 
                 <el-form-item style="text-align: center">
-                    <el-button type="primary" @click="increase(true)">发表文章</el-button>
-                    <el-button @click="increase(false)">保存草稿</el-button>
+                    <el-button type="primary" @click="submit(true)">发表文章</el-button>
+                    <el-button @click="submit(false)">保存草稿</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -93,14 +93,29 @@
                     title: '',
                     overview: '',
                     content: '',
-                    tags: {},
-                    options: [],
+                    createType: 'original',
+                    reproduceUrl: '',
+                    categoryId: '',
+                    // key是标签名称， value是标签ID
+                    // 非系统存在的标签value是空字符串
+                    tagMap: {},
+                    // options: [],
+                    commentable: true,
                     published: false
                 }
             }
         },
 
         methods: {
+            handleCreateTypeChange: function(createType) {
+                if (createType) {
+                    // 原创，则转载地址置空
+                    if (createType === 'original') {
+                        this.article.reproduceUrl = '';
+                    }
+                }
+            },
+
             /**
              * 加载分类的数据
              */
@@ -125,6 +140,7 @@
                         let data = response.data;
                         if (data.length > 0) {
                             data.forEach(function (p) {
+                                // 扩展value属性， el-autocomplete规范
                                 p.value = p.name;
                             });
                             callback(data);
@@ -135,34 +151,29 @@
 
             confirmTagInput: function (tag) {
                 if (tag.id) {
-                    this.article.tags[tag.name] = tag.id;
+                    this.article.tagMap[tag.name] = tag.id;
                 } else {
-                    this.article.tags[this.tagName] = '';
+                    this.article.tagMap[this.tagName] = '';
                 }
                 this.tagInputVisible = false;
                 this.tagName = '';
-                console.log(this.article.tags);
+                console.log(this.article.tagMap);
             },
 
             removeTag(tagName) {
                 if (tagName) {
-                    Vue.delete(this.article.tags, tagName);
+                    Vue.delete(this.article.tagMap, tagName);
                 }
             },
 
-            increase: function (published) {
-
+            submit: function (published) {
                 let article = this.article;
                 article.published = published;
-                article.categoryId = '402881ee677f023501677f0235c60000';
-                article.tags = {
-                    'JavaScript回调': '12344',
-                    'Github': ''
-                };
-
                 Vue.axios.post(this.resource._article_manage, article)
                     .then((response) => {
-                        console.log(response)
+                        if (response.status === 200) {
+                            alert("添加文章成功")
+                        }
                     });
             }
         },
