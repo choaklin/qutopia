@@ -23,7 +23,9 @@
 				</div>
 
 				<!-- post content-->
-				<div class="content">${article.content}</div>
+				<div class="content">
+					${article.content}
+				</div>
 			</article>
 
 
@@ -39,120 +41,13 @@
 					</button>
 				</a>
 			</nav>
-
-
-			<div class="post-comment">
-
-				<div class="comment-wrap">
-					<header>
-						<span class="comment-count">14 条评论</span>
-					</header>
-					<section>
-						<div class="comment-list">
-							<ul>
-								<li>
-									<div class="comment-item">
-										<div class="single-reply">
-											<div class="avatar">
-												<a href="#"><img width="40" height="40" src="../public/images/comment/50.png"></a>
-											</div>
-
-											<div class="comment-content">
-												<header class="content-header">
-												<span class="byline">
-													<span class="commenter publisher">日光微澜*ق</span>
-												</span>
-													<span class="meta">
-													<span class="bullet">•</span>
-													<span class="device">Chrome</span>
-												</span>
-												</header>
-												<div class="content-body">
-													哪里啊使用 npm run install 安装依赖，然后run build 可以生成编译文件使用 npm run install 安装依赖，然后run build 可以生成编译文件使用 npm run install 安装依赖，然后run build 可以生成编译文件
-												</div>
-												<footer class="comment-footer">
-													<span class="time">2016年6月23日</span>
-													<a href="javascript:void(0)"><i></i>(976)</a>
-													<span class="sep">|</span>
-													<a href="javascript:void(0)" class="s-fc3" data-id="53421839" data-type="reply">回复</a>
-												</footer>
-											</div>
-										</div>
-
-										<div class="comment-list comment-sub">
-											<ul>
-												<li>
-													<div class="single-reply">
-														<div class="avatar">
-															<a href="#"><img width="40" height="40" src="../public/images/comment/choaklin.png"></a>
-														</div>
-
-														<div class="comment-content">
-															<header class="content-header">
-															<span class="byline">
-																<span class="commenter publisher">茶马古道</span>回复<span class="commenter respondent">日光微澜*ق</span>
-															</span>
-																<span class="meta">
-																<span class="bullet">•</span>
-																<span class="device">a mouth ago</span>
-															</span>
-															</header>
-															<div class="content-body">你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊你猜啊</div>
-															<footer class="comment-footer">
-															</footer>
-														</div>
-													</div>
-												</li>
-
-												<li>
-													<div class="single-reply">
-														<div class="avatar">
-															<a href="#"><img width="40" height="40" src="../public/images/comment/50.png"></a>
-														</div>
-														<div class="comment-content">
-															<header class="content-header">
-															<span class="byline">
-																<span class="commenter publisher">日光微澜*ق</span>回复<span class="commenter respondent">茶马古道</span>
-															</span>
-																<span class="meta">
-																<span class="bullet">•</span>
-																<span class="device">a mouth ago</span>
-															</span>
-															</header>
-															<div class="content-body">不知道</div>
-															<footer class="comment-footer">
-															</footer>
-														</div>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-
-									<div>
-										<div>
-											<textarea style="width: 100%; resize: none; height: 60px; line-height: 20px; padding: 3px 8px 5px;border-radius: 2px; border-color: #e7e7e7;"></textarea>
-										</div>
-										<div class="btns f-cb f-pr auto-1497273941609-parent">
-											<i class="icn u-icn u-icn-36 j-flag"></i>
-											<i class="icn u-icn u-icn-41 j-flag"></i>
-											<a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-d2rJ6wvXh6R5DAvW">回复</a>
-											<span class="zs s-fc4 j-flag">134</span>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</section>
-				</div>
-			</div>
 		</div>
 	</body>
 
+	<script src="../public/lib/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
 	<script src="../public/lib/prism/clipboard.min.js" type="text/javascript"></script>
 	<script src="../public/lib/prism/prism.js" type="text/javascript"></script>
 	<script src="../public/lib/tocbot/tocbot.min.js" type="text/javascript"></script>
-	<script src="../public/lib/smooth-scroll/smooth-scroll.js" type="text/javascript"></script>
 	<script>
         // initial post table of content
 		tocbot.init({
@@ -163,5 +58,6 @@
 			headingsOffset: 10,
 			collapseDepth: 3
 		});
+
 	</script>
 </html>

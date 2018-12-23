@@ -33,6 +33,16 @@ public class ArticleDO {
     private String overview;
 
     /**
+     * 编辑器类型
+     */
+    private Editor editor;
+
+    /**
+     * 分类ID
+     */
+    private String categoryId;
+
+    /**
      * 正文
      */
     private String content;

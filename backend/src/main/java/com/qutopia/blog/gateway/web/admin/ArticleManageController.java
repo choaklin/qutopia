@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,10 @@ public class ArticleManageController {
 
 
     @GetMapping
-    public Page<ArticlePool> index(@PageableDefault(page = 1) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
+    public Page<ArticlePool> index(@PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
 
         log.info(">> 进入index方法");
+        pageQuery.setPublished(true);
         return articleService.page(page, pageQuery);
     }
 
@@ -55,7 +57,7 @@ public class ArticleManageController {
     }
 
     @GetMapping("{id}")
-    public Article show(@PathVariable String id) {
+    public Article get(@PathVariable String id) {
 
         return articleService.get(id);
     }

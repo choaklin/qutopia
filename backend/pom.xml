@@ -23,8 +23,10 @@
         <lombok.version>1.16.22</lombok.version>
         <apache.commons.lang3.version>3.5</apache.commons.lang3.version>
         <apache.commons.collections4.version>4.1</apache.commons.collections4.version>
+        <apache.file.upload>1.3.3</apache.file.upload>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <qiniu.sdk.version>7.2.6</qiniu.sdk.version>
+        <commonmark>0.12.1</commonmark>
     </properties>
 
     <dependencyManagement>
@@ -55,6 +57,11 @@
                 <version>${apache.commons.collections4.version}</version>
             </dependency>
             <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.3.3</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-jdk8</artifactId>
                 <version>${mapstruct.version}</version>
@@ -64,6 +71,11 @@
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.commonmark</groupId>
+                <artifactId>commonmark</artifactId>
+                <version>${commonmark}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -85,6 +97,10 @@
             <artifactId>commons-collections4</artifactId>
         </dependency>
         <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
         </dependency>
@@ -92,6 +108,10 @@
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
         </dependency>
 
 

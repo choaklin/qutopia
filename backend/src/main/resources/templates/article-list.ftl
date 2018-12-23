@@ -52,70 +52,18 @@
                         </div>
                         <div class="sidebar-content">
                             <ul class="root">
-                                <li class="root-parent">
-                                    <a href="#" class="item">
-                                        <span class="title">JavaSE</span>
-                                        <span class="quantity">16</span>
-                                    </a>
-                                    <ul class="sub">
-                                        <li>
+                                <#if categories??>
+                                    <#list categories as category>
+                                        <li class="root-parent">
                                             <a href="#" class="item">
-                                                <span class="title">泛型</span>
-                                                <span class="quantity">7</span>
+                                                <span class="title">${category.name}</span>
+                                                <span class="quantity">16</span>
                                             </a>
                                         </li>
-                                        <li class="sub-parent">
-                                            <a href="#" class="item">
-                                                <span class="title">IO</span>
-                                                <span class="quantity">9</span>
-                                            </a>
-                                            <ul class="sub">
-                                                <li>
-                                                    <a href="#" class="item">
-                                                        <span class="title">输入</span>
-                                                        <span class="quantity">6</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="item">
-                                                        <span class="title">输出</span>
-                                                        <span class="quantity">3</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="item">
-                                        <span class="title">JavaEE</span>
-                                        <span class="quantity">16</span>
-                                    </a>
-                                    <ul class="sub">
-                                        <li>
-                                            <a href="#" class="item">
-                                                <span class="title">Servlet</span>
-                                                <span class="quantity">6</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="item">
-                                                <span class="title">JSP</span>
-                                                <span class="quantity">3</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li></li>
+                                    </#list>
+                                </#if>
                             </ul>
                         </div>
-                    </div>
-
-                    <div class="card sidebar-item archive">
-                        <div class="sidebar-header">
-                            <span class="sidebar-header-title">归档</span>
-                        </div>
-                        <div class="sidebar-content"></div>
                     </div>
 
                     <div class="card sidebar-item tags">

@@ -2,18 +2,23 @@ package com.qutopia.blog.gateway.web.front;
 
 import com.qutopia.blog.gateway.TemplateVariable;
 import com.qutopia.blog.service.ArticleService;
+import com.qutopia.blog.service.CategoryService;
 import com.qutopia.blog.service.domain.article.Article;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
+import com.qutopia.blog.service.domain.category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 文章相关的处理
@@ -27,6 +32,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private CategoryService categoryService;
 
 
     /**
@@ -34,11 +41,15 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public String list(@PageableDefault(size = 5) Pageable pageable, Model model) {
+    public String list(@PageableDefault(size = 5, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
+        //== 文章列表、文章分类
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
+        List<Category> categories = categoryService.listByParentId("0");
 
         model.addAttribute(TemplateVariable.ARTICLES, articles.getContent());
+        model.addAttribute(TemplateVariable.CATEGORIES, categories);
+
         model.addAttribute(TemplateVariable.PAGE_NO, pageable.getPageNumber());
         model.addAttribute(TemplateVariable.PAGE_SIZE, pageable.getPageSize());
         return "article-list";
@@ -70,8 +81,7 @@ public class ArticleController {
     @GetMapping("{id}")
     public String detail(@PathVariable String id, Model model) {
 
-
-        Article article = articleService.get(id);
+        Article article = articleService.show(id);
         model.addAttribute(TemplateVariable.ARTICLE, article);
 
         return "article-detail";

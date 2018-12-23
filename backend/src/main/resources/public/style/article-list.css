@@ -98,6 +98,10 @@ a:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,.05), 0 0 1px rgba(0,0,0,.1);
 }
 
+.card+.card {
+    margin-top: 25px;
+}
+
 .boom-animation {
     transition: opacity 2s ease-out 1s, transform 2s ease-out 1s;
     opacity: 1;

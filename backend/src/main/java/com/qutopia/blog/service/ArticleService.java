@@ -8,6 +8,9 @@ import com.qutopia.blog.service.domain.article.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,14 +33,17 @@ import java.util.*;
 @Service
 public class ArticleService {
 
+    private final Parser parser = Parser.builder().build();
+    private final HtmlRenderer renderer = HtmlRenderer.builder().build();
+
     @Autowired
     private DomainMapper domainMapper;
-
     @Autowired
     private ArticleRepository articleRepository;
-
     @Autowired
     private TagService tagService;
+
+
 
     /**
      * 新增一条文章的记录
@@ -137,6 +143,28 @@ public class ArticleService {
         ArticleDO source = articleRepository.findById(id);
         if (source != null) {
             dest = domainMapper.toArticle(source);
+        }
+        return dest;
+    }
+
+
+    /**
+     * 展示指定ID的文章
+     *
+     * @return
+     */
+    public Article show(String id) {
+        Article dest = null;
+
+        ArticleDO source = articleRepository.findById(id);
+        if (source != null) {
+            dest = domainMapper.toArticle(source);
+
+            // 解析markdown
+            if (StringUtils.isNotBlank(dest.getContent())) {
+                Node node = parser.parse(dest.getContent());
+                dest.setContent(renderer.render(node));
+            }
         }
         return dest;
     }
