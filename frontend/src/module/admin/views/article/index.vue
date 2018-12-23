@@ -17,20 +17,20 @@
 
         <div style="margin-top: 30px">
             <el-table :data="pagination.content" border style="width: 100%" :height="487">
-                <el-table-column prop="title" label="标题" width="350" showOverflowTooltip></el-table-column>
-                <el-table-column prop="province" label="分类" width="140" align="center"></el-table-column>
+                <el-table-column prop="title" label="标题" width="260" showOverflowTooltip></el-table-column>
+                <el-table-column prop="province" label="分类" width="100" align="center"></el-table-column>
                 <el-table-column prop="tags" label="标签">
                     <template slot-scope="scope">
-                        <el-tag v-for="tag in scope.row.tags" :key="tag">{{tag}}</el-tag>
+                        <el-tag size="small" v-for="tag in scope.row.articleTags" :key="tag.id">{{tag.name}}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="viewCount" label="浏览数" width="70" align="center"></el-table-column>
                 <el-table-column prop="commentCount" label="评论数" width="70" align="center"></el-table-column>
                 <el-table-column prop="createTime" label="发表时间" width="160" align="center"></el-table-column>
-                <el-table-column label="操作" width="200" align="center">
+                <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="handleClick(scope.row)">预览</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
+                        <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
                         <el-button type="text" size="small">删除</el-button>
                         <el-button type="text" size="small">评论管理</el-button>
                     </template>
@@ -62,6 +62,11 @@
 
         data: function () {
             return {
+
+                resource: {
+                    _article_manage: '/admin/articleManage/'
+                },
+
                 formInline: {
                     user: "",
                     region: ""
@@ -82,7 +87,7 @@
             },
 
             loadTableData: function () {
-                vm.axios.get('/web/article').then((response) => {
+                vm.axios.get(this.resource._article_manage).then((response) => {
 
                     if (response.status === 200) {
                         let responseData = response.data;
@@ -93,6 +98,10 @@
                         this.pagination.totalElements = responseData.totalElements;
                     }
                 });
+            },
+
+            edit: function (item) {
+                console.log(item);
             }
         }
     }
@@ -105,6 +114,9 @@
         }
     }
 
+    .el-tag {
+        font-size: 10px;
+    }
     .el-table td, .el-table th {
         padding: 6px 0;
     }

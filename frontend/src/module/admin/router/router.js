@@ -31,6 +31,11 @@ export default new VueRouter({
                     component: () => import ('../views/article/index')
                 },
                 {
+                    path: 'article/edit/:id',
+                    name: "文章编辑",
+                    component: () => import ('../views/article/edit')
+                },
+                {
                     path: 'article/draft',
                     name: "草稿箱",
                     component: () => import ('../views/article/draft')

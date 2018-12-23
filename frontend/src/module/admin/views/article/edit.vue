@@ -9,7 +9,7 @@
                     <el-input type="textarea" v-model="article.overview" placeholder="无摘要不精彩" :autosize="{minRows:3, maxRows:4}"></el-input>
                 </el-form-item>
                 <el-form-item required label="内容">
-                    <mavon-editor ref="md" v-model="article.content" :toolbars="editorToolbar" codeStyle="dracula" @imgAdd="uploadImage"/>
+                    <mavon-editor v-model="article.content" :toolbars="editorToolbar" codeStyle="dracula"/>
                 </el-form-item>
 
                 <el-form-item required label="类型">
@@ -78,8 +78,7 @@
                 resource: {
                     _category_manage: '/admin/categoryManage/',
                     _tag_manage: '/admin/tagManage/',
-                    _article_manage: '/admin/articleManage/',
-                    _file_manage: '/admin/resource/',
+                    _article_manage: '/admin/articleManage/'
                 },
 
                 editorToolbar: {
@@ -136,23 +135,9 @@
         },
 
         methods: {
-            // 绑定@imgAdd event
-            uploadImage: function(position, $file) {
-                // 第一步.将图片上传到服务器.
-                let formdata = new FormData();
-                formdata.append('file', $file);
-                Vue.axios({
-                    url: this.resource._file_manage + 'upload',
-                    headers: {'Content-Type': 'multipart/form-data' },
-                    method: 'post',
-                    data: formdata
-                }).then((response) => {
-                    // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-                    // $vm.$img2Url 详情见本页末尾
-                    if (response.status === 200) {
-                        this.$refs.md.$img2Url(position, response.data);
-                    }
-                })
+            htmlCode: function(status, value) {
+                console.log(status);
+                console.log(value);
             },
 
             handleCreateTypeChange: function(createType) {
@@ -227,6 +212,8 @@
         },
 
         created: function () {
+            console.log(this);
+
             this.loadCategories();
         }
     }
