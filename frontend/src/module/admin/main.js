@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './store'
 import router from './router/router';
 import 'vue-animate';
 import App from './App';
@@ -27,6 +28,7 @@ import "./assets/style/theme/gradual.less";
 
 new Vue({
     el: '#admin_root',
+    store: store,
     router: router,
     render: h => h(App)
 })

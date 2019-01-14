@@ -17,6 +17,14 @@ module.exports = {
                     // [/web]被重写替换为[/]
                     '^/admin/': '/web/admin/'
                 }
+            },
+            '/common': {
+                target: 'http://localhost:5000',  // 目标接口域名
+                changeOrigin: true,  // 是否跨域,
+                pathRewrite: {
+                    // [/web]被重写替换为[/]
+                    '^/common/': '/'
+                }
             }
         },
 
