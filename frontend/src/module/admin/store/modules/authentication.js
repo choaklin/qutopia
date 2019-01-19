@@ -63,9 +63,9 @@ const user = {
     actions: {
         // 用户名登录
         doLogin({commit}, userInfo) {
-            const username = userInfo.username.trim()
+            const loginInput = userInfo.loginInput.trim()
             return new Promise((resolve, reject) => {
-                loginByUsername(username, userInfo.password).then(token => {
+                loginByUsername(loginInput, userInfo.password).then(token => {
                     commit('SET_TOKEN', token)
                     _methods.setToken(token);
 
@@ -128,7 +128,7 @@ const user = {
          *  @param commit
          *  @param state
          */
-        logOut({commit, state}) {
+        doLogOut({commit, state}) {
             return new Promise((resolve, reject) => {
                 logout(state.token).then(() => {
                     commit('SET_TOKEN', '')

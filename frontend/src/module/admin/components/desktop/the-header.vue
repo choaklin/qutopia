@@ -25,7 +25,7 @@
             </el-tooltip>
 
             <!-- 设置项下拉菜单 -->
-            <el-dropdown>
+            <el-dropdown @command="handleDropdownCommand">
                 <span class="el-dropdown-link">
                     <span class="username">管理员</span>
                     <i class="el-icon-arrow-down el-icon--right"></i>
@@ -35,7 +35,7 @@
                         <i class="el-icon-qutopia-info-circle"></i>
                         <router-link to="/info/index">个人信息</router-link>
                     </el-dropdown-item>
-                    <el-dropdown-item>
+                    <el-dropdown-item command="logout">
                         <i class="el-icon-qutopia-logout"></i>
                         <span>退出系统</span>
                     </el-dropdown-item>
@@ -70,6 +70,23 @@
             open: function () {
                 this.box = true;
             },
+
+            handleDropdownCommand: function(command) {
+
+                let token = this.$store.state.authentication.token;
+                console.debug(token)
+
+                switch (command) {
+                    case 'logout': {
+                        this.$store.dispatch('doLogOut').then(() => {
+                            this.$router.push({ path: '/login' })
+                        }).catch(() => {
+                            alert('用户注销失败')
+                        });
+                    }
+                    break;
+                }
+            }
         },
 
         watch: {
@@ -80,6 +97,7 @@
             }
         }
 	}
+
 </script>
 
 <style lang="less" scoped>

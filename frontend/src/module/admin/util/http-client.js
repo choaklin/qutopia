@@ -15,10 +15,10 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
     config => {
         // Do something before request is sent
-        let token = store;
-        if (store.getters.token) {
+        let token = store.state.authentication.token;
+        if (token) {
             // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-            config.headers['X-Token'] = '';
+            config.headers['token'] = token;
         }
         return config
     },

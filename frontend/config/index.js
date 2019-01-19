@@ -18,12 +18,12 @@ module.exports = {
                     '^/admin/': '/web/admin/'
                 }
             },
-            '/common': {
+            '/portal': {
                 target: 'http://localhost:5000',  // 目标接口域名
                 changeOrigin: true,  // 是否跨域,
                 pathRewrite: {
                     // [/web]被重写替换为[/]
-                    '^/common/': '/'
+                    '^/portal/': '/'
                 }
             }
         },

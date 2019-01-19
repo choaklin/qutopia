@@ -87,11 +87,9 @@ const router = new VueRouter({
     }
 })
 
-// 定义未登陆状态下的白名单
-const whiteList = ['login'];
+// 定义白名单: 未登陆状态下允许访问页面的
+const whiteList = ['/login'];
 router.beforeEach((to, from, next) => {
-    console.log(to);
-
     // start progress bar
     nprogress.start()
     let target = to.path;
@@ -109,9 +107,11 @@ router.beforeEach((to, from, next) => {
     } else {
         // 否则全部重定向到登录页
         console.warn('no token')
-        if (whiteList.indexOf(target) !== '-1') {
+        if (whiteList.indexOf(target) !== -1) {
+            console.info('>> goto while list page', target);
             next();
         } else {
+            console.info('>> forward login page')
             next('/login?redirect=' + target)
             nprogress.done();
         }

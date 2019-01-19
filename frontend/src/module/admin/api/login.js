@@ -1,8 +1,8 @@
 import httpClient from '../util/http-client'
 
-export function loginByUsername(username, password) {
+export function loginByUsername(loginInput, password) {
     const data = {
-        username,
+        loginInput,
         password
     };
     return httpClient({
@@ -15,8 +15,9 @@ export function loginByUsername(username, password) {
 
 export function logout() {
     return httpClient({
-        url: '/front/logout',
-        method: 'post'
+        baseURL: process.env.COMMON_REQUEST_BASE_URL,
+        url: '/login/logout',
+        method: 'get'
     })
 }
 
