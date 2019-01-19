@@ -12,7 +12,7 @@
                     <!-- 账号登陆 -->
                     <div id="MobileBox" class="item-box">
                         <div class="input-group user-name"> <span class="input-group-addon"><i class="icon-user"></i></span>
-                            <input v-model="loginForm.username" type="text" name="username" class="form-control" placeholder="用户名/手机号">
+                            <input v-model="loginForm.loginInput" type="text" name="loginInput" class="form-control" placeholder="用户名/手机号">
                         </div>
                         <div class="input-group password"> <span class="input-group-addon"><i class="icon-lock"></i></span>
                             <input v-model="loginForm.password" type="password" name="password" class="form-control" placeholder="密码">
@@ -36,7 +36,7 @@
             return {
                 redirectUrl: undefined,
                 loginForm: {
-                    username: null,
+                    loginInput: null,
                     password: null
                 }
             }
