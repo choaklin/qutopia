@@ -4,6 +4,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.qutopia.blog.utils.data.mongo.mapping.LogicalRemoveField;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -96,6 +97,9 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
 
     public void create(Collection<T> t) {
 
+        if (CollectionUtils.isEmpty(t)) {
+            return;
+        }
         mongoOperations.insert(t, entityClass);
     }
 

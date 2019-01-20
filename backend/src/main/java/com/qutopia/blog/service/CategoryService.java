@@ -35,6 +35,16 @@ public class CategoryService {
                 Query.query(Criteria.where("parentId").is(parentId))
         );
 
-        return domainMapper.toCategoryList(sources);
+        List<Category> result = domainMapper.toCategoryList(sources);
+        result.forEach(category -> {
+
+            List<CategoryDO> children = categoryRepository.list(Query.query(
+                    // 二级分类搜索有文章的
+                    Criteria.where("parentId").is(category.getId())
+                            // .and("articleCount").gt(0)
+            ));
+            category.setChildren(domainMapper.toCategoryList(children));
+        });
+        return result;
     }
 }

@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>文章列表 - 浮闲阁</title>
         <link href="../public/style/article-list.css" rel="stylesheet" type="text/css"/>
+        <link href="../public/font/iconfont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="container">
@@ -56,9 +57,24 @@
                                     <#list categories as category>
                                         <li class="root-parent">
                                             <a href="#" class="item">
-                                                <span class="title">${category.name}</span>
-                                                <span class="quantity">16</span>
+                                                <span class="title">
+                                                    <i class="iconfont icon-${category.icon!''}"></i>
+                                                    ${category.name}
+                                                </span>
+                                                <span class="quantity">${category.articleCount}</span>
                                             </a>
+                                            <#if category.children??>
+                                                <ul class="sub" style="display: ${(category_index==0)?string('block', 'none')}">
+                                                <#list category.children as children>
+                                                    <li>
+                                                        <a href="#" class="item">
+                                                            <span class="title">${children.name}</span>
+                                                            <span class="quantity">${children.articleCount}</span>
+                                                        </a>
+                                                    </li>
+                                                </#list>
+                                                </ul>
+                                            </#if>
                                         </li>
                                     </#list>
                                 </#if>
@@ -79,8 +95,9 @@
 
         <script type="text/javascript" src="../public/lib/jquery/jquery-1.10.2.min.js"></script>
         <script>
-            $(document).ready(function () {
-                // $(".card").addClass("boom-animation");
+            $('a.item').on('click', function (e) {
+                e.preventDefault();
+                $(e.delegateTarget).siblings('ul').slideToggle();
             })
         </script>
     </body>

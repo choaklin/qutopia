@@ -29,4 +29,19 @@ public class CategoryDO implements Serializable {
      * 名称
      */
     private String name;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 文章数量
+     */
+    private int articleCount;
+
+    /**
+     * 排序序号
+     */
+    private int sortNo;
 }

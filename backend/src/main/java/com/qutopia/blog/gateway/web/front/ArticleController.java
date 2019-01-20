@@ -45,7 +45,7 @@ public class ArticleController {
 
         //== 文章列表、文章分类
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
-        List<Category> categories = categoryService.listByParentId("0");
+        List<Category> categories = categoryService.listByParentId(CategoryService.ROOT_NODE);
 
         model.addAttribute(TemplateVariable.ARTICLES, articles.getContent());
         model.addAttribute(TemplateVariable.CATEGORIES, categories);

@@ -126,6 +126,10 @@
         <script type="text/javascript" src="../public/lib/jquery/jquery-1.10.2.min.js"></script>
         <script>
             $(document).ready(function () {
+                $('a.item').on('click', function (e) {
+                    e.preventDefault();
+                    $(e.delegateTarget).siblings('ul').slideToggle();
+                })
                 // $(".card").addClass("boom-animation");
             })
         </script>

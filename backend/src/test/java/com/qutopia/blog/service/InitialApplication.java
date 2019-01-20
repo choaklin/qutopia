@@ -12,11 +12,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 负责初始化数据的单元测试
@@ -24,8 +24,8 @@ import java.util.List;
  * @author choaklin
  * @date 2018.12.05
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class InitialApplication {
 
     @Autowired
@@ -68,9 +68,119 @@ public class InitialApplication {
     @Test
     public void initCategories() {
 
-        CategoryDO category = new CategoryDO();
-        category.setName("JavaSE");
-        categoryRepository.create(category);
+        Map<Category, List<String>> categories = new LinkedHashMap<>();
+        categories.put(
+                new Category("Java SE", "java"),
+                Arrays.asList(
+                        "基础知识",
+                        "高级特性",
+                        "核心技术",
+                        "JVM"
+                )
+        );
+        categories.put(
+                new Category("Java EE", "java"),
+                Arrays.asList(
+                        "Web应用技术",
+                        "企业应用技术",
+                        "Web服务技术",
+                        "管理和安全性技术"
+                )
+        );
+        categories.put(
+                new Category("企业应用组件", "qiye"),
+                Arrays.asList(
+                        "依赖注入",
+                        "认证授权",
+                        "Web请求处理",
+                        "Web内容处理",
+                        "数据访问",
+                        "作业调度",
+                        "Web Service"
+                )
+        );
+        categories.put(
+                new Category("分布式应用组件", "fenbushijisuan"),
+                Arrays.asList(
+                        "分布式锁",
+                        "消息队列",
+                        "分布式作业调度"
+                )
+        );
+        categories.put(
+                new Category("设计之禅", "dao"),
+                Arrays.asList(
+                        "设计模式",
+                        "架构模式",
+                        "源码解读"
+                ));
+        categories.put(
+                new Category("DevOps", "devops"),
+                Arrays.asList(
+                        "开发工具",
+                        "持续构建",
+                        "持续集成",
+                        "软件测试",
+                        "部署环境"
+                )
+        );
+        categories.put(
+                new Category("服务器", "fuwuqi"),
+                Arrays.asList(
+                        "Web服务器",
+                        "Web（Servlet）容器",
+                        "Web应用容器"
+                )
+        );
+        categories.put(
+                new Category("数据库", "database"),
+                Arrays.asList(
+                        "关系型",
+                        "NoSQL"
+                )
+        );
+
+        List<CategoryDO> subNodes = new ArrayList<>(30);
+
+        int parentIndex = 1;
+        for (Category category : categories.keySet()) {
+            String parentName = category.getName();
+            String icon = category.getIcon();
+
+            CategoryDO parent = categoryRepository.findUniqueOneByQuery(Query.query(
+                    Criteria.where("name").is(parentName)
+            ));
+            String parentId;
+            if (parent != null) {
+                parentId = parent.getId();
+            } else {
+                CategoryDO categoryDO = new CategoryDO();
+                categoryDO.setName(parentName);
+                categoryDO.setIcon(icon);
+                categoryDO.setSortNo(parentIndex++);
+                categoryRepository.create(categoryDO);
+                parentId = categoryDO.getId();
+            }
+
+            List<String> subNodeNames = categories.get(category);
+            int subIndex = 1;
+            for (String subNodeName : subNodeNames) {
+                CategoryDO categoryDO = new CategoryDO();
+                categoryDO.setName(subNodeName);
+                categoryDO.setParentId(parentId);
+                categoryDO.setSortNo(subIndex++);
+                subNodes.add(categoryDO);
+            }
+        }
+        categoryRepository.create(subNodes);
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class Category {
+        private String name;
+        private String icon;
     }
 
 }
