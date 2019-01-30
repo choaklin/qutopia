@@ -4,15 +4,68 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>文章列表 - 浮闲阁</title>
-        <link href="../public/style/article-list.css" rel="stylesheet" type="text/css"/>
+        <link href="../style/article-list.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="container">
             <div class="main">
                 <div class="articles left">
+                    <div class="card">
+                        <div id="search_bar" class="card-content">
+                            <nav class="breadcrumb" style="display: block">
+                                <ul>
+                                    <li><a href="/hexo-theme-icarus/categories">Java SE</a></li>
+                                    <li class="is-active"><a href="#">泛型</a></li>
+                                </ul>
+                            </nav>
+
+                            <nav class="menu" style="display: block">
+                                <p class="menu-label">标签</p>
+                                <div class="field is-grouped is-grouped-multiline">
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced Topics</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting Started</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced Topics</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting Started</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
                     <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
                         <div class="thumbnail">
-                            <img class="thumbnail" src="../public/images/article/desert.jpg" alt="JavaScript的执行环境和作用域">
+                            <img class="thumbnail" src="../images/article/desert.jpg" alt="JavaScript的执行环境和作用域">
                         </div>
                         <header class="title">
                             <h2><a rel="bookmark" href="#">JavaScript的执行环境和作用域</a></h2>
@@ -123,7 +176,7 @@
 
         </div>
 
-        <script type="text/javascript" src="../public/lib/jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../lib/jquery/jquery-1.10.2.min.js"></script>
         <script>
             $(document).ready(function () {
                 $('a.item').on('click', function (e) {
