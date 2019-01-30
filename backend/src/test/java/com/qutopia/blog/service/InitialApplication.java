@@ -1,10 +1,9 @@
 package com.qutopia.blog.service;
 
-import com.qutopia.blog.entity.CategoryDO;
-import com.qutopia.blog.entity.TagDO;
-import com.qutopia.blog.entity.TagDimension;
+import com.qutopia.blog.entity.*;
 import com.qutopia.blog.repository.CategoryRepository;
 import com.qutopia.blog.repository.TagRepository;
+import com.qutopia.blog.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +31,8 @@ public class InitialApplication {
     private TagRepository tagRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     public void initTags() {
@@ -181,6 +182,24 @@ public class InitialApplication {
     class Category {
         private String name;
         private String icon;
+    }
+
+    /**
+     * 初始化内置的管理员
+     */
+    @Test
+    public void initAdministrator() {
+
+        UserDO admin = new UserDO();
+        admin.setNickname("choaklin");
+        // 设置七牛云图片
+        admin.setFigureUrl("http://resource.qutopia.cn/Fr1FPnf7pdyewxYr0ze0vM1EG65V");
+        admin.setLoginInput("admin");
+        admin.setPassword("123456");
+        admin.setUserType(UserType.ADMIN.getValue());
+        admin.setRegisterType(RegisterType.INITIALIZE.getValue());
+        admin.setCreateTime(new Date());
+        userRepository.create(admin);
     }
 
 }

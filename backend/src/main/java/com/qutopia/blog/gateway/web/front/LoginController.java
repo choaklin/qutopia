@@ -1,9 +1,11 @@
 package com.qutopia.blog.gateway.web.front;
 
 import com.qutopia.blog.gateway.web.front.dto.LoginForm;
+import com.qutopia.blog.service.UserService;
 import com.qutopia.blog.utils.data.commons.UUIDGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,9 @@ public class LoginController {
 
     public static final String tokenKey = "token";
 
+    @Autowired
+    private UserService userService;
+
     /**
      * @return
      */
@@ -31,6 +36,9 @@ public class LoginController {
 
         String serverToken = (String) session.getAttribute(tokenKey);
         if (StringUtils.isBlank(serverToken)) {
+
+            userService.login(loginForm);
+
             serverToken = UUIDGenerator.generate();
             session.setAttribute(tokenKey, serverToken);
         } else {

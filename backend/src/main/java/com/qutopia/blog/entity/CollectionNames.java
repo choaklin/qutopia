@@ -12,6 +12,11 @@ public final class CollectionNames {
     /**
      * 文章
      */
+    public static final String USER = "user";
+
+    /**
+     * 文章
+     */
     public static final String ARTICLE = "article";
 
     /**
