@@ -39,8 +39,15 @@ public class ArticleDO {
 
     /**
      * 分类ID
+     *
+     * @see CategoryDO
      */
     private String categoryId;
+
+    /**
+     * 分类路径
+     */
+    private String categoryPath;
 
     /**
      * 正文

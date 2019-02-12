@@ -1,0 +1,95 @@
+.off-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 280px;
+  height: 100%;
+  font-size: 1.15em;
+  transform: translate3d(-280px,0,0);
+  transition: transform 0.4s;
+
+  .menu {
+    position: relative;
+    z-index: 1000;
+    padding: 3em 1em 0;
+
+    .icon-list a {
+      display: block;
+      padding: 0.8em;
+
+      span {
+        margin-left: 10px;
+        font-size: 0.85em;
+        font-weight: 700;
+        vertical-align: middle;
+      }
+    }
+
+    .icon-list i {
+      font-size: 1.5em;
+      vertical-align: middle;
+      color: #282a35;
+    }
+
+  }
+}
+
+.close-button {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  overflow: hidden;
+  text-indent: 16px;
+  border: none;
+  z-index: 1001;
+  background: transparent;
+  color: transparent;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    background: #888;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.show-off-canvas .off-canvas,
+.show-off-canvas .container::before {
+  transition-delay: 0s;
+}
+
+.show-off-canvas .off-canvas, .show-off-canvas .menu::before {
+  transform: translate3d(0,0,0);
+}
+.show-off-canvas .menu,
+.show-off-canvas .close-button,
+.show-off-canvas .morph-shape,
+.show-off-canvas .container::before {
+  transform: translate3d(0,0,0);
+}
+
+.show-off-canvas .menu,
+.show-off-canvas .close-button {
+  opacity: 1;
+  transition: opacity 0.3s, transform 0.3s;
+  transition-delay: 0.4s;
+}
+
+.show-off-canvas .container::before {
+  opacity: 1;
+  transition: opacity 0.4s;
+}

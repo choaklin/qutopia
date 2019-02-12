@@ -93,6 +93,13 @@ public class ArticleService {
         Page<ArticlePool> resultPage;
 
         Criteria criteria = Criteria.where("published").is(pageQuery.isPublished());
+        if (StringUtils.isNotBlank(pageQuery.getCategoryId())) {
+            criteria.and("categoryId").is(pageQuery.getCategoryId());
+        }
+        if (StringUtils.isNotBlank(pageQuery.getTitle())) {
+            criteria.and("title").regex("^" + pageQuery.getTitle(), "i");
+        }
+
         Page<ArticleDO> sourcePage = articleRepository.page(pageable, Query.query(criteria));
         if (sourcePage.getNumberOfElements() > 0) {
 

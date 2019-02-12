@@ -26,6 +26,11 @@ public class CategoryDO implements Serializable {
     private String parentId = "0";
 
     /**
+     * ID路径
+     */
+    private String path;
+
+    /**
      * 名称
      */
     private String name;

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>文章列表 - 浮闲阁</title>
+        <link href="../../public/css/article-list.css" rel="stylesheet" type="text/css"/>
+        <link href="../../public/font/iconfont.css" rel="stylesheet" type="text/css"/>
+        <link href="../../public/css/theme.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <!-- 页面头部 -->
+        <header class="header">
+            <button id="open-button" class="menu-button">Open Menu</button>
+        </header>
+
+        <!-- 功能菜单导航 -->
+        <nav class="off-canvas">
+            <nav class="menu">
+                <menu class="icon-list">
+                    <a href="#"><i class="fa fa-fw fa-star-o"></i><span>Favorites</span></a>
+                    <a href="#"><i class="fa fa-fw fa-bell-o"></i><span>Alerts</span></a>
+                    <a href="#"><i class="fa fa-fw fa-envelope-o"></i><span>Messages</span></a>
+                    <a href="#"><i class="fa fa-fw fa-comment-o"></i><span>Comments</span></a>
+                    <a href="#"><i class="fa fa-fw fa-bar-chart-o"></i><span>Analytics</span></a>
+                    <a href="#"><i class="fa fa-fw fa-newspaper-o"></i><span>Reading List</span></a>
+                </menu>
+            </nav>
+            <button class="close-button" id="close-button">Close Menu</button>
+
+            <!-- 动画路径 -->
+            <div id="morph-shape" class="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                    <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+                </svg>
+            </div>
+        </nav>
+
+        <!-- 内容主题 -->
+        <main class="container">
+            <div class="container-wrap">
+                <div class="column col-640 main-content">
+                    <div id="search_bar" class="card search-bar">
+                        <div class="card-content">
+                            <nav id="search_bar_category" class="breadcrumb" style="display: block;">
+                                <ul id="category_search_content">
+                                    <!--<li><a href="/hexo-theme-icarus/categories">全部</a></li>-->
+                                    <li><a href="/hexo-theme-icarus/categories">Java SE</a></li>
+                                    <li class="is-active"><a href="#">泛型</a></li>
+                                </ul>
+                            </nav>
+
+                            <nav id="search_bar_tag" class="menu" style="display: block;">
+                                <p class="menu-label">标签</p>
+                                <div id="tag_search_content" class="field is-grouped is-grouped-multiline">
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced Topics</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting Started</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced Topics</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                            <span class="tag">Advanced</span>
+                                            <span class="tag is-grey">1</span>
+                                        </a>
+                                    </div>
+                                    <div class="control">
+                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                            <span class="tag">Getting Started</span>
+                                            <span class="tag is-grey">8</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div id="article_container" class="article">
+                        <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
+                            <div class="thumbnail">
+                                <img class="thumbnail" src="../../public/images/article/desert.jpg" alt="JavaScript的执行环境和作用域">
+                            </div>
+                            <header class="title">
+                                <h2><a rel="bookmark" href="#">JavaScript的执行环境和作用域</a></h2>
+                            </header>
+                            <section class="overview">
+                                <span>执行环境（execution context）是JavaScript中最为重要的一个概念。</span>
+                            </section>
+                            <footer class="tags">
+                                <a class="tag" href="#">JavaScript的作用域</a>
+                                <a class="tag" href="#">Docker</a>
+                                <a class="tag" href="#">Mac OS X</a>
+                            </footer>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="column col-290" >
+                    <div class="card sidebar-item search">
+                        <div class="sidebar-header">
+                            <span class="sidebar-header-title">搜索</span>
+                        </div>
+                        <div class="sidebar-content">
+                            <div class="search-input">
+                                <input type="text" name="keyword" placeholder="请输入关键字搜索">
+                                <button type="submit" class="search-submit"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card sidebar-item catalog">
+                        <div class="sidebar-header">
+                            <span class="sidebar-header-title">分类</span>
+                        </div>
+                        <div class="sidebar-content">
+                            <ul class="root">
+                                <li class="root-parent">
+                                    <a href="#" class="item">
+                                        <span class="title">JavaSE</span>
+                                        <span class="quantity">16</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">泛型</span>
+                                                <span class="quantity">7</span>
+                                            </a>
+                                        </li>
+                                        <li class="sub-parent">
+                                            <a href="#" class="item">
+                                                <span class="title">IO</span>
+                                                <span class="quantity">9</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="item">
+                                        <span class="title">JavaEE</span>
+                                        <span class="quantity">16</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">Servlet</span>
+                                                <span class="quantity">6</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="item">
+                                                <span class="title">JSP</span>
+                                                <span class="quantity">3</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card sidebar-item tags">
+                        <div class="sidebar-header">
+                            <span class="sidebar-header-title">标签</span>
+                        </div>
+                        <div class="sidebar-content">
+                            <div class="field is-grouped is-grouped-multiline">
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                        <span class="tag">Advanced Topics</span>
+                                        <span class="tag is-grey">1</span>
+                                    </a>
+                                </div>
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                        <span class="tag">Getting Started</span>
+                                        <span class="tag is-grey">8</span>
+                                    </a>
+                                </div>
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                        <span class="tag">Advanced Topics</span>
+                                        <span class="tag is-grey">1</span>
+                                    </a>
+                                </div>
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                        <span class="tag">Getting</span>
+                                        <span class="tag is-grey">8</span>
+                                    </a>
+                                </div>
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                        <span class="tag">Advanced</span>
+                                        <span class="tag is-grey">1</span>
+                                    </a>
+                                </div>
+                                <div class="control">
+                                    <a class="tags has-addons" href="/hexo-theme-icarus/tags/Getting-Started/">
+                                        <span class="tag">Getting Started</span>
+                                        <span class="tag is-grey">8</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部菜单 -->
+        <footer class="footer">
+            <div class="contact">
+                <menu class="menu">
+                    <a href="https://weibo.com/crazysos" target="_blank" title="微博"><i class="iconfont icon-weibo"></i></a>
+                    <a href="https://github.com/choaklin/qutopia" target="_blank" title="Github"><i class="iconfont icon-github"></i></a>
+                </menu>
+            </div>
+            <div class="copyright">
+                <span>Copyright © 2019 choaklin</span>
+            </div>
+            <div class="site-info">
+                <p>Powered by <a href="http://fiona23.github.io" target="_blank">枳</a> • <a href="https://github.com/viosey/hexo-theme-material" target="_blank">Material</a></p>
+            </div>
+        </footer>
+    </body>
+
+    <script src="../../public/lib/jquery/jquery-1.10.2.min.js"></script>
+    <script src="../../public/lib/nprogress/nprogress.js"></script>
+    <script src="../../public/lib/tippy/tippy.all.min.js"></script>
+    <script src="../../public/lib/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../../public/lib/svg/snap.svg-min.js"></script>
+    <script src="../../public/lib/classie.js"></script>
+    <script src="../../public/js/off-canvas.min.js"></script>
+    <script src="../../public/js/article-list.min.js"></script>
+</html>

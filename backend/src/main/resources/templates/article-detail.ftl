@@ -48,16 +48,21 @@
 	<script src="../public/lib/prism/clipboard.min.js" type="text/javascript"></script>
 	<script src="../public/lib/prism/prism.js" type="text/javascript"></script>
 	<script src="../public/lib/tocbot/tocbot.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../public/lib/nicescroll/jquery.nicescroll.min.js"></script>
+
 	<script>
         // initial post table of content
-		tocbot.init({
-			tocSelector: '.js-toc',
-			contentSelector: '.post',
-			headingSelector: 'h1,h2,h3',
-			positionFixedSelector: '.js-toc',
-			headingsOffset: 10,
-			collapseDepth: 3
-		});
+		$(document).ready(function () {
+            tocbot.init({
+                tocSelector: '.js-toc',
+                contentSelector: '.post',
+                headingSelector: 'h1,h2,h3',
+                positionFixedSelector: '.js-toc',
+                headingsOffset: 10,
+                collapseDepth: 3
+            });
 
+            $('body').niceScroll();
+        });
 	</script>
 </html>
