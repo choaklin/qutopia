@@ -46,19 +46,24 @@
                                 <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
                                     <div class="thumbnail">
                                         <img class="thumbnail" src="../public/images/article/desert.jpg" alt="${article.title}">
+                                        <header class="title">
+                                            <h2><a rel="bookmark" href="article/${article.id}">${article.title}</a></h2>
+                                        </header>
                                     </div>
-                                    <header class="title">
-                                        <h2><a rel="bookmark" href="article/${article.id}">${article.title}</a></h2>
-                                    </header>
                                     <section class="overview">
                                         <span>${article.overview!""}</span>
                                     </section>
                                     <footer class="tags">
-                                        <#if article.articleTags??>
-                                            <#list article.articleTags as tag>
-                                                <a class="tag" <#if tag.desc??>data-tippy="${tag.desc}"</#if> href="#">${tag.name}</a>
-                                            </#list>
-                                        </#if>
+                                        <div class="tags">
+                                            <#if article.articleTags??>
+                                                <#list article.articleTags as tag>
+                                                    <a class="tag" <#if tag.desc??>data-tippy="${tag.desc}"</#if> href="#">${tag.name}</a>
+                                                </#list>
+                                            </#if>
+                                        </div>
+                                        <div class="publish-time">
+                                            <span><i class="iconfont date"></i>${article.createTime?string('yyyy-MM-dd')}</span>
+                                        </div>
                                     </footer>
                                 </article>
                             </#list>
@@ -228,7 +233,7 @@
                             temp.push('<div class="thumbnail"><img class="thumbnail" src="../public/images/article/desert.jpg" alt="' + article.title + '"></div>');
                             temp.push('<header class="title"><h2><a rel="bookmark" href="article/' + article.id + '">' + article.title + '</a></h2></header>');
                             temp.push('<section class="overview"><span>' + article.overview + '</span></section>');
-                            temp.push('<footer class="tags">');
+                            temp.push('<footer><div class="tags">');
                             var tags = articles.articleTags;
                             if (tags) {
                                 var tagCount = tags.length;
@@ -242,6 +247,8 @@
 
                                 }
                             }
+                            temp.push('</div>')
+                            temp.push('<div><span><i class="iconfont date"></i>' + article.createTime + '</span></div>')
                             temp.push('</footer>');
                             temp.push('</article>');
                         }

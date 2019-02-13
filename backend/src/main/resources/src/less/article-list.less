@@ -171,65 +171,76 @@ img.thumbnail {
   }
 
   header {
+    position: absolute;
+    bottom: 0;
     padding: 15px 30px 18px 30px;
 
     a {
-      font-size: 24px;
-      color: #363636;
+      font-size: 2.4rem;
+      color: white;
       margin-left: 0;
       font-weight: 400;
       line-height: 35px;
+      text-shadow: 1px 1px 8px #444;
     }
   }
 
   section {
-    font-size: 16px;
+    font-size: 1.4rem;
     line-height: 1.8em;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding: 30px;
     overflow: hidden;
     word-wrap: break-word;
   }
 
   footer {
-    padding: 20px 35px 0 0;
-    margin: 21px 30px 20px;
+    padding: 20px 0;
+    margin: 0px 30px;
     border-top: 1px solid #ddd;
-  }
-  .tags {
-    .tag {
-      color: #fff;
-      font-size: 12px;
-      height: 18px;
-      line-height: 18px;
-      display: inline-block;
-      padding: 2px 7px 2px 12px;
-      position: relative;
-      border-radius: 0 5px 5px 0;
-      margin: 5px 12px 5px 10px;
-      background-color: #7b5d5f;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
 
-      &:before {
-        content: " ";
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: 0;
-        left: -22px;
-        border: 11px solid transparent;
-        border-right-color: #7b5d5f;
+    .tags {
+      .tag {
+        color: #fff;
+        height: 18px;
+        line-height: 18px;
+        display: inline-block;
+        padding: 2px 7px 2px 12px;
+        position: relative;
+        border-radius: 0 5px 5px 0;
+        margin: 5px 12px 5px 10px;
+        background-color: #7b5d5f;
+
+        &:before {
+          content: " ";
+          position: absolute;
+          width: 0;
+          height: 0;
+          top: 0;
+          left: -22px;
+          border: 11px solid transparent;
+          border-right-color: #7b5d5f;
+        }
+        &:after {
+          content: " ";
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          background-color: #fff;
+          border-radius: 4px;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.3);
+          top: 8px;
+          left: 2px;
+        }
       }
-      &:after {
-        content: " ";
-        position: absolute;
-        width: 5px;
-        height: 5px;
-        background-color: #fff;
-        border-radius: 4px;
-        box-shadow: 0 0 0 1px rgba(0,0,0,.3);
-        top: 8px;
-        left: 2px;
-      }
+    }
+
+    .publish-time {
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
     }
   }
 }
