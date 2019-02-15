@@ -176,6 +176,12 @@ a:hover,
 button:focus {
   outline: none;
 }
+.tippy-tooltip {
+  max-width: 210px;
+  font-size: 1.4rem !important;
+  text-align: left;
+  padding: 1.3rem 2rem;
+}
 .morph-shape {
   position: absolute;
   width: 100%;
