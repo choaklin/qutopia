@@ -46,7 +46,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public String list(@PageableDefault(size = 5, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String index(@PageableDefault(size = 5, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
         //== 文章列表、文章分类、标签
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());

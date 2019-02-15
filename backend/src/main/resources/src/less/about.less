@@ -1,0 +1,86 @@
+// Core variables and mixins
+@import "module/variables";
+@import "module/mixins";
+
+// Reset and dependencies
+@import "module/reset";
+@import "module/animation";
+
+@import "module/header";
+@import "module/off-canvas";
+@import "module/footer";
+@import "module/layout";
+
+.about-container {
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Microsoft JhengHei", "Microsoft YaHei";
+  font-size: 1.6rem;
+  color: #464646;
+
+  .half-range {
+    width: 50%;
+    padding-right: 50px;
+  }
+
+  h1 {
+    float: right;
+    font-size: 3rem;
+    font-weight: 700;
+    width: 40px;
+    border-left: 1px solid #464646;
+    padding: 0 5px;
+    margin: 0 50px 0 15px;
+
+    a {
+      margin-top: -2px;
+    }
+  }
+
+  p {
+    line-height: 170%;
+  }
+
+  a {
+    color: #464646;
+
+    &.inline-link {
+      color: #d95e45;
+      font-weight: bolder;
+    }
+  }
+
+  .en-vertical {
+    writing-mode: vertical-lr;
+    margin: 5px -5px
+  }
+
+  .about-des {
+    box-sizing: border-box;
+    padding: 0 5px;
+    width: 40px;
+    border-left: 1px solid #464646;
+    float: right;
+    margin: 0 10px;
+  }
+
+  .about-site {
+    padding-right: 30px;
+  }
+
+
+  .iconfont {
+    &.icon-github {
+      font-size: 27px;
+      padding-left: 1px;
+    }
+    &.icon-weibo {
+      font-size: 23px;
+      padding-left: 3px;
+    }
+  }
+
+
+}
