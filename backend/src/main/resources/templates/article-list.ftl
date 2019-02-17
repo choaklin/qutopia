@@ -262,7 +262,7 @@
                                 }
                             }
                             temp.push('</div>')
-                            temp.push('<div><span><i class="iconfont icon-date"></i>' + article.createTime + '</span></div>')
+                            temp.push('<div class="publish-time"><span><i class="iconfont icon-date"></i>' + article.createTime + '</span></div>')
                             temp.push('</footer>');
                             temp.push('</article>');
                         }
