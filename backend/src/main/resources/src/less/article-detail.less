@@ -1,0 +1,112 @@
+// Core variables and mixins
+@import "module/variables";
+@import "module/mixins";
+
+// Reset and dependencies
+@import "module/reset";
+@import "module/reset-lib";
+@import "module/animation";
+
+@import "module/header";
+@import "module/off-canvas";
+@import "module/footer";
+@import "module/layout";
+
+
+.post {
+  width: 900px;
+  margin: 70px auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 600;
+  }
+
+  blockquote {
+    border-left: 4px solid #6db33f;
+    background-color: #EBF1E7;
+    padding: 20px 30px;
+    margin: 10px 0;
+    width: auto;
+    font-size: 14px;
+    font-family: "Varela Round", sans-serif;
+  }
+
+  pre code {
+    font: normal 10pt Consolas, Monaco, monospace;
+  }
+
+  .thumbnail {
+    height: 280px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 25px;
+    background-size: cover;
+    flex-direction: row;
+    align-items: flex-end;
+    background-position: 50% 50%;
+
+    .title {
+      font-size: 34px;
+      line-height: 40px;
+      font-weight: 400;
+      margin: 0;
+      text-shadow: 1px 1px 8px #444;
+      color: #fafafa!important;
+    }
+  }
+
+  .content, .license {
+    width: 90%;
+  }
+
+  .content {
+    margin: 1pc auto;
+    padding-top: 0;
+    color: #34302d;
+
+    p {
+      margin: 15px 0;
+
+      line-height: 1.7;
+      font-size: 1.5rem;
+    }
+
+    pre {
+      font-size: 1.4rem;
+    }
+  }
+
+  .license {
+    margin: 50px auto 2pc;
+    color: #6E757C;
+    background-color: #F5F5F5;
+    border-left: 3px red solid;
+    font-family: 'PingFang SC','Helvetica Neue','Microsoft YaHei UI','Microsoft YaHei','Noto Sans CJK SC',Sathu,EucrosiaUPC,Arial,Helvetica,sans-serif;
+
+    strong {
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.6rem;
+      line-height: 1.7;
+    }
+
+    a {
+      font-weight: normal;
+      color: #67BFFF;
+      text-decoration: underline;
+    }
+
+    .license-wrap {
+      padding: 16px 30px;
+    }
+  }
+}

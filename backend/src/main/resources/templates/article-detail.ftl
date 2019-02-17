@@ -1,67 +1,73 @@
+<#include "micro/header.ftl">
+<#include "micro/footer.ftl">
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<meta charset="UTF-8">
 		<title>文章详情</title>
-        <link href="../public/style/article.css" rel="stylesheet"/>
-
-		<link href="../public/lib/tocbot/tocbot.css" rel="stylesheet">
+		<link href="../../public/font/iconfont.css" rel="stylesheet" type="text/css"/>
+        <link href="../public/style/article-detail.css" rel="stylesheet"/>
+		<#--<link href="../public/lib/tocbot/tocbot.css" rel="stylesheet">-->
         <link href="../public/lib/prism/prism-oakidia.css" rel="stylesheet">
+		<link href="../public/style/theme.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
+		<!-- 页面头部及抽屉菜单 -->
+		<@header/>
 
-		<div class="container">
-            <nav class="toc js-toc"></nav>
-			<article class="post" style="display: block;">
-				<!-- thumbnail & title -->
-				<div class="thumbnail" style="background-image: url(../public/images/tourist/chaka.JPG)">
-					<h1 class="title">${article.title}</h1>
-				</div>
+		<main class="container">
+			<div class="container-wrap">
+				<#--<nav class="toc js-toc"></nav>-->
+				<article class="post" style="display: block;">
+					<!-- thumbnail & title -->
+					<div class="thumbnail" style="background-image: url(../public/images/tourist/chaka.JPG)">
+						<h1 class="title">${article.title}</h1>
+					</div>
 
-				<!-- post meta info -->
-				<div class="meta">
-				</div>
+					<!-- post meta info -->
+					<div class="meta"></div>
 
-				<!-- post content-->
-				<div class="content">
-					${article.content}
-				</div>
-			</article>
+					<!-- post content-->
+					<div class="content">
+						${article.content}
+					</div>
 
+					<footer class="license">
+						<div class="license-wrap">
+							<p><strong>本文使用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议许可</strong></p>
+							<p><strong>本文标题：</strong>${article.title}</p>
+							<p><strong>本文链接：</strong><a href="http:www.baidu.com">http:www.baidu.com</a></p>
+						</div>
+					</footer>
+				</article>
+			</div>
+		</main>
 
-			<nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-				<a href="/2017/04/04/Story-of-Journey/" id="post_nav-newer" class="prev-content">
-					<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation" data-upgraded=",MaterialButton,MaterialRipple"><i class="material-icons">arrow_back</i><span class="mdl-button__ripple-container"><span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(15px, 16px);"></span></span></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 新篇
-				</a>
-				<div class="section-spacer"></div>
-				<a href="/2017/01/20/Raspi-source-wifi-static-ip/" id="post_nav-older" class="next-content">旧篇 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation" data-upgraded=",MaterialButton,MaterialRipple">
-					<i class="material-icons">arrow_forward</i>
-						<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
-					</button>
-				</a>
-			</nav>
-		</div>
+		<!-- 底部菜单 -->
+		<@footer/>
 	</body>
 
 	<script src="../public/lib/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
 	<script src="../public/lib/prism/clipboard.min.js" type="text/javascript"></script>
 	<script src="../public/lib/prism/prism.js" type="text/javascript"></script>
-	<script src="../public/lib/tocbot/tocbot.min.js" type="text/javascript"></script>
+	<#--<script src="../public/lib/tocbot/tocbot.min.js" type="text/javascript"></script>-->
 	<script type="text/javascript" src="../public/lib/nicescroll/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="../public/lib/svg/snap.svg-min.js"></script>
+	<script type="text/javascript" src="../public/lib/classie.js"></script>
+	<script type="text/javascript" src="../public/js/off-canvas.min.js"></script>
 
 	<script>
         // initial post table of content
 		$(document).ready(function () {
-            tocbot.init({
-                tocSelector: '.js-toc',
-                contentSelector: '.post',
-                headingSelector: 'h1,h2,h3',
-                positionFixedSelector: '.js-toc',
-                headingsOffset: 10,
-                collapseDepth: 3
-            });
-
+            // tocbot.init({
+            //     tocSelector: '.js-toc',
+            //     contentSelector: '.post',
+            //     headingSelector: 'h1,h2,h3',
+            //     positionFixedSelector: '.js-toc',
+            //     headingsOffset: 10,
+            //     collapseDepth: 3
+            // });
             $('body').niceScroll();
         });
 	</script>

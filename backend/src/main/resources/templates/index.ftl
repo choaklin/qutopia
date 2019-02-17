@@ -1,7 +1,7 @@
 <#--<#assign contextPath = request.contextPath>-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>首页 - 浮闲阁</title>
