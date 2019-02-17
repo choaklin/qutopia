@@ -335,10 +335,10 @@ button:focus {
   font-size: 20px;
 }
 .footer .iconfont.icon-github {
-  font-size: 24px;
+  font-size: 21px;
 }
 .footer .contact a + a {
-  margin-left: 30px;
+  margin-left: 20px;
 }
 .footer .site-info a {
   color: #3273dc;
@@ -504,8 +504,8 @@ button:focus {
   padding-right: 30px;
 }
 .about-container .iconfont.icon-github {
-  font-size: 27px;
-  padding-left: 1px;
+  font-size: 24px;
+  padding-left: 2px;
 }
 .about-container .iconfont.icon-weibo {
   font-size: 23px;

@@ -166,6 +166,10 @@ img.thumbnail {
   color: #4a4a4a;
   background: #f7f7f7;
 
+  .iconfont {
+    margin-right: 5px;
+  }
+
   .thumbnail {
     position: relative;
     height: 220px;
@@ -277,6 +281,10 @@ img.thumbnail {
     -webkit-appearance: none;
   }
 
+  .iconfont {
+    margin-right: 5px;
+  }
+
   .root {
     line-height: 20px;
 
@@ -332,6 +340,58 @@ img.thumbnail {
       background-color: whitesmoke;
       color: #363636;
     }
+  }
+}
+
+.pager {
+  padding: 55px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+
+  .previous, .current, .next {
+    color: #4a4a4a;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,.05);
+  }
+
+  .previous {
+    order: 1;
+  }
+
+  .current {
+    order: 2;
+    width: 24px;
+    height: 24px;
+    margin-top: 7px;
+    color: #ffffff;
+    background-color: #3273dc;
+    font-size: 1.2rem;
+
+    .page-number {
+      line-height: 24px;
+      font-family: Ubuntu,Roboto,"Open Sans","Microsoft YaHei",sans-serif;
+    }
+  }
+
+  .next {
+    order: 3;
+  }
+
+  .iconfont {
+    width: 19px;
+    height: 19px;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 22px;
   }
 }
 

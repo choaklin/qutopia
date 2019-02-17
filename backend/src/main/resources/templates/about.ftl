@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>关于 - 浮闲阁</title>
         <link href="../../public/font/iconfont.css" rel="stylesheet" type="text/css"/>
         <link href="../../public/style/about.css" rel="stylesheet" type="text/css"/>
         <link href="../../public/style/theme.css" rel="stylesheet" type="text/css"/>

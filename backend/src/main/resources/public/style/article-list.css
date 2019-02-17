@@ -176,6 +176,12 @@ a:hover,
 button:focus {
   outline: none;
 }
+.iconfont.icon-weibo:hover {
+  color: #d81e06!important;
+}
+.iconfont.icon-github:hover {
+  color: black!important;
+}
 .tippy-tooltip {
   max-width: 210px;
   font-size: 1.4rem !important;
@@ -341,10 +347,10 @@ button:focus {
   font-size: 20px;
 }
 .footer .iconfont.icon-github {
-  font-size: 24px;
+  font-size: 21px;
 }
 .footer .contact a + a {
-  margin-left: 30px;
+  margin-left: 20px;
 }
 .footer .site-info a {
   color: #3273dc;
@@ -612,6 +618,9 @@ img.thumbnail {
   color: #4a4a4a;
   background: #f7f7f7;
 }
+.article .iconfont {
+  margin-right: 5px;
+}
 .article .thumbnail {
   position: relative;
   height: 220px;
@@ -719,6 +728,9 @@ img.thumbnail {
   -webkit-rtl-ordering: logical;
   -webkit-appearance: none;
 }
+.sidebar-content .iconfont {
+  margin-right: 5px;
+}
 .sidebar-content .root {
   line-height: 20px;
 }
@@ -774,5 +786,74 @@ img.thumbnail {
 .sidebar-content .root a:hover {
   background-color: whitesmoke;
   color: #363636;
+}
+.pager {
+  padding: 55px 10px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.pager .previous,
+.pager .current,
+.pager .next {
+  color: #4a4a4a;
+  width: 32px;
+  height: 32px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.pager .previous {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+}
+.pager .current {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  width: 24px;
+  height: 24px;
+  margin-top: 7px;
+  color: #ffffff;
+  background-color: #3273dc;
+  font-size: 1.2rem;
+}
+.pager .current .page-number {
+  line-height: 24px;
+  font-family: Ubuntu, Roboto, "Open Sans", "Microsoft YaHei", sans-serif;
+}
+.pager .next {
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
+}
+.pager .iconfont {
+  width: 19px;
+  height: 19px;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 22px;
 }
 /*# sourceMappingURL=article-list.css.map */

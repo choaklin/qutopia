@@ -57,18 +57,24 @@
                                         <div class="tags">
                                             <#if article.articleTags??>
                                                 <#list article.articleTags as tag>
-                                                    <a class="tag" <#if tag.desc??>data-tippy="${tag.desc}"</#if> href="#">${tag.name}</a>
+                                                    <a class="tag" href="#">${tag.name}</a>
                                                 </#list>
                                             </#if>
                                         </div>
                                         <div class="publish-time">
-                                            <span><i class="iconfont date"></i>${article.createTime?string('yyyy-MM-dd')}</span>
+                                            <span><i class="iconfont icon-date"></i>${article.createTime?string('yyyy-MM-dd')}</span>
                                         </div>
                                     </footer>
                                 </article>
                             </#list>
                         </#if>
                     </div>
+
+                    <nav class="pager">
+                        <div id="page_previous" class="previous" style="visibility: visible;" title="上一页"><i class="iconfont icon-left"></i></div>
+                        <div class="current"><span id="page_number" class="page-number">1</span></div>
+                        <div id="page_next" class="next" title="下一页"><i class="iconfont icon-right"></i></div>
+                    </nav>
                 </div>
 
                 <div class="column col-290">
@@ -94,8 +100,7 @@
                                         <li class="root-parent">
                                             <a href="#" class="item" data-id="${category.id}">
                                                 <span class="title">
-                                                    <i class="iconfont icon-${category.icon!''}"></i>
-                                                    ${category.name}
+                                                    <i class="iconfont icon-${category.icon!''}"></i>${category.name}
                                                 </span>
                                                 <span class="quantity">${category.articleCount}</span>
                                             </a>
@@ -155,6 +160,9 @@
 
         <script>
             var categories = {};
+            var pageNumber = ${page_number};
+            var totalPages = ${total_pages};
+
             <#if categories??>
                 <#list categories as parent>
                     categories['${parent.id}'] = {
@@ -203,11 +211,12 @@
 
                     // 从0开始
                     pageNo: 0,
-                    pageSize: 5
+                    pageSize: 2
                 };
 
                 var node = {
-                    nice: null,
+                    niceScroll: null,
+
                     searchBar: $('#search_bar'),
                     searchBarCategory: $('#search_bar_category'),
                     categorySearchContent: $('#category_search_content'),
@@ -215,6 +224,10 @@
                     tagSearchContent: $('#tag_search_content'),
 
                     articleContainer: $('#article_container'),
+                    previousPageBtn: $('#page_previous'),
+                    nextPageBtn: $('#page_next'),
+                    pageNumber: $('#page_number'),
+
 
                     searchKeyword: $('#search_keyword'),
                     searchSubmitBtn: $('#search_submit_btn'),
@@ -230,11 +243,13 @@
                             var article = articles[a];
 
                             temp.push('<article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">');
-                            temp.push('<div class="thumbnail"><img class="thumbnail" src="../public/images/article/desert.jpg" alt="' + article.title + '"></div>');
+                            temp.push('<div class="thumbnail">');
+                            temp.push('<img class="thumbnail" src="../public/images/article/desert.jpg" alt="' + article.title + '">');
                             temp.push('<header class="title"><h2><a rel="bookmark" href="article/' + article.id + '">' + article.title + '</a></h2></header>');
+                            temp.push('</div>');
                             temp.push('<section class="overview"><span>' + article.overview + '</span></section>');
                             temp.push('<footer><div class="tags">');
-                            var tags = articles.articleTags;
+                            var tags = article.articleTags;
                             if (tags) {
                                 var tagCount = tags.length;
                                 for (var i = 0; i < tagCount; i++) {
@@ -244,11 +259,10 @@
                                     } else {
                                         temp.push('<a class="tag" href="#">' + tag.name + '</a>');
                                     }
-
                                 }
                             }
                             temp.push('</div>')
-                            temp.push('<div><span><i class="iconfont date"></i>' + article.createTime + '</span></div>')
+                            temp.push('<div><span><i class="iconfont icon-date"></i>' + article.createTime + '</span></div>')
                             temp.push('</footer>');
                             temp.push('</article>');
                         }
@@ -321,12 +335,13 @@
                                 NProgress.start();
                             },
                             success: function (result, status, xhr) {
-                                // node.articleContainer.html(
-                                //     template.buildArticleCard(result.content)
-                                // );
+                                node.articleContainer.html(
+                                    template.buildArticleCard(result.content)
+                                );
+                                utils.refreshPager(result.number, result.totalPages);
                             },
                             complete: function (xhr, status) {
-                                node.nice.resize();
+                                node.niceScroll.resize();
                                 NProgress.done();
                             }
                         });
@@ -345,6 +360,29 @@
                             data.isSearchBarDisplay = false;
                             data.pageNo = 0;
                         }
+                    },
+
+                    /**
+                     * 刷新页面
+                     *
+                     * @param number 当前页码，从0开始
+                     * @param totalPages 总页数
+                     */
+                    refreshPager: function (number, totalPages) {
+                        node.pageNumber.html(number + 1)
+                            .parent().attr('title', '共' + totalPages + '页');
+
+                        var previousBtnCSS = 'hidden';
+                        if (number > 0) {
+                            previousBtnCSS = 'visible';
+                        }
+                        node.previousPageBtn.css('visibility', previousBtnCSS)
+
+                        var nextBtnCSS = 'hidden';
+                        if (number + 1 < totalPages) {
+                            nextBtnCSS = 'visible';
+                        }
+                        node.nextPageBtn.css('visibility', nextBtnCSS);
                     }
                 };
 
@@ -355,7 +393,12 @@
                         this.searchInputKeyPressHandle();
                         this.searchBtnClickHandle();
 
-                        node.nice = $("body").niceScroll();
+                        this.previousPageBtnClickHandle();
+                        this.nextPageBtnClickHandle();
+
+                        // 初始化滚动条和分页组件
+                        node.niceScroll = $("body").niceScroll();
+                        utils.refreshPager(pageNumber, totalPages)
                     },
 
                     /**
@@ -372,7 +415,7 @@
                                 services.changeCategory(categoryId);
                             }
                             delegate.siblings('ul').slideToggle(function () {
-                                node.nice.resize();
+                                node.niceScroll.resize();
                             });
                         })
                     },
@@ -389,6 +432,7 @@
                             // 查询全部文章
                             if (categoryId === '') {
                                 data.currentCategoryId = '';
+                                data.keyword = '';
                                 utils.refreshSearchBar();
                                 services.getArticles();
                             } else {
@@ -427,6 +471,24 @@
                                 data.keyword = keyword;
                                 services.getArticles(true)
                             }
+                        });
+                    },
+
+                    previousPageBtnClickHandle: function () {
+                        node.previousPageBtn.on('click', function (e) {
+                            e.preventDefault();
+
+                            data.pageNo -= 1;
+                            services.getArticles(false)
+                        });
+                    },
+
+                    nextPageBtnClickHandle: function () {
+                        node.nextPageBtn.on('click', function (e) {
+                            e.preventDefault();
+
+                            data.pageNo += 1;
+                            services.getArticles(false)
                         });
                     }
                 };

@@ -46,7 +46,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public String index(@PageableDefault(size = 5, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String index(@PageableDefault(size = 2, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
         //== 文章列表、文章分类、标签
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
@@ -57,8 +57,9 @@ public class ArticleController {
         model.addAttribute(TemplateVariable.CATEGORIES, categories);
         model.addAttribute(TemplateVariable.TAGS, tags);
 
-        model.addAttribute(TemplateVariable.PAGE_NO, pageable.getPageNumber());
-        model.addAttribute(TemplateVariable.PAGE_SIZE, pageable.getPageSize());
+        model.addAttribute(TemplateVariable.PAGE_NUMBER, articles.getNumber());
+        model.addAttribute(TemplateVariable.PAGE_SIZE, articles.getSize());
+        model.addAttribute(TemplateVariable.TOTAL_PAGES, articles.getTotalPages());
         return "article-list";
     }
 

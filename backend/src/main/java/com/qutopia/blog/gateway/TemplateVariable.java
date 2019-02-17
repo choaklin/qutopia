@@ -9,8 +9,9 @@ package com.qutopia.blog.gateway;
  */
 public interface TemplateVariable {
 
-    String PAGE_NO = "pageNo";
-    String PAGE_SIZE = "pageSize";
+    String PAGE_NUMBER = "page_number";
+    String PAGE_SIZE = "page_size";
+    String TOTAL_PAGES = "total_pages";
 
     ///////////////////////////////////////// 首页的模板变量 ////////////////////////////////
     /**
