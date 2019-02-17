@@ -89,7 +89,7 @@ public class InitialApplication {
                 )
         );
         categories.put(
-                new Category("企业应用组件", "qiye"),
+                new Category("企业应用组件", "enterprise"),
                 Arrays.asList(
                         "依赖注入",
                         "认证授权",
@@ -101,7 +101,7 @@ public class InitialApplication {
                 )
         );
         categories.put(
-                new Category("分布式应用组件", "fenbushijisuan"),
+                new Category("分布式应用组件", "distribute"),
                 Arrays.asList(
                         "分布式锁",
                         "消息队列",
@@ -126,7 +126,7 @@ public class InitialApplication {
                 )
         );
         categories.put(
-                new Category("服务器", "fuwuqi"),
+                new Category("服务器", "server"),
                 Arrays.asList(
                         "Web服务器",
                         "Web（Servlet）容器",
