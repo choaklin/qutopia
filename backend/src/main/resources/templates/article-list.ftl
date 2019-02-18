@@ -150,6 +150,13 @@
         <!-- 底部菜单 -->
         <@footer/>
 
+        <!-- 返回最顶部 -->
+        <div id="back_to_top" class="back-to-top">
+            <a class="toTop" href="#top">
+                <i class="iconfont icon-up"></i>
+            </a>
+        </div>
+
         <script type="text/javascript" src="../public/lib/jquery/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="../public/lib/nprogress/nprogress.js"></script>
         <script type="text/javascript" src="../public/lib/nicescroll/jquery.nicescroll.min.js"></script>
@@ -201,6 +208,7 @@
                 });
 
                 var data = {
+                    screenHeight: document.documentElement.clientHeight,
                     isSearchBarDisplay: false,
                     /**
                      * 空字符，代表全部文章
@@ -216,6 +224,7 @@
 
                 var node = {
                     niceScroll: null,
+                    backToTopBtn: $('#back_to_top'),
 
                     searchBar: $('#search_bar'),
                     searchBarCategory: $('#search_bar_category'),
@@ -397,8 +406,16 @@
                         this.nextPageBtnClickHandle();
 
                         // 初始化滚动条和分页组件
+                        this.backToTopClickHandle();
                         node.niceScroll = $("body").niceScroll();
                         utils.refreshPager(pageNumber, totalPages)
+                    },
+
+                    backToTopClickHandle: function() {
+                        node.backToTopBtn.on('click', function (e) {
+                            e.preventDefault();
+                            node.niceScroll.doScrollTop(0, 200);
+                        });
                     },
 
                     /**
@@ -494,6 +511,16 @@
                 };
 
                 event.publish();
+
+                window.onscroll = function () {
+                    var offset = node.backToTopBtn.offset();
+                    var offsetY = offset.top;
+                    if (offsetY >= data.screenHeight) {
+                        node.backToTopBtn.addClass('btt-visible');
+                    } else {
+                        node.backToTopBtn.removeClass('btt-visible')
+                    }
+                };
             });
         </script>
     </body>

@@ -39,7 +39,7 @@
 
         <!-- 内容主题 -->
         <main class="container">
-            <div class="container-wrap">
+            <div class="container-wrap" style="flex-direction: column">
                 <article class="post" style="display: block;">
                     <!-- thumbnail & title -->
                     <div class="thumbnail" style="background-image: url(../../public/images/tourist/chaka.JPG)">
@@ -282,6 +282,20 @@ public class CGLibDynamicProxy implements MethodInterceptor {
                         </div>
                     </footer>
                 </article>
+
+                <!-- 评论区域 -->
+
+                <!-- 附近文章,  -->
+                <nav class="nearby">
+                    <a class="prev" href="">
+                        <div class="btn"><i class="iconfont icon-left">上一篇</i></div>
+                        <span>Win32汇编学习(10)：对话框(1)</span>
+                    </a>
+                    <a class="next" href="">
+                        <div class="btn"><i class="iconfont icon-right">下一篇</i></div>
+                        <span>Win32汇编学习(10)：对话框(3)</span>
+                    </a>
+                </nav>
             </div>
         </main>
 
@@ -303,17 +317,43 @@ public class CGLibDynamicProxy implements MethodInterceptor {
 
         <!-- 侧边固定菜单 -->
         <aside></aside>
+
+        <!-- 返回最顶部 -->
+        <div id="back_to_top" class="back-to-top">
+            <a class="toTop" href="#top">
+                <i class="iconfont icon-up"></i>
+            </a>
+        </div>
     </body>
 
+    <script src="../../public/lib/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
     <script src="../../public/lib/prism/clipboard.min.js" type="text/javascript"></script>
     <script src="../../public/lib/prism/prism.js" type="text/javascript"></script>
-    <script src="../../public/lib/smooth-scroll/smooth-scroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../public/lib/nicescroll/jquery.nicescroll.min.js"></script>
     <script src="../../public/lib/svg/snap.svg-min.js"></script>
     <script src="../../public/lib/classie.js"></script>
     <script src="../../public/js/off-canvas.min.js"></script>
 
     <script>
-        (function() {
-        })();
+
+        $(document).ready(function () {
+            var screenHeight = document.documentElement.clientHeight;
+            var niceScroll = $('body').niceScroll();
+            var backToTopBtn = $('#back_to_top');
+            backToTopBtn.on('click', function (e) {
+                e.preventDefault();
+                niceScroll.doScrollTop(0, 200);
+            });
+
+            window.onscroll = function () {
+                var offset = backToTopBtn.offset();
+                var offsetY = offset.top;
+                if (offsetY >= screenHeight) {
+                    backToTopBtn.addClass('btt-visible');
+                } else {
+                    backToTopBtn.removeClass('btt-visible')
+                }
+            };
+        });
     </script>
 </html>

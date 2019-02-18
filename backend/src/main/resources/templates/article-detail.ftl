@@ -41,6 +41,22 @@
 						</div>
 					</footer>
 				</article>
+
+				<nav class="nearby">
+					<a class="prev" href="">
+						<div class="btn"><i class="iconfont icon-left">上一篇</i></div>Win32汇编学习(10)：对话框(1)
+					</a>
+					<a class="next" href="">
+						<div class="btn"><i class="iconfont icon-right">下一篇</i></div>Win32汇编学习(10)：对话框(3)
+					</a>
+				</nav>
+
+				<!-- 返回最顶部 -->
+				<div id="back_to_top" class="back-to-top">
+					<a class="toTop" href="#top">
+						<i class="iconfont icon-up"></i>
+					</a>
+				</div>
 			</div>
 		</main>
 
@@ -60,15 +76,23 @@
 	<script>
         // initial post table of content
 		$(document).ready(function () {
-            // tocbot.init({
-            //     tocSelector: '.js-toc',
-            //     contentSelector: '.post',
-            //     headingSelector: 'h1,h2,h3',
-            //     positionFixedSelector: '.js-toc',
-            //     headingsOffset: 10,
-            //     collapseDepth: 3
-            // });
-            $('body').niceScroll();
+            var screenHeight = document.documentElement.clientHeight;
+            var niceScroll = $('body').niceScroll();
+            var backToTopBtn = $('#back_to_top');
+            backToTopBtn.on('click', function (e) {
+                e.preventDefault();
+                niceScroll.doScrollTop(0, 200);
+            });
+
+            window.onscroll = function () {
+                var offset = backToTopBtn.offset();
+                var offsetY = offset.top;
+                if (offsetY >= screenHeight) {
+                    backToTopBtn.addClass('btt-visible');
+                } else {
+                    backToTopBtn.removeClass('btt-visible')
+                }
+            };
         });
 	</script>
 </html>
