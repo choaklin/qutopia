@@ -14,6 +14,7 @@
 
         <nav class="menu">
             <menu class="icon-list">
+                <a href="/"><i class="iconfont icon-home"></i><span>主页</span></a>
                 <a href="/article"><i class="iconfont icon-category"></i><span>博客</span></a>
                 <a href="/about"><i class="iconfont icon-about"></i><span>关于</span></a>
             </menu>
