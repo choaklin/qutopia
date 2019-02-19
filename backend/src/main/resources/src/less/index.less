@@ -1,0 +1,136 @@
+// Core variables and mixins
+@import "module/variables";
+@import "module/mixins";
+
+// Reset and dependencies
+@import "module/reset";
+@import "module/reset-lib";
+
+
+canvas {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.half-range {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.person {
+  position: relative;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+
+  .figure {
+    float: left;
+    position: relative;
+    left: 50%;
+    margin-top: 18%;
+    transition: all .5s ease;
+
+    img {
+      position: relative;
+      left: -50%;
+      width: 120px;
+      height: 120px;
+      border-radius: 60px;
+      transition: all .5s ease;
+    }
+  }
+
+  .sign {
+    position: relative;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 37%;
+    clear: left;
+  }
+
+  .nav {
+    float: left;
+    position: relative;
+    left: 50%;
+    margin-top: 13%;
+
+    .menu {
+      position: relative;
+      left: -50%;
+      float: left;
+      padding: 5px 10px;
+      margin: 0 10px;
+      border-top: 1px solid #ffffff;
+
+      width: 22px;
+      font-size: 22px;
+      line-height: 36px;
+      color: #999999;
+      a {
+        color: #999999;
+      }
+
+      &:hover {
+        a {
+          color: black;
+        }
+        cursor: pointer;
+        border-top: 1px solid #464646!important;
+        color: #464646!important;
+      }
+    }
+  }
+
+  .link {
+    float: left;
+    position: relative;
+    left: 50%;
+    margin-top: 4%;
+    clear: left;
+
+    .item{
+      position: relative;
+      left: -50%;
+      float: left;
+      padding: 5px 15px;
+    }
+
+    img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}
+
+.tourist {
+  position: relative;
+
+  ul {
+    position: relative;
+    list-style: none;
+    margin: 0px;
+
+    li {
+      margin: 0px;
+      padding: 0px;
+      position: relative;
+      width: 100%;
+      display: inline-block;
+
+      img {
+        width: 100%;
+        margin: 0px;
+        vertical-align: top;
+      }
+    }
+  }
+
+}

@@ -18,7 +18,10 @@ function fadeOut (ele, speed) {
 function fadeIn (ele, speed) {
     var opacity = 0;
     var eachAdd = 1/speed;
+
+    // 先展示，但是透明要设置为0，即不可见
     ele.style.display = 'block'
+    ele.style.opacity = 0;
     var timer = setInterval(function () {
         opacity += eachAdd;
         ele.style.opacity = opacity;
@@ -64,7 +67,7 @@ var init = {
                 welcomeRotate.step();
                 welcomeRotate.draw();
             }
-        }
+        };
         c1.width = welcomeRotate.w;
         c1.height  = welcomeRotate.h;
         ctx1.strokeStyle = 'rgba(0, 0, 0, 0.75)';
@@ -76,7 +79,7 @@ var init = {
         var welcome = document.getElementById('welcome');
         var timer = setTimeout(function () {
             fadeOut(welcome, 50)
-        }, 1500)
+        }, 1000)
     },
 	
 	showMain: function () {
@@ -84,5 +87,5 @@ var init = {
 		var timer = setTimeout(function () {
 			fadeIn(main, 30)
 		}, 4000)
-	},
+	}
 };
