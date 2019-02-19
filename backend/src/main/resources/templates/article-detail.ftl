@@ -21,7 +21,7 @@
 				<#--<nav class="toc js-toc"></nav>-->
 				<article class="post" style="display: block;">
 					<!-- thumbnail & title -->
-					<div class="thumbnail" style="background-image: url(../public/images/tourist/chaka.JPG)">
+					<div class="thumbnail" style="background-image: url(../public/images/tourist/chaka.jpg)">
 						<h1 class="title">${article.title}</h1>
 					</div>
 
