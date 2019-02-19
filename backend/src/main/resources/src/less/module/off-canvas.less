@@ -9,25 +9,41 @@
   transform: translate3d(-280px,0,0);
   transition: transform 0.4s;
 
+  .figure {
+    position: relative;
+    z-index: 1000;
+    width: 120px;
+    height: 120px;
+    margin: 80px auto 0;
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 60px;
+      -webkit-transition: all .5s ease;
+      transition: all .5s ease;
+    }
+  }
+
   .menu {
     position: relative;
     z-index: 1000;
-    padding: 3em 1em 0;
+    padding: 50px 80px 0;
 
     .icon-list a {
       display: block;
-      padding: 0.8em;
+      padding: 1.5rem;
 
       span {
-        margin-left: 10px;
-        font-size: 0.85em;
+        margin-left: 20px;
+        font-size: 1.5rem;
         font-weight: 700;
         vertical-align: middle;
       }
     }
 
     .icon-list i {
-      font-size: 1.5em;
+      font-size: 20px;
       vertical-align: middle;
       color: #282a35;
     }

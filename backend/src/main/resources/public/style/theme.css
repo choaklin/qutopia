@@ -1,12 +1,2 @@
-html,
-body {
-  background: #f7f7f7;
-}
-.off-canvas a {
-  color: #b8b7ad;
-}
-.off-canvas a:hover,
-.off-canvas a:focus {
-  color: #c94e50;
-}
+html,body{background:#f7f7f7}.off-canvas a{color:#b8b7ad}.off-canvas a:hover,.off-canvas a:focus{color:#c94e50}
 /*# sourceMappingURL=theme.css.map */
