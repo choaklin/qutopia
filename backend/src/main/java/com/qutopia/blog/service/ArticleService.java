@@ -1,8 +1,11 @@
 package com.qutopia.blog.service;
 
+import com.qutopia.blog.cache.CacheUtil;
 import com.qutopia.blog.entity.ArticleDO;
+import com.qutopia.blog.entity.CategoryDO;
 import com.qutopia.blog.entity.TagDimension;
 import com.qutopia.blog.repository.ArticleRepository;
+import com.qutopia.blog.repository.CategoryRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
 import com.qutopia.blog.service.domain.article.*;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,6 +43,12 @@ public class ArticleService {
     @Autowired
     private DomainMapper domainMapper;
     @Autowired
+    private CacheUtil cacheUtil;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private ArticleRepository articleRepository;
     @Autowired
     private TagService tagService;
@@ -48,13 +58,19 @@ public class ArticleService {
     /**
      * 新增一条文章的记录
      *
-     * @param create
+     * @param form
      */
-    public void create(ArticleCreateAO create) {
+    public void create(ArticleCreateAO form) {
 
-        ArticleDO article = domainMapper.fromCreateAO(create);
+        ArticleDO article = domainMapper.fromCreateAO(form);
+        if (StringUtils.isNotBlank(form.getCategoryId())) {
+            CategoryDO categoryDO = categoryRepository.findById(form.getCategoryId());
+            Objects.nonNull(categoryDO);
+            article.setCategoryPath(categoryDO.getPath());
+        }
+
         List<String> tags;
-        HashMap<String, String> tagMap = create.getTagMap();
+        HashMap<String, String> tagMap = form.getTagMap();
         if (tagMap != null) {
             tags = new ArrayList<>(tagMap.size());
 
@@ -76,8 +92,48 @@ public class ArticleService {
         articleRepository.create(article);
     }
 
-    public void update() {
+    private List<String> tags(HashMap<String, String> tagMap) {
+        if (tagMap != null) {
+            List<String> tagIds = new ArrayList<>(tagMap.size());
 
+            tagMap.forEach((tagName, tagId) -> {
+                if (StringUtils.isBlank(tagId)) {
+                    tagIds.add(
+                            tagService.create(TagDimension.TECHNIQUE, tagName)
+                    );
+                } else {
+                    tagIds.add(tagId);
+                }
+            });
+        }
+
+        return Collections.emptyList();
+    }
+
+    public void update(String id, ArticleUpdateAO form) {
+
+        ArticleDO target = articleRepository.findById(id);
+        Objects.requireNonNull(target, "未找到指定ID的文章: " + id);
+
+        String oldCategoryId = target.getCategoryId();
+        String newCategoryId = form.getCategoryId();
+        String categoryPath = null;
+        if (!oldCategoryId.equals(newCategoryId)) {
+            // 更新新旧文章分类的文章数
+            categoryService.rollArticleCount(oldCategoryId, false);
+
+            CategoryDO newCategory = categoryService.rollArticleCount(newCategoryId, true);
+            categoryPath = newCategory.getPath();
+        }
+
+        domainMapper.updateArticle(target, form);
+        if (categoryPath != null) {
+            target.setCategoryPath(categoryPath);
+        }
+        List<String> tagIds = this.tags(form.getTagMap());
+        target.setTags(tagIds);
+        target.setLastUpdateTime(LocalDateTime.now());
+        articleRepository.update(target);
     }
 
 
@@ -104,26 +160,17 @@ public class ArticleService {
         if (sourcePage.getNumberOfElements() > 0) {
 
             List<ArticleDO> sources = sourcePage.getContent();
-            List<String> tagIds;
-            Map<String, ArticleTag> tagCache = new HashMap<>();
 
             List<ArticlePool> dests = new ArrayList<>(sources.size());
             for (ArticleDO source : sources) {
 
                 ArticlePool dest = domainMapper.toPoolArticle(source);
-                tagIds = source.getTags();
+
+                List<String> tagIds = source.getTags();
                 if (CollectionUtils.isNotEmpty(tagIds)) {
                     List<ArticleTag> tags = new ArrayList<>(tagIds.size());
-
                     for (String tagId: tagIds) {
-                        ArticleTag tag = tagCache.get(tagId);
-                        if (tag == null) {
-
-                            tag = ArticleTag.buildFriendly(
-                                    tagService.get(tagId)
-                            );
-                            tagCache.put(tagId, tag);
-                        }
+                        ArticleTag tag = ArticleTag.buildFriendly(cacheUtil.getCacheTag(tagId));
                         tags.add(tag);
                     }
                     dest.setArticleTags(tags);
@@ -150,6 +197,16 @@ public class ArticleService {
         ArticleDO source = articleRepository.findById(id);
         if (source != null) {
             dest = domainMapper.toArticle(source);
+
+            List<String> tagIds = source.getTags();
+            if (CollectionUtils.isNotEmpty(tagIds)) {
+                List<ArticleTag> tags = new ArrayList<>(tagIds.size());
+                for (String tagId: tagIds) {
+                    ArticleTag tag = ArticleTag.buildFriendly(cacheUtil.getCacheTag(tagId));
+                    tags.add(tag);
+                }
+                dest.setArticleTags(tags);
+            }
         }
         return dest;
     }
@@ -165,8 +222,12 @@ public class ArticleService {
 
         ArticleDO source = articleRepository.findById(id);
         if (source != null) {
-            dest = domainMapper.toArticle(source);
 
+            // 更新浏览数
+            int viewCount = source.getViewCount() + 1;
+            articleRepository.updateOne(id, Update.update("viewCount", viewCount));
+
+            dest = domainMapper.toArticle(source);
             // 解析markdown
             if (StringUtils.isNotBlank(dest.getContent())) {
                 Node node = parser.parse(dest.getContent());

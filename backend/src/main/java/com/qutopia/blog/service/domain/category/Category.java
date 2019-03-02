@@ -23,6 +23,11 @@ public class Category {
     private String parentId;
 
     /**
+     * 分类路径
+     */
+    private String path;
+
+    /**
      * 名称
      */
     private String name;
@@ -36,6 +41,11 @@ public class Category {
      * 文章数量
      */
     private int articleCount;
+
+    /**
+     * 排序编号
+     */
+    private int sortNo;
 
     /**
      * 子分类

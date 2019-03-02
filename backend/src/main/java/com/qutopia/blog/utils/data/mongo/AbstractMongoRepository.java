@@ -44,9 +44,9 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
     private final String reduce_suffix = "_reduce.js";
 
     /**
-     * list条数最大获取量默认是5W
+     * list条数最大获取量默认是1Q
      */
-    private long MAX_LIST = 50000;
+    private long MAX_LIST = 1000;
 
     protected Class<T> entityClass;
     protected String entityClassName;

@@ -1,9 +1,9 @@
 package com.qutopia.blog.gateway.web.front;
 
+import com.qutopia.blog.cache.CacheUtil;
+import com.qutopia.blog.entity.TagDimension;
 import com.qutopia.blog.gateway.TemplateVariable;
 import com.qutopia.blog.service.ArticleService;
-import com.qutopia.blog.service.CategoryService;
-import com.qutopia.blog.service.TagService;
 import com.qutopia.blog.service.domain.article.Article;
 import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
@@ -34,11 +34,10 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
+    private CacheUtil cacheUtil;
+
+    @Autowired
     private ArticleService articleService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private TagService tagService;
 
 
     /**
@@ -50,8 +49,8 @@ public class ArticleController {
 
         //== 文章列表、文章分类、标签
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
-        List<Category> categories = categoryService.listByParentId(CategoryService.ROOT_NODE);
-        List<Tag> tags = tagService.list(null);
+        List<Category> categories = cacheUtil.getFrontCategories();
+        List<Tag> tags = cacheUtil.getFrontTag(TagDimension.TECHNIQUE);
 
         model.addAttribute(TemplateVariable.ARTICLES, articles.getContent());
         model.addAttribute(TemplateVariable.CATEGORIES, categories);

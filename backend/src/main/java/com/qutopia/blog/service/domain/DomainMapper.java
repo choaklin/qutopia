@@ -10,6 +10,7 @@ import com.qutopia.blog.service.domain.article.ArticleUpdateAO;
 import com.qutopia.blog.service.domain.category.Category;
 import com.qutopia.blog.service.domain.tag.Tag;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface DomainMapper {
 
     ArticleDO fromCreateAO(ArticleCreateAO create);
 
-    ArticleDO fromUpdateAO(ArticleUpdateAO update);
+    void updateArticle(@MappingTarget ArticleDO target, ArticleUpdateAO update);
 
     ArticlePool toPoolArticle(ArticleDO source);
 

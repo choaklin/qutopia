@@ -16,6 +16,11 @@ public class Article {
     private String id;
 
     /**
+     * 分类ID
+     */
+    private String categoryId;
+
+    /**
      * 标题
      */
     private String title;

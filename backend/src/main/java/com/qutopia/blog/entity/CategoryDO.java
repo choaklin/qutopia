@@ -49,4 +49,16 @@ public class CategoryDO implements Serializable {
      * 排序序号
      */
     private int sortNo;
+
+
+    public void rollArticleCount(boolean up) {
+
+        if (up) {
+            articleCount += 1;
+        } else {
+            if (articleCount > 0) {
+                articleCount -= 1;
+            }
+        }
+    }
 }

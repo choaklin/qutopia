@@ -36,6 +36,7 @@ public class TagService {
         tagDO.setDimension(dimension);
         tagDO.setInternal(false);
         tagDO.setName(name);
+        tagDO.setReferenceCount(1);
         tagDO.setPublishedCount(1);
         return tagRepository.create(tagDO).getId();
     }

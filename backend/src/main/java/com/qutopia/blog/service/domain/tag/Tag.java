@@ -1,5 +1,6 @@
 package com.qutopia.blog.service.domain.tag;
 
+import com.qutopia.blog.entity.TagDimension;
 import lombok.Data;
 
 /**
@@ -12,6 +13,11 @@ public class Tag {
      * 标签ID
      */
     private String id;
+
+    /**
+     * 标签的所属维度
+     */
+    private TagDimension dimension;
 
     /**
      * 名字

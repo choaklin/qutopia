@@ -7,6 +7,9 @@ import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 
 /**
+ * 文章的表单对象。
+ * <p>正常请客下，新增和修改操作的基本相同，只不过修改时实体有带了id，而ID可以通过路径传递</p>
+ *
  * @author choaklin
  * @version 0.0.1
  * @date 2018/8/11

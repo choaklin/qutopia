@@ -8,9 +8,11 @@ import com.qutopia.blog.service.domain.category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 分类的服务
@@ -27,6 +29,26 @@ public class CategoryService {
     private DomainMapper domainMapper;
     @Autowired
     private CategoryRepository categoryRepository;
+
+
+    public CategoryDO rollArticleCount(String id, boolean up) {
+
+        CategoryDO target = categoryRepository.findById(id);
+        Objects.requireNonNull(target, "不存在指定ID的文章分类");
+        target.rollArticleCount(up);
+        Update update = Update.update("articleCount", target.getArticleCount());
+        categoryRepository.updateOne(id, update);
+
+        String parentId = target.getParentId();
+        if (!"0".equals(parentId)) {
+            CategoryDO parent = categoryRepository.findById(parentId);
+            if (parent != null) {
+                parent.rollArticleCount(up);
+                categoryRepository.updateOne(parentId, update);
+            }
+        }
+        return target;
+    }
 
 
     public List<Category> listByParentId(String parentId) {
