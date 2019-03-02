@@ -4,6 +4,7 @@ import com.qutopia.blog.entity.*;
 import com.qutopia.blog.repository.CategoryRepository;
 import com.qutopia.blog.repository.TagRepository;
 import com.qutopia.blog.repository.UserRepository;
+import com.qutopia.blog.utils.data.commons.UUIDGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -156,6 +157,10 @@ public class InitialApplication {
                 parentId = parent.getId();
             } else {
                 CategoryDO categoryDO = new CategoryDO();
+                parentId = UUIDGenerator.generate();
+                categoryDO.setId(parentId);
+                categoryDO.setPath(parentId);
+
                 categoryDO.setName(parentName);
                 categoryDO.setIcon(icon);
                 categoryDO.setSortNo(parentIndex++);
@@ -167,8 +172,11 @@ public class InitialApplication {
             int subIndex = 1;
             for (String subNodeName : subNodeNames) {
                 CategoryDO categoryDO = new CategoryDO();
+                String childId = UUIDGenerator.generate();
+                categoryDO.setId(childId);
                 categoryDO.setName(subNodeName);
                 categoryDO.setParentId(parentId);
+                categoryDO.setPath(parentId + "/" + childId);
                 categoryDO.setSortNo(subIndex++);
                 subNodes.add(categoryDO);
             }
