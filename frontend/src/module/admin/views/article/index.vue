@@ -18,7 +18,7 @@
         <div style="margin-top: 30px">
             <el-table :data="pagination.content" border style="width: 100%" :height="487">
                 <el-table-column prop="title" label="标题" width="260" showOverflowTooltip></el-table-column>
-                <el-table-column prop="province" label="分类" width="100" align="center"></el-table-column>
+                <el-table-column prop="category" label="分类" width="100" align="center"></el-table-column>
                 <el-table-column prop="tags" label="标签">
                     <template slot-scope="scope">
                         <el-tag size="small" v-for="tag in scope.row.articleTags" :key="tag.id">{{tag.name}}</el-tag>
@@ -31,7 +31,7 @@
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="handleClick(scope.row)">预览</el-button>
                         <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
-                        <el-button type="text" size="small">删除</el-button>
+                        <el-button type="text" size="small" @click="del(scope.row)">删除</el-button>
                         <el-button type="text" size="small">评论管理</el-button>
                     </template>
                 </el-table-column>
@@ -51,6 +51,7 @@
 
 <script>
     import vm from 'vue';
+    import httpClient from '../../util/http-client';
 
     export default {
         name: "post-index",
@@ -64,7 +65,7 @@
             return {
 
                 resource: {
-                    _article_manage: '/admin/articleManage/'
+                    _article_manage: '/articleManage/'
                 },
 
                 formInline: {
@@ -87,21 +88,41 @@
             },
 
             loadTableData: function () {
-                vm.axios.get(this.resource._article_manage).then((response) => {
+                httpClient.get(this.resource._article_manage).then((response) => {
+                    // let responseData = response.data;
 
-                    if (response.status === 200) {
-                        let responseData = response.data;
-
-                        this.pagination.pageNumber = responseData.number;
-                        this.pagination.pageSize = responseData.size;
-                        this.pagination.content = responseData.content;
-                        this.pagination.totalElements = responseData.totalElements;
-                    }
+                    this.pagination.pageNumber = response.number;
+                    this.pagination.pageSize = response.size;
+                    this.pagination.content = response.content;
+                    this.pagination.totalElements = response.totalElements;
                 });
             },
 
             edit: function (item) {
-                console.log(item);
+
+                this.$router.push({
+                    path: '/article/edit/' + item.id
+                });
+            },
+
+            del: function (item) {
+
+                this.$confirm("确定要移除【" + item.title + '】至回收站?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                }).then(() => {
+
+                    httpClient.patch(this.resource._article_manage + item.id + '/delete')
+                        .then(() => {
+                            this.loadTableData();
+
+                            this.$message({
+                                type: 'success',
+                                message: '操作成功!'
+                            });
+                        });
+                });
             }
         }
     }

@@ -25,16 +25,10 @@
                 </el-form-item>
 
                 <el-form-item required label="分类">
-                    <el-select size="middle" v-model="article.categoryId">
-                        <el-option v-for="item in categories"
-                                   :key="item.id"
-                                   :label="item.name"
-                                   :value="item.id">
-                        </el-option>
-                    </el-select>
+                    <el-cascader v-model="selectedCategory" :options="categories" filterable change-on-select></el-cascader>
                 </el-form-item>
 
-                <el-form-item label="标签">
+                <el-form-item required label="标签">
                     <el-tag closable :disable-transitions="false"
                             v-for="(value, key) in article.tagMap" :key="key" @close="removeTag(key)">
                         {{key}}
@@ -118,7 +112,6 @@
                 tagName: '',
 
                 article: {
-                    type: 1,    // 技术类
                     title: '',
                     overview: '',
                     content: '',
@@ -131,7 +124,8 @@
                     // options: [],
                     commentable: true,
                     published: false
-                }
+                },
+                selectedCategory: []
             }
         },
 
@@ -171,6 +165,17 @@
                 Vue.axios.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
                     if (response.status === 200) {
                         this.categories = response.data;
+                        this.categories.forEach(item => {
+                            item.value = item.id;
+                            item.label = item.name;
+
+                            if (item.children) {
+                                item.children.forEach(child => {
+                                    child.value = child.id;
+                                    child.label = child.name;
+                                })
+                            }
+                        })
                     }
                 })
             },
@@ -217,10 +222,42 @@
             submit: function (published) {
                 let article = this.article;
                 article.published = published;
+
+                let hierarchyCount = this.selectedCategory.length;
+                if ( hierarchyCount < 2 ) {
+                    this.$message({
+                        message: '请选择一个二级文章分类',
+                        type: 'warning'
+                    });
+                    return;
+                } else {
+                    // 使用第二级ID
+                    article.categoryId = this.selectedCategory[1];
+                }
+
+                let  tagCount = 0;
+                let tags = article.tagMap;
+                for (let tag in tags) {
+                    if (tags.hasOwnProperty(tag)) {
+                        tagCount += 1;
+                    }
+                }
+                if (tagCount < 1) {
+                    this.$message({
+                        message: '脑子呢，想不出一个标签吗？',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
                 Vue.axios.post(this.resource._article_manage, article)
                     .then((response) => {
                         if (response.status === 200) {
-                            alert("添加文章成功")
+                            this.$message({
+                                message: '文章添加成功',
+                                type: 'success'
+                            });
+                            this.$router.push({path: "/article/index"});
                         }
                     });
             }

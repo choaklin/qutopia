@@ -1,6 +1,7 @@
 package com.qutopia.blog.gateway.web.admin;
 
 
+import com.qutopia.blog.entity.TagDimension;
 import com.qutopia.blog.service.TagService;
 import com.qutopia.blog.service.domain.tag.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class TagManageController {
     private TagService tagService;
 
     @GetMapping(value = "list")
-    public List<Tag> list(String name) {
+    public List<Tag> list(TagDimension dimension, String name) {
 
-        return tagService.list(name);
+        return tagService.list(dimension, name);
     }
 }

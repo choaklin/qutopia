@@ -25,13 +25,15 @@
                 </el-form-item>
 
                 <el-form-item required label="分类">
-                    <el-select size="middle" v-model="article.categoryId">
-                        <el-option v-for="item in categories"
-                                   :key="item.id"
-                                   :label="item.name"
-                                   :value="item.id">
-                        </el-option>
-                    </el-select>
+                    <el-cascader v-model="selectedCategory" :options="categories" filterable change-on-select></el-cascader>
+
+                    <!--<el-select size="middle" v-model="article.categoryId">-->
+                        <!--<el-option v-for="item in categories"-->
+                                   <!--:key="item.id"-->
+                                   <!--:label="item.name"-->
+                                   <!--:value="item.id">-->
+                        <!--</el-option>-->
+                    <!--</el-select>-->
                 </el-form-item>
 
                 <el-form-item label="标签">
@@ -59,8 +61,8 @@
                 <!--</el-form-item>-->
 
                 <el-form-item style="text-align: center">
-                    <el-button type="primary" @click="submit(true)">发表文章</el-button>
-                    <el-button @click="submit(false)">保存草稿</el-button>
+                    <el-button type="primary" @click="submit(true)">保存更改</el-button>
+                    <el-button @click="cancel">取消编辑</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -70,15 +72,16 @@
 <script>
 
     import Vue from 'vue';
+    import httpClient from '../../util/http-client';
 
     export default {
         name: "article-increase",
         data: function () {
             return {
                 resource: {
-                    _category_manage: '/admin/categoryManage/',
-                    _tag_manage: '/admin/tagManage/',
-                    _article_manage: '/admin/articleManage/'
+                    _category_manage: 'categoryManage/',
+                    _tag_manage: 'tagManage/',
+                    _article_manage: 'articleManage/'
                 },
 
                 editorToolbar: {
@@ -116,8 +119,8 @@
                 tagInputVisible: false,
                 tagName: '',
 
+                articleId: null,
                 article: {
-                    type: 1,    // 技术类
                     title: '',
                     overview: '',
                     content: '',
@@ -130,7 +133,8 @@
                     // options: [],
                     commentable: true,
                     published: false
-                }
+                },
+                selectedCategory: []
             }
         },
 
@@ -149,14 +153,52 @@
                 }
             },
 
+            fetchArticle: function(id) {
+                httpClient({
+                    url: this.resource._article_manage + id,
+                    method: 'GET'
+                }).then((response) => {
+                    this.article.title = response.title;
+                    this.article.overview = response.overview;
+                    this.article.content = response.content;
+                    this.article.createType = response.createType;
+                    this.article.reproduceUrl = response.reproduceUrl;
+                    let categoryPath = response.categoryPath;
+                    if (categoryPath) {
+                        this.selectedCategory = categoryPath.split('/');
+                    }
+                    this.article.categoryId = this.selectedCategory.length == 2 ? this.selectedCategory[1] : null;
+
+                    // key是标签名称， value是标签ID
+                    // 非系统存在的标签value是空字符串
+                    let articleTags = response.articleTags;
+                    if (articleTags) {
+                        articleTags.forEach(item => {
+                            this.article.tagMap[item.name] = item.tagId;
+                        });
+                    }
+                    this.article.commentable = response.commentable;
+                    this.article.published = response.published;
+                });
+            },
+
             /**
              * 加载分类的数据
              */
             loadCategories: function() {
-                Vue.axios.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
-                    if (response.status === 200) {
-                        this.categories = response.data;
-                    }
+                httpClient.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
+                    this.categories = response;
+                    this.categories.forEach(item => {
+                        item.value = item.id;
+                        item.label = item.name;
+
+                        if (item.children) {
+                            item.children.forEach(child => {
+                                child.value = child.id;
+                                child.label = child.name;
+                            })
+                        }
+                    });
                 })
             },
 
@@ -168,16 +210,13 @@
             },
 
             fetchTags: function(name, callback) {
-                Vue.axios.get(this.resource._tag_manage + 'list?name=' + name).then((response) => {
-                    if (response.status === 200) {
-                        let data = response.data;
-                        if (data.length > 0) {
-                            data.forEach(function (p) {
-                                // 扩展value属性， el-autocomplete规范
-                                p.value = p.name;
-                            });
-                            callback(data);
-                        }
+                httpClient.get(this.resource._tag_manage + 'list?dimension=TECHNIQUE&name=' + name).then((response) => {
+                    if (response.length > 0) {
+                        response.forEach(function (p) {
+                            // 扩展value属性， el-autocomplete规范
+                            p.value = p.name;
+                        });
+                        callback(response);
                     }
                 })
             },
@@ -189,11 +228,12 @@
                     this.article.tagMap[this.tagName] = '';
                 }
                 this.tagInputVisible = false;
-                this.tagName = '';
+                this.tagName = null;
                 console.log(this.article.tagMap);
             },
 
-            removeTag(tagName) {
+            removeTag: function(tagName) {
+                // debugger
                 if (tagName) {
                     Vue.delete(this.article.tagMap, tagName);
                 }
@@ -202,19 +242,59 @@
             submit: function (published) {
                 let article = this.article;
                 article.published = published;
-                Vue.axios.post(this.resource._article_manage, article)
-                    .then((response) => {
-                        if (response.status === 200) {
-                            alert("添加文章成功")
-                        }
+
+                let hierarchyCount = this.selectedCategory.length;
+                if ( hierarchyCount < 2 ) {
+                    this.$message({
+                        message: '请选择一个二级文章分类',
+                        type: 'warning'
                     });
+                    return;
+                } else {
+                    // 使用第二级ID
+                    article.categoryId = this.selectedCategory[1];
+                }
+
+                let  tagCount = 0;
+                let tags = article.tagMap;
+                for (let tag in tags) {
+                    if (tags.hasOwnProperty(tag)) {
+                        tagCount += 1;
+                    }
+                }
+                if (tagCount < 1) {
+                    this.$message({
+                        message: '脑子呢，想不出一个标签吗？',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+                // Vue.axios.put(this.resource._article_manage + this.articleId, article)
+                httpClient({
+                    url: this.resource._article_manage + this.articleId,
+                    method: 'PUT',
+                    data: article
+                }).then((response) => {
+                    this.$message({
+                        message: '文章更新成功',
+                        type: 'success'
+                    });
+
+                    this.$router.push({path: "/article/index"});
+                });
+            },
+
+            cancel: function () {
+                this.$router.push({path: "/article/index"});
             }
         },
 
         created: function () {
-            console.log(this);
+            this.articleId = this.$route.params.id;
 
             this.loadCategories();
+            this.fetchArticle(this.$route.params.id)
         }
     }
 </script>

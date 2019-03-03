@@ -1,6 +1,7 @@
 package com.qutopia.blog.service;
 
 
+import com.qutopia.blog.cache.CacheUtil;
 import com.qutopia.blog.entity.CategoryDO;
 import com.qutopia.blog.repository.CategoryRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
@@ -28,26 +29,46 @@ public class CategoryService {
     @Autowired
     private DomainMapper domainMapper;
     @Autowired
+    private CacheUtil cacheUtil;
+    @Autowired
     private CategoryRepository categoryRepository;
 
 
     public CategoryDO rollArticleCount(String id, boolean up) {
 
         CategoryDO target = categoryRepository.findById(id);
-        Objects.requireNonNull(target, "不存在指定ID的文章分类");
+        Objects.requireNonNull(target, "不存在指定的文章分类");
         target.rollArticleCount(up);
         Update update = Update.update("articleCount", target.getArticleCount());
         categoryRepository.updateOne(id, update);
 
         String parentId = target.getParentId();
-        if (!"0".equals(parentId)) {
+        if (!ROOT_NODE.equals(parentId)) {
             CategoryDO parent = categoryRepository.findById(parentId);
             if (parent != null) {
                 parent.rollArticleCount(up);
+                update = Update.update("articleCount", parent.getArticleCount());
                 categoryRepository.updateOne(parentId, update);
             }
         }
+
+        // 更新缓存
+        cacheUtil.rollCategoryArticleCount(id, up);
         return target;
+    }
+
+
+
+    public CategoryDO replaceCategory(String currentId, String replacedId) {
+
+        if (!currentId.equals(replacedId)) {
+            // 更新新旧文章分类的文章数
+            this.rollArticleCount(currentId, false);
+
+            CategoryDO newCategory = this.rollArticleCount(replacedId, true);
+            return newCategory;
+        }
+        return null;
     }
 
 

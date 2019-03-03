@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @see com.qutopia.blog.entity.ArticleDO
+ */
 @Data
 public class Article {
 
@@ -19,6 +22,11 @@ public class Article {
      * 分类ID
      */
     private String categoryId;
+
+    /**
+     * 分类路径
+     */
+    private String categoryPath;
 
     /**
      * 标题

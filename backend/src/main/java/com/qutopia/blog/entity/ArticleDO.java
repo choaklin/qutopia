@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Document(collection = CollectionNames.ARTICLE)
@@ -103,4 +104,10 @@ public class ArticleDO {
      * 最后更新时间
      */
     private LocalDateTime lastUpdateTime;
+
+    /**
+     * 是否可用，不可用意味着逻辑删除，丢弃在回收站
+     */
+    private boolean available;
+
 }

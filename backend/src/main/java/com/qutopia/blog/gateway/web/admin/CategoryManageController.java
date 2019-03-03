@@ -1,5 +1,6 @@
 package com.qutopia.blog.gateway.web.admin;
 
+import com.qutopia.blog.cache.CacheUtil;
 import com.qutopia.blog.service.CategoryService;
 import com.qutopia.blog.service.domain.category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.List;
 @RequestMapping("categoryManage")
 public class CategoryManageController {
 
+    @Autowired
+    private CacheUtil cacheUtil;
     @Autowired
     private CategoryService categoryService;
 

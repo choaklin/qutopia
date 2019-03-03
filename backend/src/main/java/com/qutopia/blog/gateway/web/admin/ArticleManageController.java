@@ -33,7 +33,6 @@ public class ArticleManageController {
     public Page<ArticlePool> index(@PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable page, @ModelAttribute ArticlePageQuery pageQuery) {
 
         log.info(">> 进入index方法");
-        pageQuery.setPublished(true);
         return articleService.page(page, pageQuery);
     }
 
@@ -48,12 +47,26 @@ public class ArticleManageController {
     public void update(@PathVariable @NotBlank(message = "指定修改的文章ID不能空白") String id, @RequestBody ArticleUpdateAO update) {
 
         log.info(">> update [{}] with [{}]", update);
+        articleService.update(id, update);
+    }
+
+    @PatchMapping("{id}/delete")
+    public void delete(@PathVariable String id) {
+
+        articleService.toggleAvailable(id, false);
+    }
+
+    @PatchMapping("{id}/recover")
+    public void recover(@PathVariable String id) {
+
+        articleService.toggleAvailable(id, true);
     }
 
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
 
         log.info(">> delete [{}] article", id);
+        articleService.destroy(id);
     }
 
     @GetMapping("{id}")

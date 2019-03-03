@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author choaklin
@@ -46,8 +47,13 @@ public class ArticleUpdateAO {
      * <p>key: 标签名称, value: 标签ID(系统已存在时)或空字符串, 非Null</p>
      * <p>空字符串的标签要进行新增操作</p>
      */
-    @NotEmpty(message = "")
+    @NotEmpty(message = "文章所属的标签不能为空")
     private HashMap<String, String> tagMap;
+
+    /**
+     * 文章删除的标签集合
+     */
+    private List<String> removeTagIds;
 
     /**
      * 是否允许评论

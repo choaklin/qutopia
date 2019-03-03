@@ -59,4 +59,24 @@ public class TagDO implements Serializable {
      */
     private int publishedCount;
 
+
+    public void rollArticleCount(boolean up, boolean published) {
+
+        if (up) {
+            referenceCount += 1;
+            if (published) {
+                publishedCount += 1;
+            }
+        } else {
+            if (referenceCount > 0) {
+                referenceCount -= 1;
+            }
+            if (published) {
+                if (publishedCount > 0) {
+                    publishedCount -= 1;
+                }
+            }
+        }
+    }
+
 }

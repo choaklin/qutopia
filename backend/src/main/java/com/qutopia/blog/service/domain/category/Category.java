@@ -51,4 +51,16 @@ public class Category {
      * 子分类
      */
     private List<Category> children;
+
+
+    public void rollArticleCount(boolean up) {
+
+        if (up) {
+            articleCount += 1;
+        } else {
+            if (articleCount > 0) {
+                articleCount -= 1;
+            }
+        }
+    }
 }

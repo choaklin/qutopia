@@ -30,6 +30,6 @@ public class ArticlePageQuery {
     /**
      * 是否已发布
      */
-    private boolean published;
+    private Boolean published;
 
 }

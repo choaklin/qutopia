@@ -81,6 +81,7 @@ httpClient.interceptors.response.use(
      */
     response => {
         if (response.status !== 200) {
+            debugger
             const res = response.data
             Message({
                 message: res.message,
@@ -108,9 +109,21 @@ httpClient.interceptors.response.use(
     },
 
     error => {
-        console.log('err' + error) // for debug
+        // debugger
+        let response = error.response;
+        let errorMsg = '[' + response.status + '] ';
+
+        switch (response.status) {
+            case 500:
+                errorMsg += response.data.message;
+                break;
+            case 504:
+                errorMsg += '客户端请求处理超时，请检查服务端是否正常运行!';
+                break
+            default: errorMsg = error.message;
+        }
         Message({
-            message: error.message,
+            message: errorMsg,
             type: 'error',
             duration: 5 * 1000
         })

@@ -75,6 +75,22 @@ public class CacheUtil implements ApplicationRunner {
     }
 
     /**
+     * 更新缓存里的文章分类的文章数量
+     * @param categoryId
+     * @param up
+     */
+    public void rollCategoryArticleCount(String categoryId, boolean up) {
+
+        Category category = categories.get(categoryId);
+        category.rollArticleCount(up);
+
+        if (!CategoryService.ROOT_NODE.equals(category.getParentId())) {
+            categories.get(category.getParentId()).rollArticleCount(up);
+        }
+    }
+
+
+    /**
      * 获取门户的分类
      * @return
      */
@@ -107,6 +123,13 @@ public class CacheUtil implements ApplicationRunner {
         return snapshot;
     }
 
+    public Category getCacheCategory(String id) {
+        if (StringUtils.isBlank(id)) {
+            return null;
+        }
+        return categories.get(id);
+    }
+
 
     public List<Tag> getFrontTag(TagDimension dimension) {
         Objects.requireNonNull(dimension, "请指定标签的应用维度");
@@ -121,5 +144,17 @@ public class CacheUtil implements ApplicationRunner {
             return null;
         }
         return tags.get(id);
+    }
+
+    public void refresh(TagDO tag) {
+        Objects.requireNonNull(tag);
+
+        Tag current = tags.get(tag.getId());
+        if (current != null) {
+            current.setReferenceCount(tag.getReferenceCount());
+            current.setPublishedCount(tag.getPublishedCount());
+        } else {
+            tags.put(tag.getId(), domainMapper.toTag(tag));
+        }
     }
 }
