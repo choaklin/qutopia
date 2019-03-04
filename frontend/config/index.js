@@ -3,6 +3,9 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const device = process.env.DEVICE_ENV || 'admin'
+
+var htmlTemplate =  './src/module/' + device + '/index.html'
 
 module.exports = {
     dev: {
@@ -61,12 +64,16 @@ module.exports = {
 
     build: {
         // Template for index.html
-        index: path.resolve(__dirname, '../dist/index.html'),
+        // index: path.resolve(__dirname, '../dist/index.html'),
+        index: path.resolve(__dirname, '../dist' , device , 'index.html'),
+        // 加入html入口
+        htmlTemplate: htmlTemplate,
 
         // Paths
-        assetsRoot: path.resolve(__dirname, '../dist'),
+        // assetsRoot: path.resolve(__dirname, '../dist'),
+        assetsRoot: path.resolve(__dirname, '../dist' , device),
         assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
+        assetsPublicPath: './',
 
         /**
          * Source Maps

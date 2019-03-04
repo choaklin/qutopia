@@ -13,6 +13,14 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/prod.env')
 
+// 设置device相关变量
+var device = 'admin'
+//设置入口
+var extraPolyFill = require('./device-conf').polyfills ||[]
+var entry = {
+    index: extraPolyFill.concat('./src/module/' + device + '/main.js')
+}
+
 const webpackConfig = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
@@ -21,6 +29,8 @@ const webpackConfig = merge(baseWebpackConfig, {
             usePostCSS: true
         })
     },
+
+    entry: entry,
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
         path: config.build.assetsRoot,
@@ -60,9 +70,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         // generate dist index.html with correct asset hash for caching.
         // you can customize output by editing /index.html
         // see https://github.com/ampedandwired/html-webpack-plugin
+
         new HtmlWebpackPlugin({
-            filename: config.build.index,
-            template: 'index.html',
+            filename: process.env.NODE_ENV === 'testing'
+                ? 'index.html'
+                : config.build.index,
+            // template: 'index.html',
+            template: config.build.htmlTemplate,
+
             inject: true,
             minify: {
                 removeComments: true,
@@ -74,6 +89,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),
+
         // keep module.id stable when vendor modules does not change
         new webpack.HashedModuleIdsPlugin(),
         // enable scope hoisting
