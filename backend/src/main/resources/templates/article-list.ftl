@@ -29,12 +29,6 @@
                             <nav id="search_bar_tag" class="menu" style="display: none">
                                 <p class="menu-label">标签</p>
                                 <div id="tag_search_content" class="field is-grouped is-grouped-multiline">
-                                    <div class="control">
-                                        <a class="tags has-addons" href="/hexo-theme-icarus/tags/Advanced-Topics/">
-                                            <span class="tag">Advanced Topics</span>
-                                            <span class="tag is-grey">1</span>
-                                        </a>
-                                    </div>
                                 </div>
                             </nav>
                         </div>
@@ -129,10 +123,10 @@
                         </div>
                         <div class="sidebar-content">
                             <#if tags??>
-                                <div id="tag_search_content" class="field is-grouped is-grouped-multiline">
+                                <div class="field is-grouped is-grouped-multiline">
                                     <#list tags as tag>
-                                        <div class="control">
-                                            <a class="tags has-addons" <#if tag.desc??>data-tippy="${tag.desc}"</#if> href="/hexo-theme-icarus/tags/Advanced-Topics/">
+                                        <div class="control" data-id="${tag.id}">
+                                            <a class="tags has-addons" data-id="${tag.id}" data-tippy="${tag.desc!'暂无描述'}" href="#">
                                                 <span class="tag"><i class="iconfont icon-qiye"></i>${tag.name}</span>
                                                 <span class="tag is-grey">${tag.publishedCount}</span>
                                             </a>
@@ -163,10 +157,11 @@
         <script type="text/javascript" src="../public/lib/tippy/tippy.all.min.js"></script>
         <script type="text/javascript" src="../public/lib/svg/snap.svg-min.js"></script>
         <script type="text/javascript" src="../public/lib/classie.js"></script>
-        <script type="text/javascript" src="../public/js/off-canvas.min.js"></script>
+        <script type="text/javascript" src="../public/js/off-canvas.js"></script>
 
         <script>
             var categories = {};
+            var tags = {};
             var pageNumber = ${page_number};
             var totalPages = ${total_pages};
 
@@ -186,6 +181,16 @@
                             };
                         </#list>
                     </#if>
+                </#list>
+            </#if>
+
+            <#if tags??>
+                <#list tags as tag>
+                    tags['${tag.id}'] = {
+                        id: '${tag.id}',
+                        name: '${tag.name}',
+                        publishedCount: ${tag.publishedCount}
+                    };
                 </#list>
             </#if>
             ;
@@ -215,6 +220,7 @@
                      * @see template#buildCategorySearchContent
                      */
                     currentCategoryId: '',
+                    currentTagIds: [],
                     keyword: '',
 
                     // 从0开始
@@ -286,6 +292,17 @@
                         }
                         temp.push('<li data-id="' + child.id + '" class="is-active"><a href="#" data-id="' + child.id+ '">' + child.name + '</a></li>');
                         return temp.join('');
+                    },
+
+                    buildTagSearchContent: function (tag) {
+                        var temp = [];
+                        temp.push('<div class="control" data-id="' + tag.id + '">');
+                        temp.push('<a class="tags has-addons" href="#">');
+                        temp.push('<span class="tag">' + tag.name + '</span>');
+                        temp.push('<span class="tag is-grey　close-button">close</span>');
+                        temp.push('</a>');
+                        temp.push('</div>');
+                        return temp.join('');
                     }
                 };
 
@@ -321,6 +338,28 @@
                         this.getArticles(true);
                     },
 
+                    clickTag: function(tagId) {
+
+                        var tag = tags[tagId];
+                        if (!tag) {
+                            console.error("未匹配到标签");
+                            return;
+                        }
+
+                        if (data.currentTagIds.indexOf(tagId) === -1) {
+                            data.currentTagIds.push(tagId);
+                        } else {
+                            console.warn("标签已选中了: " + tag.name);
+                            return;
+                        }
+
+                        node.tagSearchContent.append(template.buildTagSearchContent(tag));
+                        node.searchBarTag.show();
+
+                        utils.refreshSearchBar();
+                        // this.getArticles(true);
+                    },
+
                     /**
                      * 获取文章分页
                      *
@@ -338,6 +377,7 @@
                                 size: data.pageSize,
 
                                 categoryId: data.currentCategoryId,
+                                tagIds: data.currentTagIds,
                                 title: data.keyword
                             },
                             beforeSend: function (xhr) {
@@ -359,7 +399,7 @@
 
                 var utils = {
                     refreshSearchBar: function () {
-                        if (data.currentCategoryId) {
+                        if (data.currentCategoryId || data.currentTagIds.length > 0) {
                             if (!data.isSearchBarDisplay) {
                                 node.searchBar.slideDown();
                                 data.isSearchBarDisplay = true;
@@ -401,6 +441,7 @@
                         this.categoryChangeFromSearchBarHandle();
                         this.searchInputKeyPressHandle();
                         this.searchBtnClickHandle();
+                        this.tagChangeHandle();
 
                         this.previousPageBtnClickHandle();
                         this.nextPageBtnClickHandle();
@@ -456,6 +497,19 @@
                                 services.changeCategory(categoryId);
                             }
                         });
+                    },
+
+                    /**
+                     * 文章分类的点击事件拦截处理器
+                     */
+                    tagChangeHandle: function () {
+                        $('a.tags').on('click', function (e) {
+                            e.preventDefault();
+
+                            var delegate = $(e.delegateTarget);
+                            var tagId = delegate.attr('data-id');
+                            services.clickTag(tagId);
+                        })
                     },
 
                     /**
