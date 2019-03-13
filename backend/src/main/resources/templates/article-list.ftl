@@ -51,7 +51,7 @@
                                         <div class="tags">
                                             <#if article.articleTags??>
                                                 <#list article.articleTags as tag>
-                                                    <a class="tag" href="#">${tag.name}</a>
+                                                    <a class="tag" href="javascript:void(0);">${tag.name}</a>
                                                 </#list>
                                             </#if>
                                         </div>
@@ -270,9 +270,9 @@
                                 for (var i = 0; i < tagCount; i++) {
                                     var tag = tags[i];
                                     if (tag.desc) {
-                                        temp.push('<a class="tag" href="#" data-tippy="' + tag.desc+ '">' + tag.name + '</a>');
+                                        temp.push('<a class="tag" href="javascript:void(0);" data-tippy="' + tag.desc+ '">' + tag.name + '</a>');
                                     } else {
-                                        temp.push('<a class="tag" href="#">' + tag.name + '</a>');
+                                        temp.push('<a class="tag" href="javascript:void(0);">' + tag.name + '</a>');
                                     }
                                 }
                             }
@@ -297,9 +297,9 @@
                     buildTagSearchContent: function (tag) {
                         var temp = [];
                         temp.push('<div class="control" data-id="' + tag.id + '">');
-                        temp.push('<a class="tags has-addons" href="#">');
+                        temp.push('<a href="javascript:void(0);" class="tags has-addons">');
                         temp.push('<span class="tag">' + tag.name + '</span>');
-                        temp.push('<span class="tag is-grey　close-button">close</span>');
+                        temp.push('<span class="tag is-grey close-button" data-id="' + tag.id + '"></span>');
                         temp.push('</a>');
                         temp.push('</div>');
                         return temp.join('');
@@ -357,7 +357,24 @@
                         node.searchBarTag.show();
 
                         utils.refreshSearchBar();
-                        // this.getArticles(true);
+                        this.getArticles(true);
+                    },
+
+                    removeTag: function(tagId) {
+
+                        var index = data.currentTagIds.indexOf(tagId);
+                        if (index === -1) {
+                            console.warn("当前选择的标签并没有标签：" + tagId);
+                            return;
+                        } else {
+                            data.currentTagIds.splice(index, 1);
+                            if (data.currentTagIds.length === 0) {
+                                node.searchBarTag.hide();
+                            }
+                        }
+
+                        utils.refreshSearchBar();
+                        this.getArticles(true);
                     },
 
                     /**
@@ -377,8 +394,8 @@
                                 size: data.pageSize,
 
                                 categoryId: data.currentCategoryId,
-                                tagIds: data.currentTagIds,
-                                title: data.keyword
+                                tagIds: data.currentTagIds.join(','),
+                                title: data.keyword,
                             },
                             beforeSend: function (xhr) {
                                 NProgress.start();
@@ -442,6 +459,7 @@
                         this.searchInputKeyPressHandle();
                         this.searchBtnClickHandle();
                         this.tagChangeHandle();
+                        this.removeSelectedTag();
 
                         this.previousPageBtnClickHandle();
                         this.nextPageBtnClickHandle();
@@ -491,6 +509,7 @@
                             if (categoryId === '') {
                                 data.currentCategoryId = '';
                                 data.keyword = '';
+                                node.searchBarCategory.hide();
                                 utils.refreshSearchBar();
                                 services.getArticles();
                             } else {
@@ -509,6 +528,20 @@
                             var delegate = $(e.delegateTarget);
                             var tagId = delegate.attr('data-id');
                             services.clickTag(tagId);
+                        })
+                    },
+
+                    removeSelectedTag: function() {
+                        $('#tag_search_content').on('click', function (e) {
+                            e.preventDefault();
+
+                            var target = $(e.target);
+                            var tagId = target.attr('data-id');
+                            if (tagId) {
+                                // node.tagSearchContent.remove('div[data-id="' + tagId + '"]')
+                                target.parents('div.control').remove();
+                                services.removeTag(tagId);
+                            }
                         })
                     },
 

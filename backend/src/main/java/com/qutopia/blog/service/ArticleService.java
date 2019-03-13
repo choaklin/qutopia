@@ -28,7 +28,6 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 文章的服务
@@ -200,6 +199,9 @@ public class ArticleService {
         }
         if (StringUtils.isNotBlank(pageQuery.getTitle())) {
             criteria.and("title").regex("^" + pageQuery.getTitle(), "i");
+        }
+        if (CollectionUtils.isNotEmpty(pageQuery.getTagIds())) {
+            criteria.and("tags").in(pageQuery.getTagIds());
         }
 
         Page<ArticleDO> sourcePage = articleRepository.page(pageable, Query.query(criteria).with(new Sort(Sort.Direction.DESC, "createTime")));

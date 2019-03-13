@@ -16,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -68,12 +65,12 @@ public class ArticleController {
      * @param pageable
      * @param title
      * @param categoryId
-     * @param tagId
+     * @param tagIds get方式传递，url格式是 http:domain:port?tagIds=id1,id2,id3
      * @return
      */
     @ResponseBody
     @GetMapping(value = "page")
-    public Page<ArticlePool> page(@PageableDefault Pageable pageable, String title, String categoryId, String tagId) {
+    public Page<ArticlePool> page(@PageableDefault Pageable pageable, String title, String categoryId, @RequestParam("tagIds") List<String> tagIds) {
 
         return articleService.page(
                 pageable,
@@ -81,7 +78,7 @@ public class ArticleController {
                         .published(true)
                         .title(title)
                         .categoryId(categoryId)
-                        .tagId(tagId)
+                        .tagIds(tagIds)
                         .build()
         );
     }

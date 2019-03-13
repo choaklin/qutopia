@@ -3,6 +3,8 @@ package com.qutopia.blog.service.domain.article;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author choaklin
  * @version 0.0.1
@@ -23,9 +25,9 @@ public class ArticlePageQuery {
     private String categoryId;
 
     /**
-     * 标签ID
+     * 标签ID集合
      */
-    private String tagId;
+    private List<String> tagIds;
 
     /**
      * 是否已发布
