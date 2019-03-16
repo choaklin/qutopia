@@ -75,7 +75,7 @@
     import httpClient from '../../util/http-client';
 
     export default {
-        name: "article-increase",
+        name: "article-edit",
         data: function () {
             return {
                 resource: {

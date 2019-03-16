@@ -12,7 +12,7 @@
                     <!-- 账号登陆 -->
                     <div id="MobileBox" class="item-box">
                         <div class="input-group user-name"> <span class="input-group-addon"><i class="icon-user"></i></span>
-                            <input v-model="loginForm.loginInput" type="text" name="loginInput" class="form-control" placeholder="用户名/手机号">
+                            <input v-model="loginForm.loginInput" type="text" name="loginInput" class="form-control" placeholder="用户名">
                         </div>
                         <div class="input-group password"> <span class="input-group-addon"><i class="icon-lock"></i></span>
                             <input v-model="loginForm.password" type="password" name="password" class="form-control" placeholder="密码">
@@ -74,7 +74,7 @@
         left: 0;
         top: 0;
         z-index: 1;
-        background-image: url("../../assets/image/star-bg.png") !important;;
+        background-image: url("../../assets/image/star-bg-compress.png") !important;;
     }
 
     #main-box {

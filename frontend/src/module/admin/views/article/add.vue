@@ -64,16 +64,17 @@
 <script>
 
     import Vue from 'vue';
+    import httpClient from '../../util/http-client';
 
     export default {
         name: "article-increase",
         data: function () {
             return {
                 resource: {
-                    _category_manage: '/admin/categoryManage/',
-                    _tag_manage: '/admin/tagManage/',
-                    _article_manage: '/admin/articleManage/',
-                    _file_manage: '/admin/resource/',
+                    _category_manage: 'categoryManage/',
+                    _tag_manage: 'tagManage/',
+                    _article_manage: 'articleManage/',
+                    _file_manage: 'resource/',
                 },
 
                 editorToolbar: {
@@ -135,7 +136,7 @@
                 // 第一步.将图片上传到服务器.
                 let formdata = new FormData();
                 formdata.append('file', $file);
-                Vue.axios({
+                httpClient({
                     url: this.resource._file_manage + 'upload',
                     headers: {'Content-Type': 'multipart/form-data' },
                     method: 'post',
@@ -143,9 +144,7 @@
                 }).then((response) => {
                     // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
                     // $vm.$img2Url 详情见本页末尾
-                    if (response.status === 200) {
-                        this.$refs.md.$img2Url(position, response.data);
-                    }
+                    this.$refs.md.$img2Url(position, response);
                 })
             },
 
@@ -162,21 +161,19 @@
              * 加载分类的数据
              */
             loadCategories: function() {
-                Vue.axios.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
-                    if (response.status === 200) {
-                        this.categories = response.data;
-                        this.categories.forEach(item => {
-                            item.value = item.id;
-                            item.label = item.name;
+                httpClient.get(this.resource._category_manage + 'list?parentId=0').then((response) => {
+                    this.categories = response;
+                    this.categories.forEach(item => {
+                        item.value = item.id;
+                        item.label = item.name;
 
-                            if (item.children) {
-                                item.children.forEach(child => {
-                                    child.value = child.id;
-                                    child.label = child.name;
-                                })
-                            }
-                        })
-                    }
+                        if (item.children) {
+                            item.children.forEach(child => {
+                                child.value = child.id;
+                                child.label = child.name;
+                            })
+                        }
+                    })
                 })
             },
 
@@ -188,16 +185,13 @@
             },
 
             fetchTags: function(name, callback) {
-                Vue.axios.get(this.resource._tag_manage + 'list?name=' + name).then((response) => {
-                    if (response.status === 200) {
-                        let data = response.data;
-                        if (data.length > 0) {
-                            data.forEach(function (p) {
-                                // 扩展value属性， el-autocomplete规范
-                                p.value = p.name;
-                            });
-                            callback(data);
-                        }
+                httpClient.get(this.resource._tag_manage + 'list?dimension=TECHNIQUE&name=' + name).then((response) => {
+                    if (response.length > 0) {
+                        response.forEach(function (p) {
+                            // 扩展value属性， el-autocomplete规范
+                            p.value = p.name;
+                        });
+                        callback(response);
                     }
                 })
             },
@@ -250,15 +244,13 @@
                     return;
                 }
 
-                Vue.axios.post(this.resource._article_manage, article)
+                httpClient.post(this.resource._article_manage, article)
                     .then((response) => {
-                        if (response.status === 200) {
-                            this.$message({
-                                message: '文章添加成功',
-                                type: 'success'
-                            });
-                            this.$router.push({path: "/article/index"});
-                        }
+                        this.$message({
+                            message: '文章添加成功',
+                            type: 'success'
+                        });
+                        this.$router.push({path: "/article/index"});
                     });
             }
         },
