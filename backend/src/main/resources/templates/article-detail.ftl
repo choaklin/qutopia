@@ -21,7 +21,7 @@
 				<#--<nav class="toc js-toc"></nav>-->
 				<article class="post markdown" style="display: block;">
 					<!-- thumbnail & title -->
-					<div class="thumbnail" style="background-image: url(../public/images/tourist/chaka.jpg)">
+					<div class="thumbnail" style="background-image: url(${article.thumbnail!('http://resource.qutopia.cn/desert.jpg')}")">
 						<h1 class="title">${article.title}</h1>
 					</div>
 
@@ -37,17 +37,17 @@
 						<div class="license-wrap">
 							<p><strong>本文使用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议许可</strong></p>
 							<p><strong>本文标题：</strong>${article.title}</p>
-							<p><strong>本文链接：</strong><a href="http:www.baidu.com">http:www.baidu.com</a></p>
+							<p><strong>本文链接：</strong><a href="${article_link!('')}" target="_blank">${article_link!('')}</a></p>
 						</div>
 					</footer>
 				</article>
 
 				<nav class="nearby">
-					<a class="prev" href="">
-						<div class="btn"><i class="iconfont icon-left">上一篇</i></div>Win32汇编学习(10)：对话框(1)
+					<a href="<#if prev_article??>/article/${prev_article.id!('')}</#if>" class="prev" style="visibility: <#if prev_article??>visible;<#else >hidden;</#if>">
+						<div class="btn"><i class="iconfont icon-left">上一篇</i></div><#if prev_article??>${prev_article.title!('')}</#if>
 					</a>
-					<a class="next" href="">
-						<div class="btn"><i class="iconfont icon-right">下一篇</i></div>Win32汇编学习(10)：对话框(3)
+					<a href="<#if next_article??>/article/${next_article.id!('')}</#if>" class="next" style="visibility: <#if next_article??>visible;<#else >hidden;</#if>">
+						<div class="btn"><i class="iconfont icon-right">下一篇</i></div><#if next_article??>${next_article.title!('')}</#if>
 					</a>
 				</nav>
 

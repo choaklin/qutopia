@@ -20,7 +20,7 @@
                     <p class="about-des">参加工作之后便有了一个要亲手建立自己站点的小目标</p>
                     <p class="about-des">陆陆续续参考了很多风格的博客</p>
                     <p class="about-des">收录那些令自己心生欢喜的小组件 、 布局 、 动画</p>
-                    <p class="about-des">主题主要参考<a class="inline-link" href="http://fiona23.github.io" target="_blank">枳</a>和<a class="inline-link en-vertical" href="https://github.com/viosey/hexo-theme-material" target="_blank">Material</a></p>
+                    <p class="about-des">页面设计主要参考<a class="inline-link" href="http://fiona23.github.io" target="_blank">枳</a>和<a class="inline-link en-vertical" href="https://github.com/viosey/hexo-theme-material" target="_blank">Material</a></p>
                     <p class="about-des">感悟就是立项时觉得实现会很简单</p>
                     <p class="about-des">但当自己使用零碎的时间从零开始实现 ， 列功能 、 画原型</p>
                     <p class="about-des">才深刻体会到真的很需要持续的专注力😅</p>

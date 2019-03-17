@@ -39,7 +39,7 @@
                             <#list articles as article>
                                 <article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">
                                     <div class="thumbnail">
-                                        <img class="thumbnail" src="../public/images/article/desert.jpg" alt="${article.title}">
+                                        <img class="thumbnail" src="${article.thumbnail!('http://resource.qutopia.cn/desert.jpg')}" alt="${article.title}">
                                         <header class="title">
                                             <h2><a rel="bookmark" href="article/${article.id}">${article.title}</a></h2>
                                         </header>
@@ -225,7 +225,7 @@
 
                     // 从0开始
                     pageNo: 0,
-                    pageSize: 2
+                    pageSize: 5
                 };
 
                 var node = {
@@ -259,7 +259,7 @@
 
                             temp.push('<article class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform: scale(1); transform-origin: center top 0px;">');
                             temp.push('<div class="thumbnail">');
-                            temp.push('<img class="thumbnail" src="../public/images/article/desert.jpg" alt="' + article.title + '">');
+                            temp.push('<img class="thumbnail" src="' + (article.thumbnail ? article.thumbnail : 'http://resource.qutopia.cn/desert.jpg') + '" alt="' + article.title + '">');
                             temp.push('<header class="title"><h2><a rel="bookmark" href="article/' + article.id + '">' + article.title + '</a></h2></header>');
                             temp.push('</div>');
                             temp.push('<section class="overview"><span>' + article.overview + '</span></section>');

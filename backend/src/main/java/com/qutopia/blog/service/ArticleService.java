@@ -291,4 +291,39 @@ public class ArticleService {
         }
         return dest;
     }
+
+
+    /**
+     * 根据文章的创建时间 滚动
+     * @param up 向上，前一篇
+     * @param createTime 比较的创建时间
+     * @return
+     */
+    public Article rollArticleByCreateTime(boolean up, LocalDateTime createTime) {
+
+        String createTimeKey = "createTime";
+        // 因为默认是时间降序排序，向前的创建时间比当前1秒
+        // 前一篇 > 当前 > 后一篇
+        // 前一篇: 升序第一个;  后一篇：降序第一个
+        Criteria criteria;
+        Sort sort;
+        if (up) {
+            criteria = Criteria.where(createTimeKey).gt(createTime);
+            sort = new Sort(Sort.Direction.ASC, createTimeKey);
+        } else {
+
+            criteria = Criteria.where(createTimeKey).lt(createTime);
+            sort = new Sort(Sort.Direction.DESC, createTimeKey);
+        }
+
+        Query query = Query.query(criteria).with(sort).limit(1);
+        query.fields().include("id").include("title").include(createTimeKey);
+
+        ArticleDO source = articleRepository.findUniqueOneByQuery(query);
+
+        if (source != null) {
+            return domainMapper.toArticle(source);
+        }
+        return null;
+    }
 }

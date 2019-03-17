@@ -9,6 +9,7 @@ import com.qutopia.blog.service.domain.article.ArticlePageQuery;
 import com.qutopia.blog.service.domain.article.ArticlePool;
 import com.qutopia.blog.service.domain.category.Category;
 import com.qutopia.blog.service.domain.tag.Tag;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public String index(@PageableDefault(size = 2, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String index(@PageableDefault(size = 5, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
         //== 文章列表、文章分类、标签
         Page<ArticlePool> articles = articleService.page(pageable, ArticlePageQuery.builder().published(true).build());
@@ -85,10 +86,13 @@ public class ArticleController {
 
 
     @GetMapping("{id}")
-    public String detail(@PathVariable String id, Model model) {
+    public String detail(HttpServletRequest request, @PathVariable String id, Model model) {
 
         Article article = articleService.show(id);
+        model.addAttribute(TemplateVariable.ARTICLE_LINK, request.getRequestURL());
         model.addAttribute(TemplateVariable.ARTICLE, article);
+        model.addAttribute(TemplateVariable.PREV_ARTICLE, articleService.rollArticleByCreateTime(true, article.getCreateTime()));
+        model.addAttribute(TemplateVariable.NEXT_ARTICLE, articleService.rollArticleByCreateTime(false, article.getCreateTime()));
 
         return "article-detail";
     }

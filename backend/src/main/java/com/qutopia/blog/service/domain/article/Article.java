@@ -4,7 +4,6 @@ import com.qutopia.blog.entity.CreateType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public class Article {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 最后更新时间

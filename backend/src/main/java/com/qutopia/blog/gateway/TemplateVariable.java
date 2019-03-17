@@ -23,7 +23,11 @@ public interface TemplateVariable {
 
     ///////////////////////////////////////// 文章列表页的模板变量 ////////////////////////////////
     String ARTICLES = "articles";
+
+    String ARTICLE_LINK = "article_link";
     String ARTICLE = "article";
+    String PREV_ARTICLE = "prev_article";
+    String NEXT_ARTICLE = "next_article";
 
 
     String CATEGORIES = "categories";

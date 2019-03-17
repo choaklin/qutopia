@@ -97,7 +97,7 @@ public class CacheUtil implements ApplicationRunner {
     public List<Category> getFrontCategories() {
 
         List<Category> usableCategories = categories.values().stream()
-                // .filter(item -> item.getArticleCount() > 0)
+                .filter(item -> item.getArticleCount() > 0)
                 .sorted(Comparator.comparingInt(Category::getSortNo))
                 .collect(Collectors.toList());
         if (usableCategories.size() < 1) {
@@ -135,7 +135,7 @@ public class CacheUtil implements ApplicationRunner {
         Objects.requireNonNull(dimension, "请指定标签的应用维度");
         return tags.values().stream()
                 .filter(item -> dimension == item.getDimension())
-                // .filter(item -> item.getPublishedCount() > 0)
+                .filter(item -> item.getPublishedCount() > 0)
                 .collect(Collectors.toList());
     }
 
