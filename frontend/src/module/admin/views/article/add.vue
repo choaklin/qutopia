@@ -5,6 +5,9 @@
                 <el-form-item required label="标题">
                     <el-input v-model="article.title" placeholder="文章标题，字数控制在 50 个字以内"></el-input>
                 </el-form-item>
+                <el-form-item required label="图片">
+                    <el-input v-model="article.thumbnail" placeholder="文章的背景图地址"></el-input>
+                </el-form-item>
                 <el-form-item required label="摘要">
                     <el-input type="textarea" v-model="article.overview" placeholder="无摘要不精彩" :autosize="{minRows:3, maxRows:4}"></el-input>
                 </el-form-item>
@@ -114,6 +117,7 @@
 
                 article: {
                     title: '',
+                    thumbnail: '',
                     overview: '',
                     content: '',
                     createType: 'original',
@@ -263,28 +267,28 @@
 
 <style lang="less">
     .el-tag + .el-tag {
-        margin-left: 10px;
+        margin-left: 10px !important;
     }
 
     .input-new-tag {
-        width: 120px;
-        margin-left: 10px;
-        height: 32px;
-        line-height: 32px;
-        vertical-align: center;
+        width: 120px !important;
+        margin-left: 10px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+        vertical-align: center !important;
         &:first-child {
-            margin-left: 0;
+            margin-left: 0 !important;
         }
     }
 
     .button-new-tag {
-        margin-left: 10px;
-        height: 32px;
-        line-height: 32px;
-        padding-top: 0;
-        padding-bottom: 0;
+        margin-left: 10px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
         &:first-child {
-            margin-left: 0;
+            margin-left: 0 !important;
         }
     }
 </style>

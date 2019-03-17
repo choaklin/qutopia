@@ -74,7 +74,7 @@
         left: 0;
         top: 0;
         z-index: 1;
-        background-image: url("../../assets/image/star-bg-compress.png") !important;;
+        background-image: url("http://resource.qutopia.cn/star-bg.png") !important;
     }
 
     #main-box {

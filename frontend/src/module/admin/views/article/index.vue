@@ -4,12 +4,12 @@
             <el-form-item label="文章标题">
                 <el-input v-model="formInline.user" placeholder="文章标题"></el-input>
             </el-form-item>
-            <el-form-item label="标签">
-                <el-select v-model="formInline.region" placeholder="标签">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-            </el-form-item>
+            <!--<el-form-item label="标签">-->
+                <!--<el-select v-model="formInline.region" placeholder="标签">-->
+                    <!--<el-option label="区域一" value="shanghai"></el-option>-->
+                    <!--<el-option label="区域二" value="beijing"></el-option>-->
+                <!--</el-select>-->
+            <!--</el-form-item>-->
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
@@ -54,10 +54,9 @@
     import httpClient from '../../util/http-client';
 
     export default {
-        name: "post-index",
+        name: "article-index",
 
         mounted: function() {
-            console.log('>> execute mounted callback function, eg load data');
             this.loadTableData();
         },
 
@@ -131,21 +130,21 @@
 <style lang="less">
     .el-form--inline {
         .el-form-item {
-            padding-left: 20px;
+            padding-left: 20px !important;
         }
     }
 
     .el-tag {
-        font-size: 10px;
+        font-size: 10px!important;
     }
     .el-table td, .el-table th {
-        padding: 6px 0;
+        padding: 6px 0 !important;
     }
 
     .el-tag + .el-tag {
-        margin-left: 5px;
+        margin-left: 5px !important;
     }
     .el-button+.el-button {
-        margin-left: 5px;
+        margin-left: 5px !important;
     }
 </style>
