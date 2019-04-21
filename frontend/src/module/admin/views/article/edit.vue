@@ -63,7 +63,7 @@
                     <!--</el-checkbox-group>-->
                 <!--</el-form-item>-->
 
-                <el-form-item style="text-align: center">
+                <el-form-item :class="scrollDown?'fix-operation-zoom':''" style="text-align: center">
                     <el-button type="primary" @click="submit(true)">保存更改</el-button>
                     <el-button @click="cancel">取消编辑</el-button>
                 </el-form-item>
@@ -74,13 +74,16 @@
 
 <script>
 
-    import Vue from 'vue';
-    import httpClient from '../../util/http-client';
+    import Vue from 'vue'
+    import httpClient from '../../util/http-client'
 
     export default {
         name: "article-edit",
         data: function () {
             return {
+                scrollTop: 0,
+                scrollDown: false,
+
                 resource: {
                     _category_manage: 'categoryManage/',
                     _tag_manage: 'tagManage/',
@@ -285,17 +288,31 @@
                         message: '文章更新成功',
                         type: 'success'
                     });
-
-                    this.$router.push({path: "/article/index"});
                 });
             },
 
             cancel: function () {
                 this.$router.push({path: "/article/index"});
+            },
+
+            handleScroll: function () {
+                if (this) {
+                    let scrollTop = this.$parent.$el.scrollTop;
+                    // 页面滚动距顶部距离
+                    if (scrollTop - this.scrollTop > 0) {
+                        this.scrollDown = true;
+                    } else {
+                        this.scrollDown = false;
+                    }
+                    this.scrollTop = scrollTop;
+                }
             }
         },
 
         created: function () {
+
+            window.addEventListener('scroll', this.handleScroll, true)
+
             this.articleId = this.$route.params.id;
 
             this.loadCategories();
@@ -329,5 +346,15 @@
         &:first-child {
             margin-left: 0 !important;
         }
+    }
+
+    .fix-operation-zoom {
+        position: fixed;
+        padding: 15px 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1510;
     }
 </style>
