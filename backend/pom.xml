@@ -27,6 +27,7 @@
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <qiniu.sdk.version>7.2.6</qiniu.sdk.version>
         <commonmark>0.12.1</commonmark>
+        <flexmark.version>0.42.6</flexmark.version>
     </properties>
 
     <dependencyManagement>
@@ -77,6 +78,11 @@
                 <artifactId>commonmark</artifactId>
                 <version>${commonmark}</version>
             </dependency>
+            <dependency>
+                <groupId>com.vladsch.flexmark</groupId>
+                <artifactId>flexmark-all</artifactId>
+                <version>${flexmark.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -109,9 +115,27 @@
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.atlassian.commonmark</groupId>-->
+            <!--<artifactId>commonmark</artifactId>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark</artifactId>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vladsch.flexmark</groupId>
+                    <artifactId>flexmark-pdf-converter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vladsch.flexmark</groupId>
+                    <artifactId>flexmark-youtrack-converter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vladsch.flexmark</groupId>
+                    <artifactId>flexmark-jira-converter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 

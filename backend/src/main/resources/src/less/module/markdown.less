@@ -1,14 +1,22 @@
 .markdown {
+
+  //== 标题
+  h1, h2, h3 {
+    margin: 28px 0 18px;
+    color: #4f4f4f;
+    font-weight: 700;
+  }
+
   h1 {
     padding-bottom: 8px;
   }
 
   h2 {
-    padding-bottom: 8px;
-    border-bottom: 1px dotted #ccc;
+    font-size: 2.4rem;
   }
 
   h3 {
+    font-size: 2rem;
   }
 
   h4 {
@@ -20,6 +28,152 @@
   h6 {
   }
 
+  //== 粗斜体
+  strong {
+    font-weight: 700;
+  }
+
+  i, em {
+    font-style: italic;
+  }
+
+  code, kbd, pre, samp {
+    font-family: "Source Code Pro", Consolas, Menlo, Monaco, "Courier New", monospace;
+  }
+
+  //== 键位文本
+  kbd {
+    margin: 0 2px;
+    padding: 2px 8px;
+    background: #fff;
+    color: #333;
+    font-size: 1.3rem;
+    white-space: nowrap;
+    border: 1px solid rgba(63, 63, 63, .25);
+    box-shadow: 0 1px 0 rgba(63, 63, 63, .25);
+    border-radius: 4px;
+  }
+
+  //== 缩略语
+  abbr {
+    text-decoration: none;
+    border-bottom: 1.5px dotted;
+    color: #a04242;
+
+    &:hover {
+      cursor: help;
+    }
+  }
+
+
+  //== 代码, 未指定语言的
+  code, pre {
+    line-height: 1.5;
+    overflow-wrap: normal;
+    white-space: pre;
+    font-size: 1.3rem;
+    letter-spacing: 0.2px;
+    border-radius: 4px;
+  }
+
+  code {
+    padding: 2px 4px;
+    color: #c7254e;
+    background-color: #f9f2f4;
+  }
+
+  pre {
+    padding: 10px;
+    color: #333;
+    border: none;
+    overflow: auto;
+    line-height: 1.3;
+    max-height: 500px;
+    background: url("/public/images/markdown/pre_bg.png") #F6F6F6;
+    background-size: 30px 30px;
+
+    code {
+      padding: 0;
+      color: inherit;
+      background-color: transparent;
+    }
+  }
+
+  //== 列表
+  ul, ol {
+    li {
+      margin: .5rem 0;
+    }
+  }
+
+  ul {
+    li {
+      list-style-type: disc;
+    }
+  }
+
+  ol {
+    li {
+      list-style-type: decimal;
+    }
+  }
+
+  //== 引用
+  blockquote {
+    padding: 20px 30px;
+    border-left: 4px solid #6db33f;
+    background: #F6F6F6;
+    color: #555;
+    font-size: 1em;
+
+    p:first-child {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  //== 链接
+  a, a:hover, a:active, a:focus {
+    outline: 0;
+  }
+
+  a {
+    color: #009a61;
+    text-decoration: none;
+
+    &:focus, &:hover {
+      color: #004e31;
+      border-bottom: 1px solid #009a61;
+    }
+  }
+
+
+  //== 表格
+  table {
+    width: 100%;
+    text-align: center;
+
+    tr {
+      td, th {
+        border: 1px solid #E6E6E6;
+        padding: 5px 8px;
+        word-break: normal;
+        vertical-align: middle;
+      }
+
+      th {
+        background: #eff3f5;
+      }
+
+      &:nth-child(2n) {
+        background: #f7f7f7;
+      }
+    }
+  }
+
   blockquote,
   h4,
   ol,
@@ -28,17 +182,9 @@
   table,
   ul {
     margin: 18px 0;
-    list-style: none;
   }
 
-  h1,
-  h2,
-  h3 {
-    margin: 28px 0 18px;
-  }
-
-  > h1:first-child,
-  blockquote:first-child,
+  h1:first-child,
   h2:first-child,
   h3:first-child,
   h4:first-child,
@@ -75,108 +221,14 @@
     position: static !important;
   }
 
-  blockquote {
-    border-color: #008E59;
-    color: #555;
-    font-size: 1em;
-    background-color: #f9f9f9;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  blockquote p:first-child {
-    margin-top: 0;
-  }
-
-  code,
-  pre {
-    // font-size: 0.92857em;
-    background-color: #f6f6f6;
-    font-size: 90%;
-    color: #c7254e;
-    background-color: #f9f2f4;
-    border-radius: 4px;
-    letter-spacing: 0.2px;
-    font-family: "Source Code Pro",Consolas,Menlo,Monaco,"Courier New",monospace!important;
-    line-height: 1.8;
-  }
-
-  code {
-    padding: 2px 4px;
-  }
-
-  pre {
-    padding: 10px;
-    border: none;
-    overflow: auto;
-    line-height: 1.3;
-    max-height: 500px;
-  }
-
-  pre code {
-    background-color: transparent;
-    font-size: 1em;
-    overflow-wrap: normal;
-    white-space: inherit;
-  }
-
   hr {
     margin: 20px auto;
     border-top: 2px dotted #eee;
   }
 
-  kbd {
-    padding: 4px 4px 3px;
-    background: #eee;
-    color: #555;
-  }
 
   .x-scroll {
     overflow-x: auto;
   }
 
-  table {
-    width: 100%;
-  }
-
-  table td,
-  table th {
-    border: 1px solid #E6E6E6;
-    padding: 5px 8px;
-    word-break: normal;
-  }
-
-  table th {
-    background: #F3F3F3;
-  }
-
-  .widget-comments {
-    // font-size: 13px;
-  }
-
-  .widget-comments blockquote,
-  .widget-comments h1,
-  .widget-comments h2,
-  .widget-comments h3,
-  .widget-comments h4,
-  .widget-comments ol,
-  .widget-comments p,
-  .widget-comments pre,
-  .widget-comments table,
-  .widget-comments ul {
-    margin: 10px 0;
-  }
-
-  .widget-comments > h1:first-child,
-  .widget-comments blockquote:first-child,
-  .widget-comments h2:first-child,
-  .widget-comments h3:first-child,
-  .widget-comments h4:first-child,
-  .widget-comments ol:first-child,
-  .widget-comments p:first-child,
-  .widget-comments pre:first-child,
-  .widget-comments table:first-child,
-  .widget-comments ul:first-child {
-    margin-top: 0;
-  }
 }

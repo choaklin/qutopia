@@ -9,12 +9,15 @@ import com.qutopia.blog.repository.ArticleRepository;
 import com.qutopia.blog.service.domain.DomainMapper;
 import com.qutopia.blog.service.domain.article.*;
 import com.qutopia.blog.service.domain.category.Category;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.profiles.pegdown.Extensions;
+import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
+import com.vladsch.flexmark.util.ast.Document;
+import com.vladsch.flexmark.util.options.DataHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,8 +43,22 @@ import java.util.*;
 @Service
 public class ArticleService {
 
-    private final Parser parser = Parser.builder().build();
-    private final HtmlRenderer renderer = HtmlRenderer.builder().build();
+    // private final Parser parser = Parser.builder().build();
+    // private final HtmlRenderer renderer = HtmlRenderer.builder().build();
+
+    private static final DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(
+            Extensions.ALL_OPTIONALS | Extensions.ALL_WITH_OPTIONALS
+    );
+
+    /**
+     * Built-in MD engine parser.
+     */
+    private static final Parser PARSER = Parser.builder(OPTIONS).build();
+
+    /**
+     * Built-in MD engine HTML renderer.
+     */
+    private static final HtmlRenderer RENDERER = HtmlRenderer.builder(OPTIONS).build();
 
     @Autowired
     private DomainMapper domainMapper;
@@ -285,8 +302,8 @@ public class ArticleService {
             dest = domainMapper.toArticle(source);
             // 解析markdown
             if (StringUtils.isNotBlank(dest.getContent())) {
-                Node node = parser.parse(dest.getContent());
-                dest.setContent(renderer.render(node));
+                Document document = PARSER.parse(dest.getContent());
+                dest.setContent(RENDERER.render(document));
             }
         }
         return dest;
